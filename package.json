@@ -1,0 +1,14 @@
+{
+  "name": "metamask-api-specs",
+  "version": "0.0.0-development",
+  "description": "",
+  "scripts": {
+    "build": "openrpc-cli bundle metamask-openrpc.json > build-metamask-openrpc.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@xops.net/openrpc-cli": "^1.0.2"
+  }
+}

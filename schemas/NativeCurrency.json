@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "required": [
+        "decimals",
+        "name",
+        "symbol"
+    ],
+    "properties": {
+        "decimals": {
+            "type": "number"
+        },
+        "name": {
+            "type": "string"
+        },
+        "symbol": {
+            "type": "string"
+        }
+    }
+}
