@@ -13,5 +13,5 @@
     "dependencies": {
         "node-fetch": "^2.6.1"
     },
-    "version": "refs/heads/main"
+    "version": "0.0.1"
 }

@@ -9,7 +9,7 @@ const changeVersion = async (filePath, version) => {
   const file = await promisifiedFsReadFile(filePath);
   const json = JSON.parse(file.toString());
   json.version = version;
-  return promisifiedFsWriteFile(filePath, JSON.stringify(json, null, 4));
+  return promisifiedFsWriteFile(filePath, JSON.stringify(json, null, 4) + "\n");
 };
 const p = path.resolve(__dirname, "..", "package.json");
 
