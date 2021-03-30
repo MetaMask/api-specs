@@ -1,0 +1,35 @@
+name: Create Pull Request
+
+# Triggered when code is pushed to any branch in a repository
+on: create
+
+# require public member
+# private member is treated as CONTRIBUTOR
+jobs:
+  release_pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.15.1
+      - name: "update package version"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          export BRANCH_NAME="${GITHUB_REF##*}"
+          export NEW_VERSION="${GITHUB_REF##*/release-v}"
+          node scripts/update-package-version.js
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Release ${NEW_VERSION}"
+          git push
+          if ! hub pull-request \
+              --draft \
+              --message "${NEW_VERSION} RC" --message ':package: :rocket:' \
+              --base "main" \
+              --head "${BRANCH_NAME}";
+          then
+              printf '%s\n' 'Pull Request already exists'
+          fi
