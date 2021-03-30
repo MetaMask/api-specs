@@ -1,0 +1,26 @@
+{
+  "tags": [
+    {
+      "$ref": "../tags/Metamask.json"
+    }
+  ],
+  "name": "eth_getEncryptionPublicKey",
+  "summary": "Returns a public key used for encryption",
+  "description": "Requests that the user shares their public encryption key. Returns a public encryption key, or rejects if the user denied the request. The public key is computed from entropy associated with the specified user account, using the nacl implementation of the `X25519_XSalsa20_Poly1305` algorithm. ",
+  "params": [
+    {
+      "name": "Address",
+      "required": true,
+      "description": "The address of the ethereum account that can decrypt the message",
+      "schema": {
+        "$ref": "../schemas/Address.json"
+      }
+    }
+  ],
+  "result": {
+    "name": "EncryptionKey",
+    "schema": {
+      "type": "string"
+    }
+  }
+}

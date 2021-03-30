@@ -1,19 +1,25 @@
 {
-    "type": "object",
-    "required": [
-        "decimals",
-        "name",
-        "symbol"
-    ],
-    "properties": {
-        "decimals": {
-            "type": "number"
-        },
-        "name": {
-            "type": "string"
-        },
-        "symbol": {
-            "type": "string"
-        }
+  "title": "NativeCurrency",
+  "type": "object",
+  "description": "If provided, MUST describe the native currency of the chain using the name, symbol, and decimals fields. ",
+  "required": [
+    "decimals",
+    "name",
+    "symbol"
+  ],
+  "properties": {
+    "decimals": {
+      "description": "Non-negative integer",
+      "min": 0,
+      "type": "integer"
+    },
+    "name": {
+      "description": "SHOULD be human-readable",
+      "type": "string"
+    },
+    "symbol": {
+      "description": "SHOULD be human-readable",
+      "type": "string"
     }
+  }
 }

@@ -1,23 +1,41 @@
 {
-    "type": "object",
-    "required": [
-        "chainId"
-    ],
-    "properties": {
-        "chainId": {
-            "type": "string"
-        },
-        "blockExplorerUrl": {
-            "type": "string"
-        },
-        "chainName": {
-            "type": "string"
-        },
-        "nativeCurrency": {
-            "$ref": "./NativeCurrency.json"
-        },
-        "rpcUrl": {
-            "type": "string"
-        }
+  "title": "AddEthereumChainParameter",
+  "type": "object",
+  "required": [
+    "chainId"
+  ],
+  "properties": {
+    "chainId": {
+      "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the eth_chainId Ethereum RPC method. The wallet SHOULD compare the specified chainId value with the eth_chainId return value from the endpoint. If these values are not identical, the wallet MUST reject the request.",
+      "type": "string"
+    },
+    "blockExplorerUrls": {
+      "description": "If provided, MUST specify one or more URLs pointing to block explorer web sites for the chain.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "chainName": {
+      "description": "If provided, MUST specify a human-readable name for the chain.",
+      "type": "string"
+    },
+    "iconUrls": {
+      "description": "If provided, MUST specify one or more URLs pointing to reasonably sized images that can be used to visually identify the chain.",
+      "type": "array",
+      "items": {
+        "format": "uri",
+        "type": "string"
+      }
+    },
+    "nativeCurrency": {
+      "$ref": "./NativeCurrency.json"
+    },
+    "rpcUrls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     }
+  }
 }

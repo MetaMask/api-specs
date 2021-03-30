@@ -7,6 +7,30 @@
     "methods": [
         {
             "$ref": "./methods/wallet_addEthereumChain.json"
+        },
+        {
+            "$ref": "./methods/wallet_requestPermissions.json"
+        },
+        {
+            "$ref": "./methods/wallet_getPermissions.json"
+        },
+        {
+            "$ref": "./methods/eth_decrypt.json"
+        },
+        {
+            "$ref": "./methods/eth_getEncryptionPublicKey.json"
+        },
+        {
+            "$ref": "./methods/wallet_registerOnboarding.json"
+        },
+        {
+            "$ref": "./methods/wallet_watchAsset.json"
+        },
+        {
+            "$ref": "./methods/eth_accounts.json"
+        },
+        {
+            "$ref": "./methods/eth_sendTransaction.json"
         }
     ]
 }

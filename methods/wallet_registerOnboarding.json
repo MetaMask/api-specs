@@ -1,0 +1,18 @@
+{
+  "tags": [
+    {
+      "$ref": "../tags/Metamask.json"
+    }
+  ],
+  "name": "wallet_registerOnboarding",
+  "summary": "Redirects the user back to your site after onboarding has completed",
+  "description": "Registers the requesting site with MetaMask as the initiator of onboarding. Returns a Promise that resolves to `true`, or rejects if there's an error. This method is intended to be called after MetaMask has been installed, but before the MetaMask onboarding has completed. You can use this method to inform MetaMask that you were the one that suggested installing MetaMask. This lets MetaMask redirect the user back to your site after onboarding as completed. Instead of calling this method directly, you should use the `@metamask/onboarding` library",
+  "params": [],
+  "result": {
+    "name": "RegisterOnboardingResult",
+    "description": "true if the request was successful, false otherwise.",
+    "schema": {
+      "type": "boolean"
+    }
+  }
+}

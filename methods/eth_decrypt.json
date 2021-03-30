@@ -1,0 +1,34 @@
+{
+  "tags": [
+    {
+      "$ref": "../tags/Metamask.json"
+    }
+  ],
+  "name": "eth_decrypt",
+  "summary": "Decrypts the given message",
+  "description": "Requests that MetaMask decrypts the given encrypted message. The message must have been encrypted using the public encryption key of the given Ethereum address. Returns a Promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
+  "params": [
+    {
+      "name": "EncryptedMessage",
+      "required": true,
+      "description": "An Encrypted Message",
+      "schema": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "Address",
+      "required": true,
+      "description": "The address of the ethereum account that can decrypt the message",
+      "schema": {
+        "$ref": "../schemas/Address.json"
+      }
+    }
+  ],
+  "result": {
+    "name": "PermissionsList",
+    "schema": {
+      "$ref": "../schemas/PermissionsList.json"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "title": "Permission",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Every capability document, except for the target, MUST have an associated id",
+      "type": "string"
+    },
+    "@context": {
+      "description": "When two people communicate with one another, the conversation takes place in a shared environment, typically called 'the context of the conversation'. This shared context allows the individuals to use shortcut terms, like the first name of a mutual friend, to communicate more quickly but without losing accuracy. A context in JSON-LD works in the same way. It allows two applications to use shortcut terms to communicate with one another more efficiently, but without losing accuracy.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "invoker": {
+      "description": "links to one or more instances of cryptographic material (such as public keys) being granted authority to use this capability",
+      "type": "string"
+    },
+    "caveats": {
+      "description": "Every capability document MAY add restrictions on the way the capability may be used by adding to the caveat property. Capabilities inherit the restrictions from all caveat properties of their parents, and MAY add new caveats in addition to those of their parents.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "value": true,
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
