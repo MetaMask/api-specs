@@ -36,3 +36,18 @@ jobs:
           then
               printf '%s\n' 'Pull Request already exists'
           fi
+          npm install -g yarn
+          yarn install
+          yarn build
+          export RELEASE_BODY="$(awk -v version="${NEW_VERSION}" -f scripts/show-changelog.awk CHANGELOG.md)"
+          pushd build
+          if ! hub release create \
+            --prerelease
+            --attach metamask-openrpc.json \
+            --message "Version ${NEW_VERSION}" \
+            --message "${RELEASE_BODY}" \
+            --commitish "$GITHUB_SHA" \
+            "${NEW_VERSION}"
+          then
+              printf '%s\n' 'Release already exists'
+          fi
