@@ -2,7 +2,7 @@ name: Create Release Pull Request
 
 # Triggered when code is pushed to any branch in a repository
 on:
-  create:
+  push:
      branches:
       - 'release-v*'
 
@@ -49,5 +49,14 @@ jobs:
             --commitish "$GITHUB_SHA" \
             "${NEW_VERSION}"
           then
-              printf '%s\n' 'Release already exists'
+            if ! hub release edit \
+              --prerelease \
+              --attach metamask-openrpc.json \
+              --message "Version ${NEW_VERSION}" \
+              --message "${RELEASE_BODY}" \
+              --commitish "$GITHUB_SHA" \
+              "${NEW_VERSION}"
+            then
+              printf '%s\n' 'Release cant be edited'
+            fi
           fi
