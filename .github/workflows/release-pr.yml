@@ -31,7 +31,7 @@ jobs:
           export RELEASE_BODY="$(awk -v version="${NEW_VERSION}" -f scripts/show-changelog.awk CHANGELOG.md)"
           if ! hub pull-request \
               --draft \
-              --message "${NEW_VERSION} RC" --message ':package: :rocket:\\n ${RELEASE_BODY}' \
+              --message "${NEW_VERSION} RC" --message ":package: :rocket:\\n ${RELEASE_BODY}" \
               --base "main" \
               --head "${BRANCH_NAME}";
           then
