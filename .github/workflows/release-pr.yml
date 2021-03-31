@@ -28,6 +28,7 @@ jobs:
           export RELEASE_BODY="$(awk -v version="${NEW_VERSION}" -f scripts/show-changelog.awk CHANGELOG.md)"
           if ! git diff-files --quiet;
           then
+            echo "updated version. commiting changes."
             git add .
             git commit -m "Release ${NEW_VERSION}\n\n${RELEASE_BODY}"
             git push
