@@ -42,7 +42,7 @@ jobs:
           export RELEASE_BODY="$(awk -v version="${NEW_VERSION}" -f scripts/show-changelog.awk CHANGELOG.md)"
           pushd build
           if ! hub release create \
-            --prerelease
+            --prerelease \
             --attach metamask-openrpc.json \
             --message "Version ${NEW_VERSION}" \
             --message "${RELEASE_BODY}" \
