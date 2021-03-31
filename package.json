@@ -1,5 +1,5 @@
 {
-    "name": "metamask-api-specs",
+    "name": "@metamask/metamask-api-specs",
     "description": "",
     "scripts": {
         "build": "node merge-openrpc.js && openrpc-cli bundle GENERATED-openrpc.json > build/metamask-openrpc.json && rm GENERATED-openrpc.json",
