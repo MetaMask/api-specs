@@ -23,8 +23,8 @@ jobs:
           export BRANCH_NAME="${GITHUB_REF##*}"
           export NEW_VERSION="${GITHUB_REF##*/release-v}"
           node scripts/update-package-version.js
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name metamask-bot
+          git config user.email metamask-pr-bot@metamask.io
           export RELEASE_BODY="$(awk -v version="${NEW_VERSION}" -f scripts/show-changelog.awk CHANGELOG.md)"
 
           if ! (git add . && git commit -m "Release ${NEW_VERSION}\n\n${RELEASE_BODY}" && git push);
