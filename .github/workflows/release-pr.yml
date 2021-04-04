@@ -18,12 +18,12 @@ jobs:
           node-version: 14.15.1
       - name: "update package version"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: |
           export BRANCH_NAME="${GITHUB_REF##*}"
           export NEW_VERSION="${GITHUB_REF##*/release-v}"
           node scripts/update-package-version.js
-          git config user.name metamask-bot
+          git config user.name metamask-pr-bot
           git config user.email metamask-pr-bot@metamask.io
           export RELEASE_BODY="$(awk -v version="${NEW_VERSION}" -f scripts/show-changelog.awk CHANGELOG.md)"
 
