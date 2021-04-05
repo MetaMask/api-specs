@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-node@v2
         with:
           node-version: 14.15.1
@@ -38,7 +36,3 @@ jobs:
           then
               printf '%s\n' 'Pull Request already exists'
           fi
-          npm install -g yarn
-          yarn install
-          yarn build
-          pushd build

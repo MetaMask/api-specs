@@ -22,6 +22,10 @@ jobs:
           export PREFIX=release-v
           export NEW_VERSION="${GITHUB_HEAD_REF#$PREFIX}"
           export RELEASE_BODY="$(awk -v version="${NEW_VERSION}" -f scripts/show-changelog.awk CHANGELOG.md)"
+          npm install -g yarn
+          yarn install
+          yarn build
+          pushd build
           if ! hub release create \
             --attach metamask-openrpc.json \
             --message "Version ${NEW_VERSION}" \
