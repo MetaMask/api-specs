@@ -10,29 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Get Node.js version
+        id: nvm
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v2
         with:
-          node-version: 14.15.1
-      - name: "update package version"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          export BRANCH_NAME="${GITHUB_REF##*}"
-          export NEW_VERSION="${GITHUB_REF##*/release-v}"
-          node scripts/update-package-version.js
-          git config user.name metamask-pr-bot
-          git config user.email metamask-pr-bot@metamask.io
-          export RELEASE_BODY="$(awk -v version="${NEW_VERSION}" -f scripts/show-changelog.awk CHANGELOG.md)"
-          if ! (git add . && git commit -m "Release ${NEW_VERSION}" && git push);
-          then
-            echo "No changes"
-          fi
-
-          if ! hub pull-request \
-              --draft \
-              --message "${NEW_VERSION} RC" --message "${RELEASE_BODY}" \
-              --base "main" \
-              --head "${BRANCH_NAME}";
-          then
-              printf '%s\n' 'Pull Request already exists'
-          fi
+          node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
+      - uses: Metamask/actions-create-release-pr
