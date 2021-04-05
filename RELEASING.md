@@ -3,12 +3,16 @@ Creating a new release:
 
 This repository uses [Github Actions](https://docs.github.com/en/actions) to release.
 
-1. Start on the `main` branch
+1. Start on the `main` branch and on latest
+    ```
+      git checkout main
+      git pull origin main
+    ```
 1. Create a branch with the correct name: `release-v${version}`
 
     ex:
     ```
-      git co -b release-v0.0.1
+      git checkout -b release-v0.0.1
     ```
 
 1. Push the branch to origin

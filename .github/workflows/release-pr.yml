@@ -1,13 +1,10 @@
 name: Create Release Pull Request
 
-# Triggered when code is pushed to any branch in a repository
 on:
   create:
     branches:
       - "release-v*"
 
-# require public member
-# private member is treated as CONTRIBUTOR
 jobs:
   release_pr:
     runs-on: ubuntu-latest

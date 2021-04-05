@@ -1,6 +1,9 @@
 {
     "name": "@metamask/metamask-api-specs",
     "description": "",
+    "publishConfig": {
+      "access": "public"
+    },
     "scripts": {
         "build": "mkdir -p build && node merge-openrpc.js && openrpc-cli bundle GENERATED-openrpc.json > build/metamask-openrpc.json && rm GENERATED-openrpc.json",
         "test": "echo \"Error: no test specified\" && exit 1"
