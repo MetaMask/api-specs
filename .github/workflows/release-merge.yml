@@ -18,23 +18,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
-      - name: "Create Release"
+      - uses: MetaMask/action-publish-release@0.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          export PREFIX=release-v
-          export NEW_VERSION="${GITHUB_HEAD_REF#$PREFIX}"
-          export RELEASE_BODY="$(awk -v version="${NEW_VERSION}" -f scripts/show-changelog.awk CHANGELOG.md)"
-          npm install -g yarn
-          yarn install
-          yarn build
-          pushd build
-          if ! hub release create \
-            --attach metamask-openrpc.json \
-            --message "Version ${NEW_VERSION}" \
-            --message "${RELEASE_BODY}" \
-            --commitish "$GITHUB_SHA" \
-            "${NEW_VERSION}"
-          then
-            printf '%s\n' 'Release cant be created'
-          fi
