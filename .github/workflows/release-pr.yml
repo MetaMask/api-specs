@@ -12,12 +12,13 @@ jobs:
   release_pr:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14.15.1
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.RELEASE_TOKEN }}
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.15.1
+      - name: "update package version"
         run: |
           export BRANCH_NAME="${GITHUB_REF##*}"
           export NEW_VERSION="${GITHUB_REF##*/release-v}"
