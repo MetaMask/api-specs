@@ -28,8 +28,7 @@ jobs:
           git config user.name metamask-pr-bot
           git config user.email metamask-pr-bot@metamask.io
           export RELEASE_BODY="$(awk -v version="${NEW_VERSION}" -f scripts/show-changelog.awk CHANGELOG.md)"
-
-          if ! (git add . && git commit -m "Release ${NEW_VERSION}\n\n${RELEASE_BODY}" && git push);
+          if ! (git add . && git commit -m "${RELEASE_BODY}" && git push);
           then
             echo "No changes"
           fi
