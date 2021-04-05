@@ -2,7 +2,7 @@
     "name": "@metamask/metamask-api-specs",
     "description": "",
     "publishConfig": {
-      "access": "public"
+        "access": "public"
     },
     "scripts": {
         "build": "mkdir -p build && node merge-openrpc.js && openrpc-cli bundle GENERATED-openrpc.json > build/metamask-openrpc.json && rm GENERATED-openrpc.json",
@@ -16,5 +16,5 @@
     "dependencies": {
         "node-fetch": "^2.6.1"
     },
-    "version": "0.0.18"
+    "version": "0.0.19"
 }
