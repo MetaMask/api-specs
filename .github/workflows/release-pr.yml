@@ -46,22 +46,3 @@ jobs:
           yarn install
           yarn build
           pushd build
-          if ! hub release create \
-            --prerelease \
-            --attach metamask-openrpc.json \
-            --message "Version ${NEW_VERSION}" \
-            --message "${RELEASE_BODY}" \
-            --commitish "$GITHUB_SHA" \
-            "${NEW_VERSION}"
-          then
-            if ! hub release edit \
-              --prerelease \
-              --attach metamask-openrpc.json \
-              --message "Version ${NEW_VERSION}" \
-              --message "${RELEASE_BODY}" \
-              --commitish "$GITHUB_SHA" \
-              "${NEW_VERSION}"
-            then
-              printf '%s\n' 'Release cant be edited'
-            fi
-          fi

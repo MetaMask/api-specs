@@ -21,12 +21,12 @@ jobs:
           export PREFIX=release-v
           export NEW_VERSION="${GITHUB_HEAD_REF#$PREFIX}"
           env
-          if ! hub release edit \
+          if ! hub release create \
             --attach metamask-openrpc.json \
             --message "Version ${NEW_VERSION}" \
             --message "${RELEASE_BODY}" \
             --commitish "$GITHUB_SHA" \
             "${NEW_VERSION}"
           then
-            printf '%s\n' 'Release cant be edited'
+            printf '%s\n' 'Release cant be created'
           fi
