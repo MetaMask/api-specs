@@ -18,8 +18,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          export BRANCH_NAME="${GITHUB_HEAD_REF##*}"
-          export NEW_VERSION="${GITHUB_HEAD_REF##*/release-v}"
+          export PREFIX=release-v
+          export NEW_VERSION="${GITHUB_HEAD_REF#$PREFIX}"
           env
           if ! hub release edit \
             --attach metamask-openrpc.json \
