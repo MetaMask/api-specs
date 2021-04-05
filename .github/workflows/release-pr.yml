@@ -16,4 +16,4 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
-      - uses: Metamask/actions-create-release-pr
+      - uses: Metamask/actions-create-release-pr@0.0.1
