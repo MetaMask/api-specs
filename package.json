@@ -13,5 +13,5 @@
     "dependencies": {
         "node-fetch": "^2.6.1"
     },
-    "version": "0.0.17"
+    "version": "0.0.18"
 }
