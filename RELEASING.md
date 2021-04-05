@@ -18,7 +18,7 @@ This repository uses [Github Actions](https://docs.github.com/en/actions) to rel
     ```
 
 1. kicks off [.github/workflows/release-pr.yml](/.github/workflows/release-pr.yml)
-1. A [pull request](/pulls) should be created
+1. A [Pull Request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests) should be created
 1. Review pull request
 1. Merge PR when ready to release
 1. Release kicks off and runs [.github/workflows/release-merge.yml](/.github/workflows/release-merge.yml)
