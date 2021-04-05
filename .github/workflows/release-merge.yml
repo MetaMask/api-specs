@@ -17,11 +17,9 @@ jobs:
       - name: "update package version"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REF: ${{github.event.pull_request.head.ref}}
-          GITHUB_SHA: ${{github.event.pull_request.head.sha}}
         run: |
-          export BRANCH_NAME="${GITHUB_REF##*}"
-          export NEW_VERSION="${GITHUB_REF##*/release-v}"
+          export BRANCH_NAME="${GITHUB_HEAD_REF##*}"
+          export NEW_VERSION="${GITHUB_HEAD_REF##*/release-v}"
           env
           if ! hub release edit \
             --attach metamask-openrpc.json \
