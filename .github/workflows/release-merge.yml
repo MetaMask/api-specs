@@ -2,8 +2,6 @@ name: Release Merge
 
 on:
   pull_request:
-    branches:
-      - "release-v*"
     types: [closed]
 
 jobs:
