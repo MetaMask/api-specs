@@ -17,6 +17,8 @@ jobs:
       - name: "update package version"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REF: ${{github.event.pull_request.head.ref}}
+          GITHUB_SHA: ${{github.event.pull_request.head.sha}}
         run: |
           export BRANCH_NAME="${GITHUB_REF##*}"
           export NEW_VERSION="${GITHUB_REF##*/release-v}"
