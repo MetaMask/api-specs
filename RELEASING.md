@@ -17,8 +17,8 @@ This repository uses [Github Actions](https://docs.github.com/en/actions) to rel
       git push origin release-v0.0.1
     ```
 
-1. kicks off `.github/workflows/release-pr.yml`
+1. kicks off [.github/workflows/release-pr.yml](/blob/.github/workflows/release-pr.yml)
 1. A [pull request](/pulls) should be created
 1. Review pull request
 1. Merge PR when ready to release
-1. Release kicks off and runs `.github/worksflows/release-merge.yml`
+1. Release kicks off and runs [.github/worksflows/release-merge.yml](/blob/.github/worksflows/release-merge.yml)
