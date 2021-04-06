@@ -4,14 +4,20 @@
     "publishConfig": {
         "access": "public"
     },
+    "main": "dist/index.js",
+    "files": [
+      "dist/",
+      "dist/build"
+    ],
     "scripts": {
-        "build": "mkdir -p build && node merge-openrpc.js && openrpc-cli bundle GENERATED-openrpc.json > build/metamask-openrpc.json && rm GENERATED-openrpc.json",
+        "build": "mkdir -p build && node merge-openrpc.js && openrpc-cli bundle GENERATED-openrpc.json > build/metamask-openrpc.json && rm GENERATED-openrpc.json && tsc && rm -rf build/",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@xops.net/openrpc-cli": "^1.0.2"
+        "@xops.net/openrpc-cli": "^1.0.2",
+        "typescript": "^4.2.3"
     },
     "dependencies": {
         "node-fetch": "^2.6.1"

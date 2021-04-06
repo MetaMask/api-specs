@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "esModuleInterop": true,
+    "inlineSources": true,
+    "lib": [
+      "ES2020"
+    ],
+    "resolveJsonModule": true,
+    "outDir": "dist",
+    "sourceMap": true,
+    "strict": true,
+  },
+  "include": [
+    "index.ts"
+  ]
+}

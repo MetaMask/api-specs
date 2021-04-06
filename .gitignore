@@ -2,3 +2,5 @@ build-metamask-openrpc.json
 node_modules
 GENERATED-openrpc.json
 build
+dist
+*.tgz
