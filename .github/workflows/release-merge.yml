@@ -6,7 +6,9 @@ on:
 
 jobs:
   release_merge:
-    if: ${{github.event.pull_request.merged == true}} && ${{startsWith(github.ref, 'refs/heads/release-v')}}
+    if: |
+      github.event.pull_request.merged == true &&
+      startsWith(github.head_ref, 'refs/heads/release-v')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
