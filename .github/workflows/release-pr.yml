@@ -1,12 +1,10 @@
 name: Create Release Pull Request
 
-on:
-  create:
-    branches:
-      - "release-v*"
+on: [create]
 
 jobs:
   release_pr:
+    if: startsWith('refs/heads/release-v', github.ref)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
