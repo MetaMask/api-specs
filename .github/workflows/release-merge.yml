@@ -5,8 +5,8 @@ on:
     types: [closed]
 
 jobs:
-  releases_merge:
-    if: ${{github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'refs/heads/release-v')}}
+  release_merge:
+    if: ${{github.event.pull_request.merged == true && startsWith(github.head_ref, 'refs/heads/release-v')}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
