@@ -6,8 +6,8 @@
     },
     "main": "dist/index.js",
     "files": [
-      "dist/",
-      "dist/build"
+        "dist/",
+        "dist/build"
     ],
     "scripts": {
         "build": "mkdir -p build && node merge-openrpc.js && openrpc-cli bundle GENERATED-openrpc.json > build/metamask-openrpc.json && rm GENERATED-openrpc.json && tsc && rm -rf build/",
@@ -22,5 +22,5 @@
     "dependencies": {
         "node-fetch": "^2.6.1"
     },
-    "version": "0.0.20"
+    "version": "refs/heads/fix/single-quote-branches"
 }
