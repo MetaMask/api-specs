@@ -1,4 +1,4 @@
-const MetamaskOpenRPC = require("./metamask-openrpc.json");
+const MetaMaskOpenRPC = require("./metamask-openrpc.json");
 const fs = require("fs");
 const fetch = require("node-fetch");
 
@@ -10,7 +10,7 @@ fetch("https://raw.githubusercontent.com/etclabscore/ethereum-json-rpc-specifica
   .then((EthereumOpenRPC) => {
     fs.writeFileSync(__dirname + "/GENERATED-openrpc.json",
       JSON.stringify(
-        mergeOpenRPC(MetamaskOpenRPC, EthereumOpenRPC),
+        mergeOpenRPC(MetaMaskOpenRPC, EthereumOpenRPC),
         null,
         4
       )
