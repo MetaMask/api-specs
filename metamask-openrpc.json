@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0",
     "info": {
-        "title": "Metamask API Reference",
+        "title": "MetaMask API Reference",
         "version": "1.0.0"
     },
     "methods": [
