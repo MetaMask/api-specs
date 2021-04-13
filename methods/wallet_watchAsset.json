@@ -45,7 +45,7 @@
     }
   ],
   "result": {
-    "name": "RegisterOnboardingResult",
+    "name": "WatchAssetResult",
     "description": "true if the token was added, false otherwise.",
     "schema": {
       "type": "boolean"
