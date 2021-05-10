@@ -5,7 +5,7 @@
     }
   ],
   "name": "wallet_switchEthereumChain",
-  "summary": "An RPC method for switching the wallet's active Ethereum chain.",
+  "summary": "An RPC method for switching the wallets active Ethereum chain.",
   "description": "Allows Ethereum applications ('dapps') to request that the wallet switches its active Ethereum chain.\n Introduced by [EIP 3326](https://eips.ethereum.org/EIPS/eip-3326).",
   "params": [
     {
