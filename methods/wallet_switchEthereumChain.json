@@ -1,0 +1,58 @@
+{
+  "tags": [
+    {
+      "$ref": "../tags/Metamask.json"
+    }
+  ],
+  "name": "wallet_switchEthereumChain",
+  "summary": "An RPC method for switching the wallet's active Ethereum chain. ",
+  "description": "Allows Ethereum applications ('dapps') to request that the wallet switches its active Ethereum chain.\n Introduced by [EIP 3326](https://eips.ethereum.org/EIPS/eip-3326).",
+  "params": [
+    {
+      "name": "SwitchEthereumChainParameter",
+      "description": "The SwitchEthereumChainParameter",
+      "schema": {
+        "title": "SwitchEthereumChainParameter",
+        "type": "object",
+        "required": [
+          "chainId"
+        ],
+        "properties": {
+          "chainId": {
+            "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the eth_chainId Ethereum RPC method. The wallet SHOULD compare the specified chainId value with the eth_chainId return value from the endpoint. If these values are not identical, the wallet MUST reject the request.",
+            "type": "string"
+          }
+        }
+      }
+    }
+  ],
+  "result": {
+    "name": "SwitchEthereumChainResult",
+    "schema": {
+      "type": "null"
+    }
+  },
+  "errors": [
+    {
+      "code": 4902,
+      "message": "Unrecognized chain ID. Try adding the chain using `wallet_addEthereumChain` first."
+    }
+  ],
+  "examples": [
+    {
+      "name": "wallet_switchEthereumChainExample",
+      "params": [
+        {
+          "name": "SwitchEthereumChainParameter",
+          "value": {
+            "chainId": "0x64"
+          }
+        }
+      ],
+      "result": {
+        "name": "wallet_switchEthereumChainExampleResult",
+        "value": "null"
+      }
+    }
+  ]
+}
