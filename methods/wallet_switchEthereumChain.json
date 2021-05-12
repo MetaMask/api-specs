@@ -19,7 +19,7 @@
         ],
         "properties": {
           "chainId": {
-            "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the eth_chainId Ethereum RPC method.",
+            "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the `eth_chainId` Ethereum RPC method.",
             "type": "string"
           }
         }
