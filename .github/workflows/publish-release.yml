@@ -5,7 +5,9 @@ on:
     types: [closed]
 
 jobs:
-  release_merge:
+  publish-release:
+    permissions:
+      contents: write
     # The second argument to startsWith() must match the release-branch-prefix
     # input to this Action. Here, we use the default, "automation_release-".
     if: |
