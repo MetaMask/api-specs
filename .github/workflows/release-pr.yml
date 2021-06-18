@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 0
           # We check out the specified branch, which will be used as the base
           # branch for all git operations and the release PR.
-          ref: ${{ inputs.base-branch }}
+          ref: ${{ github.event.inputs.base-branch }}
       - name: Get Node.js version
         id: nvm
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
