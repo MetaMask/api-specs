@@ -6,4 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/MetaMask/api-specs/
+## [0.0.28]
+### Uncategorized
+- Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
+- build(deps): bump ws from 7.4.4 to 7.5.0 ([#67](https://github.com/MetaMask/api-specs/pull/67))
+- Update release-merge.yml
+- Update release-pr.yml
+- feat: add wallet_switchEthereumChain ([#66](https://github.com/MetaMask/api-specs/pull/66))
+
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.0.28...HEAD
+[0.0.28]: https://github.com/MetaMask/api-specs/releases/tag/v0.0.28
