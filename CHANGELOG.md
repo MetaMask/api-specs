@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.0.29]
-### Uncategorized
+### Added
 - add ethereum chain to openrpc document ([#71](https://github.com/MetaMask/api-specs/pull/71))
 
 ## [0.0.28]
