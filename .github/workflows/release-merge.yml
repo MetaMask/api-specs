@@ -6,9 +6,11 @@ on:
 
 jobs:
   release_merge:
+    # The second argument to startsWith() must match the release-branch-prefix
+    # input to this Action. Here, we use the default, "automation_release-".
     if: |
       github.event.pull_request.merged == true &&
-      startsWith(github.event.pull_request.head.ref, 'release-v')
+      startsWith(github.event.pull_request.head.ref, 'automation_release-')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,15 +20,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
-      - uses: MetaMask/action-publish-release@v0.0.3
+      - uses: MetaMask/action-publish-release@v0.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - shell: bash
-        run: |
-          yarn setup
-          yarn build
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
