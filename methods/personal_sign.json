@@ -6,6 +6,7 @@
   "params": [
     {
       "name": "Challenge",
+      "required": true,
       "description": "A hex-encoded UTF-8 string to present to the user. For example, '0x${Buffer.from(exampleMessage, 'utf8').toString('hex')}'",
       "schema": {
         "type": "string",
@@ -14,6 +15,7 @@
     },
     {
       "name": "Address",
+      "required": true,
       "description": "The address of the requested signing account.",
       "schema": {
         "$ref": "https://raw.githubusercontent.com/etclabscore/ethereum-json-rpc-specification/master/openrpc.json#/components/schemas/Address"
