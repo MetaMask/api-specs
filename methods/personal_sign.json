@@ -6,7 +6,7 @@
   "params": [
     {
       "name": "Challenge",
-      "description": "A hex-encoded UTF-8 string to present to the user.",
+      "description": "A hex-encoded UTF-8 string to present to the user. For example, `0x${Buffer.from(exampleMessage, 'utf8').toString('hex')}`",
       "schema": {
         "type": "string",
         "pattern": "^0x[a-fA-F\\d]+$"
