@@ -1,7 +1,7 @@
 {
   "name": "personal_sign",
   "summary": "Presents a plain text signature challenge to the user.",
-  "description": "Presents a plain text signature challenge to the user and returns the signed response.",
+  "description": "Presents a plain text signature challenge to the user and returns the signed response. This method is equivalent to eth_sign on some other wallets, and prepends a safe prefix to the signed message to prevent the challenge tricking users into signing a financial transaction.",
   "deprecated": false,
   "params": [
     {
