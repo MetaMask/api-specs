@@ -33,6 +33,9 @@
             "$ref": "./methods/eth_accounts.json"
         },
         {
+            "$ref": "./methods/personal_sign.json"
+        },
+        {
             "$ref": "./methods/eth_sendTransaction.json"
         }
     ]
