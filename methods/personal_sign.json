@@ -23,9 +23,8 @@
   "result": {
     "name": "Signature",
     "schema": {
-      "title": "hex encoded bytes",
-      "type": "string",
-      "pattern": "^0x[0-9a-f]*$"
-    }
+		"title": "65 hex encoded bytes",
+		"type": "string",
+		"pattern": "^0x[0-9a-f]{512}$"
   }
 }
