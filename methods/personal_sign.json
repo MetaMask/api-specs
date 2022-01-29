@@ -23,7 +23,9 @@
   "result": {
     "name": "Signature",
     "schema": {
-      "$ref": "https://raw.githubusercontent.com/ethereum/execution-apis/bea0266c42919a2fb3ee524fb91e624a23bc17c5/src/schemas/base-types.json#/components/schemas/bytes"
+      "title": "hex encoded bytes",
+      "type": "string",
+      "pattern": "^0x[0-9a-f]*$"
     }
   }
 }
