@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.0.30]
-### Uncategorized
-- Add personal_sign ([#74](https://github.com/MetaMask/api-specs/pull/74))
+### Added
+- `personal_sign` ([#74](https://github.com/MetaMask/api-specs/pull/74))
 
 ## [0.0.29]
 ### Added
