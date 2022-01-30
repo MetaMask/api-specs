@@ -26,7 +26,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: yarn --frozen-lockfile
-      - run: yarn allow-scripts
       - name: Get release version
         id: version
         run: |
