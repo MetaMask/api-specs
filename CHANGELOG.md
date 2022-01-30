@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.31]
+### Uncategorized
+- Add link to encoding example ([#77](https://github.com/MetaMask/api-specs/pull/77))
+- Added extra publish steps for gh-pages ([#78](https://github.com/MetaMask/api-specs/pull/78))
+
 ## [0.0.30]
 ### Added
 - `personal_sign` ([#74](https://github.com/MetaMask/api-specs/pull/74))
@@ -24,7 +29,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.0.30...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.0.31...HEAD
+[0.0.31]: https://github.com/MetaMask/api-specs/compare/v0.0.30...v0.0.31
 [0.0.30]: https://github.com/MetaMask/api-specs/compare/v0.0.29...v0.0.30
 [0.0.29]: https://github.com/MetaMask/api-specs/compare/v0.0.28...v0.0.29
 [0.0.28]: https://github.com/MetaMask/api-specs/releases/tag/v0.0.28
