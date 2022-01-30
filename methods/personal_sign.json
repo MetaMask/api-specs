@@ -7,7 +7,7 @@
     {
       "name": "Challenge",
       "required": true,
-      "description": "A hex-encoded UTF-8 string to present to the user. For example, '0x${Buffer.from(exampleMessage, 'utf8').toString('hex')}'",
+      "description": "A hex-encoded UTF-8 string to present to the user. You can see how to encode a string like this in the module [browser-string-hexer](https://github.com/danfinlay/browser-string-hexer).",
       "schema": {
         "type": "string",
         "pattern": "^0x[a-fA-F\\d]+$"
