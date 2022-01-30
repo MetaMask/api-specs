@@ -4,6 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "homepage": "https://metamask.github.io/api-specs/",
   "main": "dist/index.js",
   "files": [
     "dist/",
