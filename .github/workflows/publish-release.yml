@@ -22,6 +22,27 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
-      - uses: MetaMask/action-publish-release@v0.1.0
+      - uses: MetaMask/action-publish-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: yarn --frozen-lockfile
+      - run: yarn allow-scripts
+      - name: Get release version
+        id: version
+        run: |
+          PREFIX='release/'
+          echo ::set-output name=NEW_VERSION::${GITHUB_HEAD_REF#"$PREFIX"}
+      - name: Publish gh pages version dir
+        uses: MetaMask/action-publish-gh-pages@v2
+        with:
+          source-directory: dist/build
+          destination-directory: ${{ steps.version.outputs.NEW_VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish gh pages latest dir
+        uses: MetaMask/action-publish-gh-pages@v2
+        with:
+          source-directory: dist/build
+          destination-directory: latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
