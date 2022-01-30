@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.0.31]
-### Uncategorized
-- Add link to encoding example ([#77](https://github.com/MetaMask/api-specs/pull/77))
-- Added extra publish steps for gh-pages ([#78](https://github.com/MetaMask/api-specs/pull/78))
+### Added
+- link to encoding example to `personal_sign` ([#77](https://github.com/MetaMask/api-specs/pull/77))
+- extra publish steps for gh-pages ([#78](https://github.com/MetaMask/api-specs/pull/78))
 
 ## [0.0.30]
 ### Added
