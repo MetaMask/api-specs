@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.0.34]
-### Uncategorized
-- Update package.json ([#84](https://github.com/MetaMask/api-specs/pull/84))
+### Added
+- homepage to package.json ([#84](https://github.com/MetaMask/api-specs/pull/84))
 
 ## [0.0.33]
 ### Changed
