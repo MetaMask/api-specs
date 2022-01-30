@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.0.33]
-### Uncategorized
-- Update publish-release.yml ([#82](https://github.com/MetaMask/api-specs/pull/82))
+### Changed
+- publish-release.yml ([#82](https://github.com/MetaMask/api-specs/pull/82))
 
 ## [0.0.32]
 ### Fixed
