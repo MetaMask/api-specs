@@ -1,0 +1,17 @@
+{
+  "tags": [
+    {
+      "$ref": "../tags/Metamask.json"
+    }
+  ],
+  "name": "wallet_getLanguage",
+  "summary": "Get language",
+  "description": "Get the user's current language.",
+  "params": [],
+  "result": {
+    "name": "LanguageResult",
+    "schema": {
+      "type": "string"
+    }
+  }
+}
