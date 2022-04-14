@@ -15,6 +15,9 @@
             "$ref": "./methods/wallet_requestPermissions.json"
         },
         {
+            "$ref": "./methods/wallet_getLanguage.json"
+        },
+        {
             "$ref": "./methods/wallet_getPermissions.json"
         },
         {
