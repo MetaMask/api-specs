@@ -4,12 +4,12 @@
       "$ref": "../tags/Metamask.json"
     }
   ],
-  "name": "wallet_getLanguage",
-  "summary": "Get language",
-  "description": "Get the user's current language.",
+  "name": "wallet_getLocale",
+  "summary": "Get locale",
+  "description": "Get the user's current language locale.",
   "params": [],
   "result": {
-    "name": "LanguageResult",
+    "name": "LocaleResult",
     "schema": {
       "type": "string"
     }
