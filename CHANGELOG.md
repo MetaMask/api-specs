@@ -7,9 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.0.36]
-### Uncategorized
-- Fixed hash pointer for gh-pages action ([#97](https://github.com/MetaMask/api-specs/pull/97))
-- 0.0.35 ([#96](https://github.com/MetaMask/api-specs/pull/96))
+### Fixed
+- hash pointer for gh-pages action ([#97](https://github.com/MetaMask/api-specs/pull/97))
 
 ## [0.0.35]
 ### Fixed
