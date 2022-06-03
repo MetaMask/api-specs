@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.0.37]
-### Uncategorized
-- Added yarn build to gh pages publish step ([#99](https://github.com/MetaMask/api-specs/pull/99))
+### Added
+- yarn build to gh pages publish step ([#99](https://github.com/MetaMask/api-specs/pull/99))
 
 ## [0.0.36]
 ### Fixed
