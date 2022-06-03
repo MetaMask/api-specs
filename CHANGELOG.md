@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.35]
+### Fixed
+- Deploy for latest ([#95](https://github.com/MetaMask/api-specs/pull/95))
+
 ## [0.0.34]
 ### Added
 - homepage to package.json ([#84](https://github.com/MetaMask/api-specs/pull/84))
@@ -41,7 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.0.34...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.0.35...HEAD
+[0.0.35]: https://github.com/MetaMask/api-specs/compare/v0.0.34...v0.0.35
 [0.0.34]: https://github.com/MetaMask/api-specs/compare/v0.0.33...v0.0.34
 [0.0.33]: https://github.com/MetaMask/api-specs/compare/v0.0.32...v0.0.33
 [0.0.32]: https://github.com/MetaMask/api-specs/compare/v0.0.31...v0.0.32
