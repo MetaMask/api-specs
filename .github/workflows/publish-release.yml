@@ -32,13 +32,13 @@ jobs:
           PREFIX='release/'
           echo ::set-output name=NEW_VERSION::${GITHUB_HEAD_REF#"$PREFIX"}
       - name: Deploy Version
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@068dc23d9710f1ba62e86896f84735d869951305
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir:  dist/build
           destination_dir: ${{ steps.version.outputs.NEW_VERSION }}
       - name: Deploy Latest
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@068dc23d9710f1ba62e86896f84735d869951305
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir:  dist/build
