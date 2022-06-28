@@ -32,7 +32,7 @@
             "chainId": "0x64",
             "chainName": "xDAI Chain",
             "rpcUrls": [
-              "https://dai.poa.network"
+              "https://rpc.gnosischain.com"
             ],
             "iconUrls": [
               "https://xdaichain.com/fake/example/url/xdai.svg",
@@ -44,7 +44,7 @@
               "decimals": 18
             },
             "blockExplorerUrls": [
-              "https://blockscout.com/poa/xdai/"
+              "https://blockscout.com/xdai/mainnet"
             ]
           }
         }
