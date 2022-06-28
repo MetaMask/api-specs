@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.0.38]
-### Uncategorized
-- Fixed xdai chain pointing to dead url ([#102](https://github.com/MetaMask/api-specs/pull/102))
+### Fixed
+- xdai chain pointing to dead url ([#102](https://github.com/MetaMask/api-specs/pull/102))
 
 ## [0.0.37]
 ### Added
