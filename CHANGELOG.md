@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.38]
+### Uncategorized
+- Fixed xdai chain pointing to dead url ([#102](https://github.com/MetaMask/api-specs/pull/102))
+
 ## [0.0.37]
 ### Added
 - yarn build to gh pages publish step ([#99](https://github.com/MetaMask/api-specs/pull/99))
@@ -53,7 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.0.37...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.0.38...HEAD
+[0.0.38]: https://github.com/MetaMask/api-specs/compare/v0.0.37...v0.0.38
 [0.0.37]: https://github.com/MetaMask/api-specs/compare/v0.0.36...v0.0.37
 [0.0.36]: https://github.com/MetaMask/api-specs/compare/v0.0.35...v0.0.36
 [0.0.35]: https://github.com/MetaMask/api-specs/compare/v0.0.34...v0.0.35
