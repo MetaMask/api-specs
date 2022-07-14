@@ -29,7 +29,7 @@
             "type": "string"
           },
           "symbol": {
-            "description": " A ticker symbol or shorthand, up to 5 characters",
+            "description": " A ticker symbol or shorthand, up to 11 characters",
             "type": "string"
           },
           "decimals": {
