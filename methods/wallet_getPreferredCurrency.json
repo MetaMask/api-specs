@@ -1,0 +1,17 @@
+{
+  "tags": [
+    {
+      "$ref": "../tags/Metamask.json"
+    }
+  ],
+  "name": "wallet_getPreferredCurrency",
+  "summary": "Get preferred currency",
+  "description": "Get the user's preferred base currency.",
+  "params": [],
+  "result": {
+    "name": "CurrencyResult",
+    "schema": {
+      "type": "string"
+    }
+  }
+}
