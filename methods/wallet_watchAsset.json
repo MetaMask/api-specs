@@ -30,6 +30,8 @@
           },
           "symbol": {
             "description": " A ticker symbol or shorthand, up to 11 characters",
+            "minLength": 2,
+            "maxLength": 11,
             "type": "string"
           },
           "decimals": {
