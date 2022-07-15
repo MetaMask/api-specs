@@ -16,6 +16,32 @@
       }
     }
   ],
+  "errors": [
+    {
+      "code": -32602,
+      "message": "Expected null or array with at least one valid string HTTPS URL 'blockExplorerUrl'. Received: ${blockExplorerUrls}"
+    },
+    {
+      "code": -32602,
+      "message": "Expected 0x-prefixed, unpadded, non-zero hexadecimal string 'chainId'. Received:\n${chainId}"
+    },
+    {
+      "code": -32602,
+      "message": "Invalid chain ID \"${_chainId}\": numerical value greater than max safe value. Received:\n${chainId}"
+    },
+    {
+      "code": -32602,
+      "message": "May not specify default MetaMask chain."
+    },
+    {
+      "code": -32602,
+      "message": "Expected 2-6 character string 'nativeCurrency.symbol'. Received:\n${ticker}"
+    },
+    {
+      "code": -32602,
+      "message": "nativeCurrency.symbol does not match currency symbol for a network the user already has added with the same chainId. Received:\n${ticker}"
+    }
+  ],
   "result": {
     "name": "AddEthereumChainResult",
     "schema": {
