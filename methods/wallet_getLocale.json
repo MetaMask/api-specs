@@ -1,0 +1,17 @@
+{
+  "tags": [
+    {
+      "$ref": "../tags/Metamask.json"
+    }
+  ],
+  "name": "wallet_getLocale",
+  "summary": "Get locale",
+  "description": "Get the user's current language locale.",
+  "params": [],
+  "result": {
+    "name": "LocaleResult",
+    "schema": {
+      "type": "string"
+    }
+  }
+}
