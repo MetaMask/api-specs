@@ -10,37 +10,51 @@
   "paramStructure": "by-name",
   "params": [
     {
-      "name": "type",
-      "schema": {
-        "type": "string",
-        "description": "Only ERC20 supported. In the future, other standards will be supported",
-        "enum": [
-          "ERC20"
-        ]
-      }
-    },
-    {
       "name": "options",
       "schema": {
         "type": "object",
+        "required": ["address"],
         "properties": {
+          "type": {
+            "type": "string",
+            "description": "Only ERC20 supported. In the future, other standards will be supported",
+            "enum": [
+              "ERC20",
+              "ERC721"
+            ]
+          },
           "address": {
             "description": "The address of the token contract",
             "type": "string"
-          },
-          "symbol": {
-            "description": " A ticker symbol or shorthand, up to 11 characters",
-            "minLength": 2,
-            "maxLength": 11,
-            "type": "string"
-          },
-          "decimals": {
-            "description": "The number of token decimals",
-            "type": "number"
-          },
-          "image": {
-            "description": "A string url of the token logo",
-            "type": "string"
+          }
+        },
+        "if": {
+          "type": { "properties": { "const": "ERC20" } }
+        },
+        "then": {
+          "properties": {
+            "symbol": {
+              "description": " A ticker symbol or shorthand, up to 11 characters",
+              "minLength": 2,
+              "maxLength": 11,
+              "type": "string"
+            },
+            "decimals": {
+              "description": "The number of token decimals",
+              "type": "number"
+            },
+            "image": {
+              "description": "A string url of the token logo",
+              "type": "string"
+            }
+          }
+        },
+        "else": {
+          "properties": {
+            "tokenId": {
+              "description": "ID of the token",
+              "type": "string"
+            }
           }
         }
       }
@@ -55,7 +69,7 @@
   },
   "examples": [
     {
-      "name": "wallet_watchAssetExample",
+      "name": "wallet_watchAssetExampleERC20",
       "params": [
         {
           "name": "type",
@@ -68,6 +82,26 @@
             "symbol": "FOO",
             "decimals": 18,
             "image": "https: //foo.io/token-image.svg"
+          }
+        }
+      ],
+      "result": {
+        "name": "wallet_watchAssetExampleResult",
+        "value": true
+      }
+    },
+    {
+      "name": "wallet_watchAssetExampleERC721",
+      "params": [
+        {
+          "name": "type",
+          "value": "ERC721"
+        },
+        {
+          "name": "options",
+          "value": {
+            "address": "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
+            "tokenId": "0xb60e8dd61c5d32be8058bb8eb970870f07233155"
           }
         }
       ],
