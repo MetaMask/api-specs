@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0",
     "info": {
-        "title": "MetaMask API Reference",
+        "title": "MetaMask JSON-RPC API Reference",
         "version": "1.0.0"
     },
     "methods": [
@@ -84,6 +84,32 @@
                     }
                 }
             ],
+            "errors": [
+                {
+                    "code": -32602,
+                    "message": "Expected null or array with at least one valid string HTTPS URL 'blockExplorerUrl'. Received: ${blockExplorerUrls}"
+                },
+                {
+                    "code": -32602,
+                    "message": "Expected 0x-prefixed, unpadded, non-zero hexadecimal string 'chainId'. Received:\n${chainId}"
+                },
+                {
+                    "code": -32602,
+                    "message": "Invalid chain ID \"${_chainId}\": numerical value greater than max safe value. Received:\n${chainId}"
+                },
+                {
+                    "code": -32602,
+                    "message": "May not specify default MetaMask chain."
+                },
+                {
+                    "code": -32602,
+                    "message": "Expected 2-6 character string 'nativeCurrency.symbol'. Received:\n${ticker}"
+                },
+                {
+                    "code": -32602,
+                    "message": "nativeCurrency.symbol does not match currency symbol for a network the user already has added with the same chainId. Received:\n${ticker}"
+                }
+            ],
             "result": {
                 "name": "AddEthereumChainResult",
                 "schema": {
@@ -98,7 +124,7 @@
                             "name": "AddEthereumChainParameter",
                             "value": {
                                 "chainId": "0x64",
-                                "chainName": "xDAI Chain",
+                                "chainName": "Gnosis",
                                 "rpcUrls": [
                                     "https://rpc.gnosischain.com"
                                 ],
@@ -334,7 +360,9 @@
                                 "type": "string"
                             },
                             "symbol": {
-                                "description": " A ticker symbol or shorthand, up to 5 characters",
+                                "description": " A ticker symbol or shorthand, up to 11 characters",
+                                "minLength": 2,
+                                "maxLength": 11,
                                 "type": "string"
                             },
                             "decimals": {
