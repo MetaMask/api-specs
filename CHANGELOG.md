@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.39]
+### Uncategorized
+- Fixed chain name for addEthereumChain example ([#109](https://github.com/MetaMask/api-specs/pull/109))
+- Update metamask-openrpc.json ([#108](https://github.com/MetaMask/api-specs/pull/108))
+- Update wallet_addEthereumChain errors ([#106](https://github.com/MetaMask/api-specs/pull/106))
+- Changed wallet_watchAsset description to 11 characters ([#105](https://github.com/MetaMask/api-specs/pull/105))
+
 ## [0.0.38]
 ### Fixed
 - xdai chain pointing to dead url ([#102](https://github.com/MetaMask/api-specs/pull/102))
@@ -57,7 +64,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.0.38...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.0.39...HEAD
+[0.0.39]: https://github.com/MetaMask/api-specs/compare/v0.0.38...v0.0.39
 [0.0.38]: https://github.com/MetaMask/api-specs/compare/v0.0.37...v0.0.38
 [0.0.37]: https://github.com/MetaMask/api-specs/compare/v0.0.36...v0.0.37
 [0.0.36]: https://github.com/MetaMask/api-specs/compare/v0.0.35...v0.0.36
