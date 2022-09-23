@@ -56,7 +56,7 @@
           "name": "AddEthereumChainParameter",
           "value": {
             "chainId": "0x64",
-            "chainName": "xDAI Chain",
+            "chainName": "Gnosis",
             "rpcUrls": [
               "https://rpc.gnosischain.com"
             ],
