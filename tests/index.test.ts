@@ -3,7 +3,6 @@ import mm from '../dist/build/openrpc.json';
 
 const MetaMaskOpenRPCDocument = mm as OpenrpcDocument;
 
-// openrpc 1.0.0 => string
 
 import {parseOpenRPCDocument} from '@open-rpc/schema-utils-js'
 
