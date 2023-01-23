@@ -1,0 +1,517 @@
+{
+  "openrpc": "1.2.4",
+  "info": {
+    "title": "MetaMask API Reference",
+    "version": "1.0.0"
+  },
+  "methods": [
+    {
+      "name": "wallet_addEthereumChain",
+      "tags": [
+        {
+          "$ref": "#/components/tags/Metamask"
+        }
+      ],
+      "summary": "Add Ethereum chain to wallet",
+      "description": "Allows Ethereum applications (“dapps”) to suggest chains to be added to the user’s wallet application. The caller must specify a chain ID and some chain metadata. The wallet application may arbitrarily refuse or accept the request. `null` is returned if the chain was added, and an error otherwise. Introduced by [EIP 3085](https://eips.ethereum.org/EIPS/eip-3085).",
+      "params": [
+        {
+          "name": "AddEthereumChainParameter",
+          "description": "The AddEthereumChainParameter",
+          "schema": {
+            "$ref": "#/components/schemas/AddEthereumChainParameter"
+          }
+        }
+      ],
+      "result": {
+        "name": "AddEthereumChainResult",
+        "schema": {
+          "type": "null"
+        }
+      },
+      "examples": [
+        {
+          "name": "wallet_addEthereumChainExample",
+          "params": [
+            {
+              "name": "AddEthereumChainParameter",
+              "value": {
+                "chainId": "0x64",
+                "chainName": "xDAI Chain",
+                "rpcUrls": [
+                  "https://dai.poa.network"
+                ],
+                "iconUrls": [
+                  "https://xdaichain.com/fake/example/url/xdai.svg",
+                  "https://xdaichain.com/fake/example/url/xdai.png"
+                ],
+                "nativeCurrency": {
+                  "name": "xDAI",
+                  "symbol": "xDAI",
+                  "decimals": 18
+                },
+                "blockExplorerUrls": [
+                  "https://blockscout.com/poa/xdai/"
+                ]
+              }
+            }
+          ],
+          "result": {
+            "name": "wallet_addEthereumChainExampleResult",
+            "value": "null"
+          }
+        }
+      ]
+    },
+    {
+      "name": "wallet_switchEthereumChain",
+      "tags": [
+        {
+          "$ref": "#/components/tags/Metamask"
+        }
+      ],
+      "summary": "An RPC method for switching the wallets active Ethereum chain.",
+      "description": "Allows Ethereum applications ('dapps') to request that the wallet switches its active Ethereum chain.\n Introduced by [EIP 3326](https://ethereum-magicians.org/t/eip-3326-wallet-switchethereumchain).",
+      "params": [
+        {
+          "name": "SwitchEthereumChainParameter",
+          "description": "The SwitchEthereumChainParameter",
+          "schema": {
+            "title": "SwitchEthereumChainParameter",
+            "type": "object",
+            "required": [
+              "chainId"
+            ],
+            "properties": {
+              "chainId": {
+                "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the `eth_chainId` Ethereum RPC method.",
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "SwitchEthereumChainResult",
+        "schema": {
+          "type": "null"
+        }
+      },
+      "errors": [
+        {
+          "code": 4902,
+          "message": "Unrecognized chain ID. Try adding the chain using `wallet_addEthereumChain` first."
+        }
+      ],
+      "examples": [
+        {
+          "name": "wallet_switchEthereumChainExample",
+          "params": [
+            {
+              "name": "SwitchEthereumChainParameter",
+              "value": {
+                "chainId": "0x64"
+              }
+            }
+          ],
+          "result": {
+            "name": "wallet_switchEthereumChainExampleResult",
+            "value": "null"
+          }
+        }
+      ]
+    },
+    {
+      "name": "wallet_requestPermissions",
+      "tags": [
+        {
+          "$ref": "#/components/tags/Metamask"
+        }
+      ],
+      "summary": "Request additional permissions",
+      "description": "Request additional permissions from the user. Introduced by [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255).",
+      "params": [
+        {
+          "name": "requestPermissionsObject",
+          "required": true,
+          "schema": {
+            "title": "requestPermissionObject",
+            "type": "object",
+            "properties": {
+              "eth_accounts": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "PermissionsList",
+        "schema": {
+          "$ref": "#/components/schemas/PermissionsList"
+        }
+      },
+      "examples": [
+        {
+          "name": "requestPermissionObjectExample",
+          "description": "example for a permission request for listAccounts",
+          "params": [
+            {
+              "name": "requestPermissionObject",
+              "value": {
+                "eth_accounts": {}
+              }
+            }
+          ],
+          "result": {
+            "name": "permissionList",
+            "value": {}
+          }
+        }
+      ]
+    },
+    {
+      "tags": [
+        {
+          "$ref": "#/components/tags/Metamask"
+        }
+      ],
+      "name": "wallet_getPermissions",
+      "summary": "Get permissions",
+      "description": "Get the users permissions. Introduced by [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255).",
+      "params": [],
+      "result": {
+        "name": "PermissionsList",
+        "schema": {
+          "$ref": "#/components/schemas/PermissionsList"
+        }
+      }
+    },
+    {
+      "tags": [
+        {
+          "$ref": "#/components/tags/Metamask"
+        }
+      ],
+      "name": "wallet_registerOnboarding",
+      "summary": "Redirects the user back to your site after onboarding has completed",
+      "description": "Registers the requesting site with MetaMask as the initiator of onboarding. Returns a Promise that resolves to `true`, or rejects if there's an error. This method is intended to be called after MetaMask has been installed, but before the MetaMask onboarding has completed. You can use this method to inform MetaMask that you were the one that suggested installing MetaMask. This lets MetaMask redirect the user back to your site after onboarding as completed. Instead of calling this method directly, you should use the `@metamask/onboarding` library",
+      "params": [],
+      "result": {
+        "name": "RegisterOnboardingResult",
+        "description": "true if the request was successful, false otherwise.",
+        "schema": {
+          "type": "boolean"
+        }
+      }
+    },
+    {
+      "name": "wallet_watchAsset",
+      "tags": [
+        {
+          "$ref": "#/components/tags/Metamask"
+        }
+      ],
+      "summary": "Tracks the token in MetaMask.",
+      "description": "Requests that the user tracks the token in MetaMask. Returns a boolean indicating if the token was successfully added. Most Ethereum wallets support some set of tokens, usually from a centrally curated registry of tokens. `wallet_watchAsset` enables web3 application developers to ask their users to track tokens in their wallets, at runtime. Once added, the token is indistinguishable from those added via legacy methods, such as a centralized registry. Introduced By [EIP-747](https://eips.ethereum.org/EIPS/eip-747).",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "type",
+          "schema": {
+            "type": "string",
+            "description": "Only ERC20 supported. In the future, other standards will be supported",
+            "enum": [
+              "ERC20"
+            ]
+          }
+        },
+        {
+          "name": "options",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "description": "The address of the token contract",
+                "type": "string"
+              },
+              "symbol": {
+                "description": " A ticker symbol or shorthand, up to 5 characters",
+                "type": "string"
+              },
+              "decimals": {
+                "description": "The number of token decimals",
+                "type": "number"
+              },
+              "image": {
+                "description": "A string url of the token logo",
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "WatchAssetResult",
+        "description": "true if the token was added, false otherwise.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "name": "wallet_watchAssetExample",
+          "params": [
+            {
+              "name": "type",
+              "value": "ERC20"
+            },
+            {
+              "name": "options",
+              "value": {
+                "address": "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
+                "symbol": "FOO",
+                "decimals": 18,
+                "image": "https: //foo.io/token-image.svg"
+              }
+            }
+          ],
+          "result": {
+            "name": "wallet_watchAssetExampleResult",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "eth_decrypt",
+      "tags": [
+        {
+          "$ref": "#/components/tags/Metamask"
+        }
+      ],
+      "summary": "Decrypts the given message",
+      "description": "Requests that MetaMask decrypts the given encrypted message. The message must have been encrypted using the public encryption key of the given Ethereum address. Returns a Promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
+      "params": [
+        {
+          "name": "EncryptedMessage",
+          "required": true,
+          "description": "An Encrypted Message",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the ethereum account that can decrypt the message",
+          "schema": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      ],
+      "result": {
+        "name": "PermissionsList",
+        "schema": {
+          "$ref": "#/components/schemas/PermissionsList"
+        }
+      }
+    },
+    {
+      "tags": [
+        {
+          "$ref": "#/components/tags/Metamask"
+        }
+      ],
+      "name": "eth_getEncryptionPublicKey",
+      "summary": "Returns a public key used for encryption",
+      "description": "Requests that the user shares their public encryption key. Returns a public encryption key, or rejects if the user denied the request. The public key is computed from entropy associated with the specified user account, using the nacl implementation of the `X25519_XSalsa20_Poly1305` algorithm. ",
+      "params": [
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the ethereum account that can decrypt the message",
+          "schema": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      ],
+      "result": {
+        "name": "EncryptionKey",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "tags": [
+        {
+          "$ref": "#/components/tags/Metamask"
+        }
+      ],
+      "name": "eth_accounts",
+      "description": "Returns a list of addresses for the accounts owned",
+      "summary": "List of addresses for users accounts",
+      "params": [],
+      "result": {
+        "name": "AddressList",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      }
+    },
+    {
+      "name": "personal_sign",
+      "summary": "Presents a plain text signature challenge to the user.",
+      "description": "Presents a plain text signature challenge to the user and returns the signed response. This method is equivalent to eth_sign on some other wallets, and prepends a safe prefix to the signed message to prevent the challenge tricking users into signing a financial transaction. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` first.",
+      "deprecated": false,
+      "params": [
+        {
+          "name": "Challenge",
+          "required": true,
+          "description": "A hex-encoded UTF-8 string to present to the user. You can see how to encode a string like this in the module [browser-string-hexer](https://github.com/danfinlay/browser-string-hexer).",
+          "schema": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F\\d]+$"
+          }
+        },
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the requested signing account.",
+          "schema": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      ],
+      "result": {
+        "name": "Signature",
+        "schema": {
+          "$ref": "#/components/schemas/bytes"
+        }
+      }
+    }
+  ],
+  "components": {
+    "schemas": {
+      "AddEthereumChainParameter": {
+        "title": "AddEthereumChainParameter",
+        "type": "object",
+        "required": [
+          "chainId"
+        ],
+        "properties": {
+          "chainId": {
+            "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the eth_chainId Ethereum RPC method. The wallet SHOULD compare the specified chainId value with the eth_chainId return value from the endpoint. If these values are not identical, the wallet MUST reject the request.",
+            "type": "string"
+          },
+          "blockExplorerUrls": {
+            "description": "If provided, MUST specify one or more URLs pointing to block explorer web sites for the chain.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "chainName": {
+            "description": "If provided, MUST specify a human-readable name for the chain.",
+            "type": "string"
+          },
+          "iconUrls": {
+            "description": "If provided, MUST specify one or more URLs pointing to reasonably sized images that can be used to visually identify the chain.",
+            "type": "array",
+            "items": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          "nativeCurrency": {
+            "$ref": "#/components/schemas/NativeCurrency"
+          },
+          "rpcUrls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "NativeCurrency": {
+        "title": "NativeCurrency",
+        "type": "object",
+        "description": "If provided, MUST describe the native currency of the chain using the name, symbol, and decimals fields. ",
+        "required": [
+          "decimals",
+          "name",
+          "symbol"
+        ],
+        "properties": {
+          "decimals": {
+            "description": "Non-negative integer",
+            "min": 0,
+            "type": "integer"
+          },
+          "name": {
+            "description": "SHOULD be human-readable",
+            "type": "string"
+          },
+          "symbol": {
+            "description": "SHOULD be human-readable",
+            "type": "string"
+          }
+        }
+      },
+      "Permission": {
+        "title": "Permission",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Every capability document, except for the target, MUST have an associated id",
+            "type": "string"
+          },
+          "@context": {
+            "description": "When two people communicate with one another, the conversation takes place in a shared environment, typically called 'the context of the conversation'. This shared context allows the individuals to use shortcut terms, like the first name of a mutual friend, to communicate more quickly but without losing accuracy. A context in JSON-LD works in the same way. It allows two applications to use shortcut terms to communicate with one another more efficiently, but without losing accuracy.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "invoker": {
+            "description": "links to one or more instances of cryptographic material (such as public keys) being granted authority to use this capability",
+            "type": "string"
+          },
+          "caveats": {
+            "description": "Every capability document MAY add restrictions on the way the capability may be used by adding to the caveat property. Capabilities inherit the restrictions from all caveat properties of their parents, and MAY add new caveats in addition to those of their parents.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "value": true,
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PermissionsList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Permission"
+        }
+      }
+    },
+    "tags": {
+      "Metamask": {
+        "name": "Metamask",
+        "description": "Metamask specific methods"
+      }
+    }
+  }
+}
