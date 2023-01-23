@@ -8,13 +8,21 @@ MetaMask dapp developers lack a formal RPC specification. This attempts to docum
 
 MetaMasks effectiveness as an enterprise-grade application platform depends on its ability to provide a reliable and predictable developer experience.
 
-## To Add Methods
+## Contributing
 
-Add new methods as files to the `methods/` folder.
-
-Add those new files to the `metamask-openrpc.json` file.
+Edit the `openrpc.json` file.
 
 You can then run `yarn run build` to generate the output file again.
 
-To test the result, you can paste the resulting file from `dist/build/metamask-openrpc.json` into [the OpenRPC playground](https://playground.open-rpc.org/) and view the result.
+To test the result, you can paste the resulting file from `dist/build/openrpc.json` into [the OpenRPC playground](https://playground.open-rpc.org/) and view the result.
+
+### Build Process
+- filter out methods that are not supported/implemented by metamask
+- merge wallet methods with execution api methods
+- output to `build`
+
+
+## Deploy
+- On release uploads to npm at `@metamask/api-specs`
+- On release uploads to github pages at `https://metamask.github.io/api-specs/latest/metamask-openrpc.json`
 
