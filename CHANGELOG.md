@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0]
+### Changed
+- Removed unused files ([#115](https://github.com/MetaMask/api-specs/pull/115))
+- Changed OpenRPC Document to be one file instead of many ([#114](https://github.com/MetaMask/api-specs/pull/114))
+
 ## [0.0.39]
 ### Uncategorized
 - Fixed chain name for addEthereumChain example ([#109](https://github.com/MetaMask/api-specs/pull/109))
@@ -64,7 +69,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.0.39...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/MetaMask/api-specs/compare/v0.0.39...v0.1.0
 [0.0.39]: https://github.com/MetaMask/api-specs/compare/v0.0.38...v0.0.39
 [0.0.38]: https://github.com/MetaMask/api-specs/compare/v0.0.37...v0.0.38
 [0.0.37]: https://github.com/MetaMask/api-specs/compare/v0.0.36...v0.0.37
