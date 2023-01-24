@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.1.0]
-### Uncategorized
+### Changed
 - Removed unused files ([#115](https://github.com/MetaMask/api-specs/pull/115))
 - Changed OpenRPC Document to be one file instead of many ([#114](https://github.com/MetaMask/api-specs/pull/114))
 
