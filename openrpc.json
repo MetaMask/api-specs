@@ -6,6 +6,31 @@
   },
   "methods": [
     {
+      "name": "metamask_multiChain",
+      "tags": [
+        {
+          "$ref": "#/components/tags/Metamask"
+        }
+      ],
+      "summary": "Call a method on a chain",
+      "description": "Call a method on a chain. This method is used to call methods on chains that are not the currently active chain. This method is only available if the user has added the chain to their wallet. Introduced by [EIP-3085](https://eips.ethereum.org/EIPS/eip-3085).",
+      "params": [
+        {
+          "name": "MultiChainParameter",
+          "description": "The MultiChainParameter",
+          "schema": {
+            "$ref": "#/components/schemas/MultiChainParameter"
+          }
+        }
+      ],
+      "result": {
+        "name": "MultiChainResult",
+        "schema": {
+          "$ref": "#/components/schemas/MultiChainResult"
+        }
+      }
+    },
+    {
       "name": "wallet_addEthereumChain",
       "tags": [
         {
@@ -84,7 +109,7 @@
           ],
           "result": {
             "name": "wallet_addEthereumChainExampleResult",
-            "value": "null"
+            "value": null
           }
         }
       ]
@@ -163,6 +188,41 @@
           "schema": {
             "title": "requestPermissionObject",
             "type": "object",
+            "patternProperties": {
+              "[-a-z0-9]{3,8}:[-_a-zA-Z0-9]{1,32}": {
+                "type": "object",
+                "description": "Define a multi-chain connection via CAIP-2 chainIds",
+                "required": ["methods"],
+                "properties": {
+                  "chains": {
+                    "description": "Array of CAIP-2 chainIds",
+                    "type": "array",
+                    "items": {
+                      "pattern": "[-a-z0-9]{3,8}:[-_a-zA-Z0-9]{1,32}",
+                      "type": "string"
+                    }
+                  },
+                  "methods": {
+                    "description": "Array of method names that the chain must implement",
+                    "type": "array",
+                    "items": {
+                      "title": "method",
+                      "description": "Method name",
+                      "type": "string"
+                    }
+                  },
+                  "notifications": {
+                    "description": "Array of notifications that the chain must implement",
+                    "type": "array",
+                    "items": {
+                      "title": "notification",
+                      "description": "Notification name",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
             "properties": {
               "eth_accounts": {
                 "type": "object"
@@ -425,6 +485,34 @@
   ],
   "components": {
     "schemas": {
+      "MultiChainParameter": {
+        "title": "MultiChainParameter",
+        "type": "object",
+        "required": [
+          "chainId"
+        ],
+        "properties": {
+          "chainId": {
+            "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the eth_chainId Ethereum RPC method. The wallet SHOULD compare the specified chainId value with the eth_chainId return value from the endpoint. If these values are not identical, the wallet MUST reject the request.",
+            "type": "string"
+          },
+          "request": {
+            "description": "The request object to send to the specific chainId.",
+            "type": "object",
+            "properties": {
+              "method": {
+                "description": "The RPC method to send to the specific chainId.",
+                "type": "string"
+              },
+              "params": {
+                "description": "The RPC params to send to the specific chainId.",
+                "type": "array"
+              }
+            }
+          }
+        }
+      },
+      "MultiChainResult": true,
       "AddEthereumChainParameter": {
         "title": "AddEthereumChainParameter",
         "type": "object",
