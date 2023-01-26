@@ -245,7 +245,32 @@
               "name": "requestPermissionObject",
               "value": {
                 "eip155:2": {
-                  "methods": ["eth_accounts", "eth_sendTransaction"]
+                  "openrpcDocument": {
+                    "info": {
+                      "title": "EIP-155 Chain 2",
+                      "version": "1.0.0"
+                    },
+                    "methods": [
+                      {
+                        "name": "eth_accounts",
+                        "summary": "List accounts",
+                        "description": "Returns a list of addresses owned by the user.",
+                        "params": [],
+                        "result": {
+                          "name": "accounts",
+                          "schema": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "permissions": {
+                    "eth_accounts": {}
+                  }
                 }
               }
             }
