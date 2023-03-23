@@ -64,9 +64,7 @@
               "value": {
                 "chainId": "0x64",
                 "chainName": "Gnosis",
-                "rpcUrls": [
-                  "https://dai.poa.network"
-                ],
+                "rpcUrls": ["https://dai.poa.network"],
                 "iconUrls": [
                   "https://xdaichain.com/fake/example/url/xdai.svg",
                   "https://xdaichain.com/fake/example/url/xdai.png"
@@ -76,9 +74,7 @@
                   "symbol": "xDAI",
                   "decimals": 18
                 },
-                "blockExplorerUrls": [
-                  "https://blockscout.com/poa/xdai/"
-                ]
+                "blockExplorerUrls": ["https://blockscout.com/poa/xdai/"]
               }
             }
           ],
@@ -105,9 +101,7 @@
           "schema": {
             "title": "SwitchEthereumChainParameter",
             "type": "object",
-            "required": [
-              "chainId"
-            ],
+            "required": ["chainId"],
             "properties": {
               "chainId": {
                 "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the `eth_chainId` Ethereum RPC method.",
@@ -247,9 +241,7 @@
           "schema": {
             "type": "string",
             "description": "Only ERC20 supported. In the future, other standards will be supported",
-            "enum": [
-              "ERC20"
-            ]
+            "enum": ["ERC20"]
           }
         },
         {
@@ -392,6 +384,95 @@
       }
     },
     {
+      "name": "eth_signTypedData_v4",
+      "tags": [
+        {
+          "$ref": "#/components/tags/Metamask"
+        }
+      ],
+      "summary": "Presents a structured data message for the user to sign.",
+      "description": "Presents a data message for the user to sign in a structured and readable format and returns the signed response. Introduced By [EIP-712](https://eips.ethereum.org/EIPS/eip-712).",
+      "params": [
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the requested signing account.",
+          "schema": {
+            "$ref": "#/components/schemas/address"
+          }
+        },
+        {
+          "name": "TypedData",
+          "required": true,
+          "description": "The TypedData parameter",
+          "schema": {
+            "$ref": "#/components/schemas/TypedData"
+          }
+        }
+      ],
+      "result": {
+        "name": "Signature",
+        "schema": {
+          "$ref": "#/components/schemas/bytes"
+        }
+      },
+      "examples": [
+        {
+          "name": "eth_SignTypedData_v4Example",
+          "params": [
+            {
+              "name": "Address",
+              "value": "0x0000000000000000000000000000000000000000"
+            },
+            {
+              "name": "TypedData",
+              "value": {
+                "types": {
+                  "EIP712Domain": [
+                    { "name": "name", "type": "string" },
+                    { "name": "version", "type": "string" },
+                    { "name": "chainId", "type": "uint256" },
+                    { "name": "verifyingContract", "type": "address" }
+                  ],
+                  "Person": [
+                    { "name": "name", "type": "string" },
+                    { "name": "wallet", "type": "address" }
+                  ],
+                  "Mail": [
+                    { "name": "from", "type": "Person" },
+                    { "name": "to", "type": "Person" },
+                    { "name": "contents", "type": "string" }
+                  ]
+                },
+                "primaryType": "Mail",
+                "domain": {
+                  "name": "Ether Mail",
+                  "version": "1",
+                  "chainId": 1,
+                  "verifyingContract": "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC"
+                },
+                "message": {
+                  "from": {
+                    "name": "Cow",
+                    "wallet": "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826"
+                  },
+                  "to": {
+                    "name": "Bob",
+                    "wallet": "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB"
+                  },
+                  "contents": "Hello, Bob!"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "Signature",
+            "value": "[the signature]"
+          }
+        }
+      ]
+    },
+    {
       "name": "personal_sign",
       "summary": "Presents a plain text signature challenge to the user.",
       "description": "Presents a plain text signature challenge to the user and returns the signed response. This method is equivalent to eth_sign on some other wallets, and prepends a safe prefix to the signed message to prevent the challenge tricking users into signing a financial transaction. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` first.",
@@ -417,6 +498,7 @@
       ],
       "result": {
         "name": "Signature",
+        "description": "a hex encoded 129 byte array starting with 0x",
         "schema": {
           "$ref": "#/components/schemas/bytes"
         }
@@ -425,12 +507,44 @@
   ],
   "components": {
     "schemas": {
+      "TypedData": {
+        "title": "TypedData",
+        "type": "object",
+        "required": ["types", "primaryType", "domain", "message"],
+        "properties": {
+          "types": {
+            "type": "object",
+            "required": ["EIP712Domain"],
+            "properties": {
+              "EIP712Domain": {
+                "type": "array",
+                "description": "An array specifying one or more of the following domain separator values 1) 'name': the user readable name of signing domain, i.e. the name of the DApp or the protocol. 2) 'version': the current major version of the signing domain. 3) chainId: the EIP-155 chain id. 4) verifyingContract: the address of the contract that will verify the signature. 5) salt: a disambiguating salt for the protocol."
+              }
+            },
+            "additionalProperties": {
+              "type": "array",
+              "required": ["name", "type"],
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "type": { "type": "string" }
+                }
+              }
+            }
+          },
+          "domain": {
+            "type": "object",
+            "description": "contains the domain separator values specified in the EIP712Domain type"
+          },
+          "primaryType": { "type": "string" },
+          "message": { "type": "object" }
+        }
+      },
       "AddEthereumChainParameter": {
         "title": "AddEthereumChainParameter",
         "type": "object",
-        "required": [
-          "chainId"
-        ],
+        "required": ["chainId"],
         "properties": {
           "chainId": {
             "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the eth_chainId Ethereum RPC method. The wallet SHOULD compare the specified chainId value with the eth_chainId return value from the endpoint. If these values are not identical, the wallet MUST reject the request.",
@@ -470,11 +584,7 @@
         "title": "NativeCurrency",
         "type": "object",
         "description": "If provided, MUST describe the native currency of the chain using the name, symbol, and decimals fields. ",
-        "required": [
-          "decimals",
-          "name",
-          "symbol"
-        ],
+        "required": ["decimals", "name", "symbol"],
         "properties": {
           "decimals": {
             "description": "Non-negative integer",
