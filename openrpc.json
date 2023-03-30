@@ -200,7 +200,7 @@
         }
       ],
       "name": "wallet_getPermissions",
-      "summary": "Get the user's permissions.",
+      "summary": "Gets the user's permissions.",
       "description": "Gets the user's permissions. Introduced by [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255).",
       "params": [],
       "result": {
@@ -374,7 +374,7 @@
       ],
       "name": "eth_accounts",
       "description": "Returns a list of addresses for the accounts owned by the user.",
-      "summary": "Gets a list of addresses for user's accounts.",
+      "summary": "Gets a list of addresses for the user's accounts.",
       "params": [],
       "result": {
         "name": "AddressList",
@@ -650,15 +650,15 @@
     "tags": {
       "MetaMask": {
         "name": "MetaMask",
-        "description": "MetaMask-specific methods"
+        "description": "MetaMask-specific methods."
       },
       "Restricted": {
         "name": "Restricted",
-        "description": "Restricted methods"
+        "description": "Restricted methods. If a method is restricted, the caller must have the corresponding permission via `wallet_requestPermissions` in order to call it."
       },
       "Mobile": {
         "name": "Mobile",
-        "description": "Mobile-specific methods"
+        "description": "Mobile-specific methods."
       }
     }
   }
