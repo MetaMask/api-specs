@@ -144,9 +144,6 @@
       "tags": [
         {
           "$ref": "#/components/tags/MetaMask"
-        },
-        {
-          "$ref": "#/components/tags/Restricted"
         }
       ],
       "summary": "Requests additional permissions.",
@@ -194,9 +191,6 @@
       "tags": [
         {
           "$ref": "#/components/tags/MetaMask"
-        },
-        {
-          "$ref": "#/components/tags/Restricted"
         }
       ],
       "name": "wallet_getPermissions",
@@ -370,6 +364,9 @@
       "tags": [
         {
           "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Restricted"
         }
       ],
       "name": "eth_accounts",
