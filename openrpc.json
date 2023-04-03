@@ -6,6 +6,98 @@
   },
   "methods": [
     {
+      "name": "eth_subscribe",
+      "summary": "Subscribes to specific Ethereum events, returning a subscription ID used to receive notifications.",
+      "description": "The eth_subscribe method allows clients to subscribe to specific events on the Ethereum network, such as new blocks, new pending transactions, or changes in the state of an account. When an event occurs, a notification is sent to the client with the corresponding data. To stop receiving notifications, the client can unsubscribe using the eth_unsubscribe method.",
+      "params": [
+        {
+          "name": "subscriptionType",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "enum": ["newHeads", "logs", "newPendingTransactions", "syncing"],
+            "description": "The type of subscription to create. Must be one of:`newHeads`: new block headers - `logs`: logs matching a filter object - `newPendingTransactions`: new pending transactions - `syncing`: changes in syncing status"
+          }
+        },
+        {
+          "name": "filterOptions",
+          "type": "object",
+          "description": "An optional object containing filter options specific to the subscription type. Only applicable for 'logs' subscription type.",
+          "properties": {
+            "address": {
+              "type": "string",
+              "description": "A single address or an array of addresses to filter the logs by. Optional."
+            },
+            "topics": {
+              "type": "array",
+              "description": "An array of topics to filter the logs by. Optional."
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "subscriptionId",
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique subscription ID that can be used to unsubscribe or identify incoming notifications."
+      },
+
+      "examples": [
+        {
+          "name": "eth_subscribe example",
+          "params": [
+            {
+              "name": "subscriptionType",
+              "value": "newHeads"
+            }
+          ],
+          "result": {
+            "name": "eth_subscribeExampleResult",
+            "value": "0x1b84f2cdf29a204b79e450c1939b30c1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "eth_unsubscribe",
+      "summary": "Unsubscribes from a specific Ethereum event, using the subscription ID provided by eth_subscribe.",
+      "description": "The eth_unsubscribe method allows clients to unsubscribe from specific events on the Ethereum network, to which they have previously subscribed using the eth_subscribe method. The client needs to provide the subscription ID obtained from eth_subscribe to stop receiving notifications for the corresponding event.",
+      "params": [
+        {
+          "name": "subscriptionId",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "description": "The unique subscription ID obtained from the eth_subscribe method, used to identify the subscription to be unsubscribed."
+          }
+        }
+      ],
+      "result": {
+        "name": "unsubscribed",
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "A boolean value indicating whether the unsubscription was successful."
+      },
+
+      "examples": [
+        {
+          "name": "eth_unsubscribe example",
+          "params": [
+            {
+              "name": "subscriptionId",
+              "value": "0x1b84f2cdf29a204b79e450c1939b30c1"
+            }
+          ],
+          "result": {
+            "name": "eth_unsubscribeExampleResult",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
       "name": "wallet_addEthereumChain",
       "tags": [
         {
