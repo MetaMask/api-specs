@@ -21,16 +21,18 @@
         },
         {
           "name": "filterOptions",
-          "type": "object",
-          "description": "An optional object containing filter options specific to the subscription type. Only applicable for 'logs' subscription type.",
-          "properties": {
-            "address": {
-              "type": "string",
-              "description": "A single address or an array of addresses to filter the logs by. Optional."
-            },
-            "topics": {
-              "type": "array",
-              "description": "An array of topics to filter the logs by. Optional."
+          "schema": {
+            "type": "object",
+            "description": "An optional object containing filter options specific to the subscription type. Only applicable for 'logs' subscription type.",
+            "properties": {
+              "address": {
+                "type": "string",
+                "description": "A single address or an array of addresses to filter the logs by. Optional."
+              },
+              "topics": {
+                "type": "array",
+                "description": "An array of topics to filter the logs by. Optional."
+              }
             }
           }
         }
