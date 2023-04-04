@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0]
+### Added
+- specs for eth_subscribe and eth_unsubscribe ([#127](https://github.com/MetaMask/api-specs/pull/127))
+- add eth_signTypedData_v4 ([#123](https://github.com/MetaMask/api-specs/pull/123))
+
+### Changed
+- API docs descriptions ([#125](https://github.com/MetaMask/api-specs/pull/125))
+
 ## [0.1.0]
 ### Changed
 - Removed unused files ([#115](https://github.com/MetaMask/api-specs/pull/115))
@@ -69,7 +77,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/MetaMask/api-specs/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/MetaMask/api-specs/compare/v0.0.39...v0.1.0
 [0.0.39]: https://github.com/MetaMask/api-specs/compare/v0.0.38...v0.0.39
 [0.0.38]: https://github.com/MetaMask/api-specs/compare/v0.0.37...v0.0.38
