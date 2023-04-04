@@ -7,10 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.2.0]
-### Uncategorized
-- adds specs for eth_subscribe and eth_unsubscribe ([#127](https://github.com/MetaMask/api-specs/pull/127))
-- Edit API docs ([#125](https://github.com/MetaMask/api-specs/pull/125))
+### Added
+- specs for eth_subscribe and eth_unsubscribe ([#127](https://github.com/MetaMask/api-specs/pull/127))
 - add eth_signTypedData_v4 ([#123](https://github.com/MetaMask/api-specs/pull/123))
+
+### Changed
+- API docs descriptions ([#125](https://github.com/MetaMask/api-specs/pull/125))
 
 ## [0.1.0]
 ### Changed
