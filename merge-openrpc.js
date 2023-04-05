@@ -25,6 +25,7 @@ const unneeded = [
   /eth_signTransaction/,
   /eth_sign/,
   /debug_.*/,
+  /engine_.*/
 ];
 
 const filterExecutionAPIs = (openrpcDocument) => {
