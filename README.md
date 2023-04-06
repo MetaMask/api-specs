@@ -1,6 +1,7 @@
 # MetaMask API Specs
 
 API Playground: https://metamask.github.io/api-playground/api-documentation
+Latest build: https://metamask.github.io/api-specs/latest/openrpc.json
 
 JSON-RPC API provided by MetaMask.
 
