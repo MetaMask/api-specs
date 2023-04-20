@@ -358,6 +358,7 @@
         {
           "name": "options",
           "schema": {
+            "title": "WatchAssetOptions",
             "type": "object",
             "required": ["address"],
             "properties": {
