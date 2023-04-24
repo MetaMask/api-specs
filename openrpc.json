@@ -14,6 +14,7 @@
           "name": "subscriptionType",
           "required": true,
           "schema": {
+            "title": "subscriptionType",
             "type": "string",
             "enum": ["newHeads", "logs", "newPendingTransactions", "syncing"],
             "description": "The type of subscription to create. Must be one of:`newHeads`: new block headers - `logs`: logs matching a filter object - `newPendingTransactions`: new pending transactions - `syncing`: changes in syncing status"

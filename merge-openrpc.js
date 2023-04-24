@@ -7,7 +7,7 @@ const getFilteredExecutionAPIs = () => {
   return fetch("https://raw.githubusercontent.com/ethereum/execution-apis/assembled-spec/refs-openrpc.json")
     .then(async (res) => {
       return filterExecutionAPIs(await res.json());
-    })
+    });
 }
 
 // fetch, merge and write
