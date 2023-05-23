@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0]
+### Uncategorized
+- Update README.md ([#141](https://github.com/MetaMask/api-specs/pull/141))
+- Fixed watchAsset example image url ([#142](https://github.com/MetaMask/api-specs/pull/142))
+- fix duplicate methods in built result ([#143](https://github.com/MetaMask/api-specs/pull/143))
+- add link to latest build in readme ([#132](https://github.com/MetaMask/api-specs/pull/132))
+- update broken rpcURL for addEthereumChain ([#135](https://github.com/MetaMask/api-specs/pull/135))
+- Added a watch command to rebuild on change ([#139](https://github.com/MetaMask/api-specs/pull/139))
+- update wallet_watchAsset description to acknowledge the divergence between EIP-747 and our implementation ([#137](https://github.com/MetaMask/api-specs/pull/137))
+
 ## [0.2.1]
 ### Uncategorized
 - Update merge-openrpc.js ([#130](https://github.com/MetaMask/api-specs/pull/130))
@@ -81,7 +91,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/MetaMask/api-specs/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/MetaMask/api-specs/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/MetaMask/api-specs/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/MetaMask/api-specs/compare/v0.0.39...v0.1.0
