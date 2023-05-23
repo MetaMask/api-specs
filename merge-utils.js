@@ -1,13 +1,13 @@
 
 const dedupe = (methods1, methods2) => {
-  return methods1.reduce(
+  return methods2.reduce(
     (arr, method) => {
-      if (arr.find((m2) => m2.name === method.name) === undefined) {
+      if (arr.find((m) => m.name === method.name) === undefined) {
         arr.push(method);
       }
       return arr;
     },
-    methods2
+    methods1
   );
 };
 
@@ -15,7 +15,7 @@ const mergeOpenRPC = (first, second) => {
   return {
     openrpc: first.openrpc,
     info: first.info,
-    methods: dedupe(second.methods, first.methods),
+    methods: dedupe(first.methods, second.methods),
     components: {
       errors: {
         ...first.components.errors,
