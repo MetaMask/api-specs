@@ -385,7 +385,7 @@
                 "address": "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
                 "symbol": "FOO",
                 "decimals": 18,
-                "image": "https: //foo.io/token-image.svg"
+                "image": "https://foo.io/token-image.svg"
               }
             }
           ],
