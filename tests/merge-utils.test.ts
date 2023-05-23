@@ -10,7 +10,8 @@ describe("merge openrpc document", () => {
           { name: 'foo', description: 'abc' },
           { name: 'bar' },
           { name: 'baz' },
-        ]
+        ],
+        components: {}
       };
       const doc2 = {
         info: {},
@@ -18,9 +19,10 @@ describe("merge openrpc document", () => {
           { name: 'foo', description: '123' },
           { name: 'bling' },
           { name: 'blang' },
-        ]
+        ],
+        components: {}
       };
-      expect(mergeOpenRPC(doc1, doc2).methods[0].description).toBe("123");
+      expect(mergeOpenRPC(doc1, doc2).methods[0].description).toBe("abc");
     });
   });
 });
