@@ -23,6 +23,7 @@
         {
           "name": "filterOptions",
           "schema": {
+            "title": "filterOptions",
             "type": "object",
             "description": "An optional object containing filter options specific to the subscription type. Only applicable for 'logs' subscription type.",
             "properties": {

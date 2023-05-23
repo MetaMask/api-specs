@@ -1,7 +1,7 @@
 const MetaMaskOpenRPC = require("./openrpc.json");
 const fs = require("fs");
 const fetch = require("node-fetch");
-
+const mergeOpenRPC = require("./merge-utils");
 
 const getFilteredExecutionAPIs = () => {
   return fetch("https://raw.githubusercontent.com/ethereum/execution-apis/assembled-spec/refs-openrpc.json")
@@ -19,7 +19,7 @@ getFilteredExecutionAPIs().then((EthereumOpenRPC) => {
       4
     )
   );
-})
+});
 
 const unneeded = [
   /eth_signTransaction/,
@@ -30,49 +30,8 @@ const unneeded = [
 
 const filterExecutionAPIs = (openrpcDocument) => {
   openrpcDocument.methods = openrpcDocument.methods.filter((method) => {
-    const matches = unneeded.some((regex) => regex.test(method.name))
+    const matches = unneeded.some((regex) => regex.test(method.name));
     return !matches;
   });
   return openrpcDocument;
-}
-
-const mergeOpenRPC = (first, second) => {
-  return {
-    openrpc: first.openrpc,
-    info: first.info,
-    methods: [
-      ...first.methods,
-      ...second.methods
-    ],
-    components: {
-      errors: {
-        ...first.components.errors,
-        ...second.components.errors
-      },
-      schemas: {
-        ...first.components.schemas,
-        ...second.components.schemas
-      },
-      tags: {
-        ...first.components.tags,
-        ...second.components.tags
-      },
-      contentDescriptors: {
-        ...first.components.contentDescriptors,
-        ...second.components.contentDescriptors
-      },
-      examplePairings: {
-        ...first.components.examplePairings,
-        ...second.components.examplePairings
-      },
-      links: {
-        ...first.components.links,
-        ...second.components.links
-      },
-      examples: {
-        ...first.components.examples,
-        ...second.components.examples
-      }
-    }
-  }
 };
