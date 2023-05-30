@@ -598,6 +598,40 @@
           "$ref": "#/components/schemas/bytes"
         }
       }
+    },
+    {
+      "name": "eth_getPlumeSignature",
+      "tags": [
+        {
+          "$ref": "#/components/tags/Metamask"
+        }
+      ],
+      "summary": "Generates the plume signature and necessary proof signals.",
+      "description": "Requests that MetaMask generates the plume signature and necessary proof signals.",
+      "params": [
+        {
+          "name": "Message",
+          "required": true,
+          "description": "A message to generate ",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the requested signing account",
+          "schema": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      ],
+      "result": {
+        "name": "PlumeResult",
+        "schema": {
+          "$ref": "#/components/schemas/PlumeResponse"
+        }
+      }
     }
   ],
   "components": {
@@ -737,6 +771,35 @@
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/Permission"
+        }
+      },
+      "PlumeResponse": {
+        "type": "object",
+        "properties": {
+          "plume": {
+            "description": "The deterministic signature generated for the given message, also a public input to the proof.",
+            "$ref": "#/components/schemas/bytes"
+          },
+          "s": {
+            "description": "Private input to the proof.",
+            "$ref": "#/components/schemas/bytes"
+          },
+          "c": {
+            "description": "Private input to the proof.",
+            "$ref": "#/components/schemas/bytes"
+          },
+          "gPowR": {
+            "description": "Private input to the proof.",
+            "$ref": "#/components/schemas/bytes"
+          },
+          "hashMPKPowR": {
+            "description": "Optional private output to the proof.",
+            "$ref": "#/components/schemas/bytes"
+          },
+          "publicKey": {
+            "description": "Optional private output to the proof.",
+            "$ref": "#/components/schemas/bytes"
+          }
         }
       }
     },
