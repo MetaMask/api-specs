@@ -282,6 +282,73 @@
       ]
     },
     {
+      "name": "wallet_revokePermissions",
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        }
+      ],
+      "summary": "Revoke existing permissions.",
+      "description": "Revoke permissions from the user",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "accounts",
+          "description": "If not provided, all permissions for the specified invoker will be revoked. Alternatively, if permissions list is provided, the method will delete permissions for each of the passed IDs",
+          "required": false,
+          "schema": {
+            "title": "optionalAccountsArray",
+            "type": "array",
+            "description": "Optional list of account addresses to be revoked",
+            "items": {
+              "$ref": "#/components/schemas/address"
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "UpdatedPermissionsAfterRevoke",
+        "description": "The list of the revoked permissions objects",
+        "schema": {
+          "$ref": "#/components/schemas/PermissionsList"
+        }
+      },
+      "errors": [
+        {
+          "code": 404,
+          "message": "revoked permission was not found"
+        }
+      ],
+      "examples": [
+        {
+          "name": "wallet_revokePermissions example of revoking all permissions",
+          "params": [
+            {
+              "name": "accounts",
+              "value": ["0x71c7656ec7ab88b098defb751b7401b5f6d8976f"]
+            }
+          ],
+          "result": {
+            "name": "UpdatedPermissionsAfterRevoke",
+            "value": []
+          }
+        },
+        {
+          "name": "wallet_revokePermissions example of revoking specific account address",
+          "params": [
+            {
+              "name": "accounts",
+              "value": []
+            }
+          ],
+          "result": {
+            "name": "UpdatedPermissionsAfterRevoke",
+            "value": []
+          }
+        }
+      ]
+    },
+    {
       "tags": [
         {
           "$ref": "#/components/tags/MetaMask"
