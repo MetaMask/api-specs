@@ -1,0 +1,4 @@
+{
+  "watch": [ "./openrpc.json", "./merge-openrpc.js" ],
+  "exec": "yarn start"
+}
