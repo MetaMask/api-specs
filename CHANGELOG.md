@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1]
+### Uncategorized
+- Fixed schema to better render in the docs side + removed createAccessList ([#156](https://github.com/MetaMask/api-specs/pull/156))
+
 ## [0.3.0]
 ### Uncategorized
 - Update README.md ([#141](https://github.com/MetaMask/api-specs/pull/141))
@@ -91,7 +95,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/MetaMask/api-specs/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/MetaMask/api-specs/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/MetaMask/api-specs/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/MetaMask/api-specs/compare/v0.1.0...v0.2.0
