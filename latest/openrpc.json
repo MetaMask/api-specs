@@ -38,7 +38,10 @@
                             },
                             "topics": {
                                 "type": "array",
-                                "description": "An array of topics to filter the logs by. Optional."
+                                "description": "An array of topics to filter the logs by.",
+                                "items": {
+                                    "type": "string"
+                                }
                             }
                         }
                     }
@@ -260,9 +263,14 @@
                     "schema": {
                         "title": "requestPermissionObject",
                         "type": "object",
+                        "additionalProperties": {
+                            "type": "object",
+                            "additionalProperties": true
+                        },
                         "properties": {
                             "eth_accounts": {
-                                "type": "object"
+                                "type": "object",
+                                "additionalProperties": true
                             }
                         }
                     }
@@ -662,7 +670,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/Block"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getBlockByNumber",
@@ -689,7 +703,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/Block"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getBlockTransactionCountByHash",
@@ -707,7 +727,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/uint"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getBlockTransactionCountByNumber",
@@ -725,7 +751,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/uint"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getUncleCountByBlockHash",
@@ -743,7 +775,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/uint"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getUncleCountByBlockNumber",
@@ -761,7 +799,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/uint"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_chainId",
@@ -772,7 +816,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/uint"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_syncing",
@@ -783,7 +833,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/SyncingStatus"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_coinbase",
@@ -794,7 +850,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/address"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_blockNumber",
@@ -805,7 +867,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/uint"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_call",
@@ -831,7 +899,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/bytes"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_estimateGas",
@@ -857,48 +931,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/uint"
                 }
-            }
-        },
-        {
-            "name": "eth_createAccessList",
-            "summary": "Generates an access list for a transaction.",
-            "params": [
+            },
+            "tags": [
                 {
-                    "name": "Transaction",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/GenericTransaction"
-                    }
-                },
-                {
-                    "name": "Block",
-                    "required": false,
-                    "schema": {
-                        "$ref": "#/components/schemas/BlockNumberOrTag"
-                    }
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
                 }
-            ],
-            "result": {
-                "name": "Gas used",
-                "schema": {
-                    "title": "Access list result",
-                    "type": "object",
-                    "properties": {
-                        "accessList": {
-                            "title": "accessList",
-                            "$ref": "#/components/schemas/AccessList"
-                        },
-                        "error": {
-                            "title": "error",
-                            "type": "string"
-                        },
-                        "gasUsed": {
-                            "title": "Gas used",
-                            "$ref": "#/components/schemas/uint"
-                        }
-                    }
-                }
-            }
+            ]
         },
         {
             "name": "eth_gasPrice",
@@ -910,7 +949,13 @@
                     "title": "Gas price",
                     "$ref": "#/components/schemas/uint"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_maxPriorityFeePerGas",
@@ -922,7 +967,13 @@
                     "title": "Max priority fee per gas",
                     "$ref": "#/components/schemas/uint"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_feeHistory",
@@ -1003,7 +1054,13 @@
                         }
                     }
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_newFilter",
@@ -1021,7 +1078,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/uint"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_newBlockFilter",
@@ -1032,7 +1095,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/uint"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_newPendingTransactionFilter",
@@ -1043,7 +1112,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/uint"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_uninstallFilter",
@@ -1061,7 +1136,13 @@
                 "schema": {
                     "type": "boolean"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getFilterChanges",
@@ -1079,7 +1160,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/FilterResults"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getFilterLogs",
@@ -1097,7 +1184,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/FilterResults"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getLogs",
@@ -1115,7 +1208,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/FilterResults"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_mining",
@@ -1127,7 +1226,13 @@
                     "title": "miningStatus",
                     "type": "boolean"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_hashrate",
@@ -1139,7 +1244,13 @@
                     "title": "Hashrate",
                     "$ref": "#/components/schemas/uint"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getWork",
@@ -1164,7 +1275,13 @@
                         }
                     ]
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_submitWork",
@@ -1197,7 +1314,13 @@
                 "schema": {
                     "type": "boolean"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_submitHashrate",
@@ -1223,7 +1346,13 @@
                 "schema": {
                     "type": "boolean"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getBalance",
@@ -1249,7 +1378,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/uint"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getStorageAt",
@@ -1282,7 +1417,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/bytes"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getTransactionCount",
@@ -1308,7 +1449,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/uint"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getCode",
@@ -1334,7 +1481,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/bytes"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getProof",
@@ -1371,7 +1524,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/AccountProof"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_sendTransaction",
@@ -1390,7 +1549,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/hash32"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_sendRawTransaction",
@@ -1409,7 +1574,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/hash32"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getTransactionByHash",
@@ -1428,7 +1599,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/TransactionInfo"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getTransactionByBlockHashAndIndex",
@@ -1454,7 +1631,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/TransactionInfo"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getTransactionByBlockNumberAndIndex",
@@ -1480,7 +1663,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/TransactionInfo"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         },
         {
             "name": "eth_getTransactionReceipt",
@@ -1498,7 +1687,13 @@
                 "schema": {
                     "$ref": "#/components/schemas/ReceiptInfo"
                 }
-            }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
         }
     ],
     "components": {
