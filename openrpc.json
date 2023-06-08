@@ -290,8 +290,8 @@
           "$ref": "#/components/tags/MetaMask"
         }
       ],
-      "summary": "Revoke existing permissions.",
-      "description": "Revoke permissions from the user",
+      "summary": "Revoke wallet permissions.",
+      "description": "Revoke previously granted permissions for a specific dapp identified by origin (invoker)",
       "paramStructure": "by-name",
       "params": [
         {
