@@ -295,15 +295,28 @@
       "paramStructure": "by-name",
       "params": [
         {
-          "name": "accounts",
-          "description": "If not provided, all permissions for the specified invoker will be revoked. Alternatively, if permissions list is provided, the method will delete permissions for each of the passed IDs",
+          "name": "permission",
           "required": false,
           "schema": {
-            "title": "optionalAccountsArray",
-            "type": "array",
-            "description": "Optional list of account addresses to be revoked",
-            "items": {
-              "$ref": "#/components/schemas/address"
+            "type": "object",
+            "properties": {
+              "target": {
+                "type": "string",
+                "description": "The target name of the permission",
+                "enum": ["eth_accounts"]
+              },
+              "caveatType": {
+                "type": "string",
+                "description": "The type of the caveat to update",
+                "enum": ["restrictReturnedAccounts"]
+              },
+              "caveatValue": {
+                "type": "array",
+                "description": "The value of the caveat to be revoked from the target permission",
+                "items": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -324,25 +337,7 @@
       "examples": [
         {
           "name": "wallet_revokePermissions example of revoking all permissions",
-          "params": [
-            {
-              "name": "accounts",
-              "value": ["0x71c7656ec7ab88b098defb751b7401b5f6d8976f"]
-            }
-          ],
-          "result": {
-            "name": "UpdatedPermissionsAfterRevoke",
-            "value": []
-          }
-        },
-        {
-          "name": "wallet_revokePermissions example of revoking specific account address",
-          "params": [
-            {
-              "name": "accounts",
-              "value": []
-            }
-          ],
+          "params": [],
           "result": {
             "name": "UpdatedPermissionsAfterRevoke",
             "value": []
