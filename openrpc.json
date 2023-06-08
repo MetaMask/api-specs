@@ -33,7 +33,10 @@
               },
               "topics": {
                 "type": "array",
-                "description": "An array of topics to filter the logs by. Optional."
+                "description": "An array of topics to filter the logs by.",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -251,9 +254,14 @@
           "schema": {
             "title": "requestPermissionObject",
             "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": true
+            },
             "properties": {
               "eth_accounts": {
-                "type": "object"
+                "type": "object",
+                "additionalProperties": true
               }
             }
           }
