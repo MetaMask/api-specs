@@ -33,7 +33,7 @@
               },
               "topics": {
                 "type": "array",
-                "description": "An array of topics to filter the logs by. Optional.",
+                "description": "An array of topics to filter the logs by.",
                 "items": {
                   "type": "string"
                 }
