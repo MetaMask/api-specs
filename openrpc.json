@@ -388,6 +388,52 @@
           }
         }
       ],
+      "errors": [
+        {
+          "code": -32602,
+          "message": "Must specify address, symbol, and decimals."
+        },
+        {
+          "code": -32602,
+          "message": "Invalid symbol: not a string."
+        },
+        {
+          "code": -32602,
+          "message": "Invalid symbol '${symbol}': longer than 11 characters."
+        },
+        {
+          "code": -32602,
+          "message": "Invalid decimals '${decimals}': must be 0 <= 36."
+        },
+        {
+          "code": -32602,
+          "message": "Invalid address '${address}'."
+        },
+        {
+          "code": -32602,
+          "message": "Asset type is required"
+        },
+        {
+          "code": -32602,
+          "message": "Both address and tokenId are required"
+        },
+        {
+          "code": -32602,
+          "message": "Invalid address"
+        },
+        {
+          "code": -32000,
+          "message": "Suggested NFT is not owned by the selected account."
+        },
+        {
+          "code": -32602,
+          "message": "Expected 2-6 character string 'nativeCurrency.symbol'. Received:\n${ticker}"
+        },
+        {
+          "code": -32002,
+          "message": "Unable to verify ownership. Possibly because the standard is not supported or the user's currently selected network does not match the chain of the asset in question."
+        }
+      ],
       "result": {
         "name": "WatchAssetResult",
         "description": "`true` if the token was added, `false` otherwise.",
