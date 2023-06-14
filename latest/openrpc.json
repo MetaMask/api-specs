@@ -646,6 +646,84 @@
             }
         },
         {
+            "name": "eth_sendTransaction",
+            "description": "Creates a new wallet confirmation to make an ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
+            "summary": "Initiates a new transaction.",
+            "params": [
+                {
+                    "name": "Transaction",
+                    "required": true,
+                    "description": "The transaction object to sign and send.",
+                    "schema": {
+                        "type": "object",
+                        "title": "Transaction",
+                        "description": "The parameters to customize a transaction. If a `to` address is not provided. It will be assumed that the transaction is a contract creation transaction, and the `data` field of the transaction will be used as the contract initialization code. `gasPrice` cannot be used together with `maxPriorityFeePerGas` and `maxFeePerGas`.",
+                        "required": [
+                            "from"
+                        ],
+                        "if": {
+                            "properties": {
+                                "to": {
+                                    "not": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "then": {
+                            "required": [
+                                "data"
+                            ]
+                        },
+                        "properties": {
+                            "to": {
+                                "title": "to address",
+                                "$ref": "#/components/schemas/address"
+                            },
+                            "from": {
+                                "title": "from address",
+                                "$ref": "#/components/schemas/address"
+                            },
+                            "gas": {
+                                "title": "gas limit",
+                                "$ref": "#/components/schemas/uint"
+                            },
+                            "value": {
+                                "title": "value",
+                                "$ref": "#/components/schemas/uint"
+                            },
+                            "data": {
+                                "title": "data",
+                                "$ref": "#/components/schemas/bytes"
+                            },
+                            "gasPrice": {
+                                "title": "gas price",
+                                "description": "The gas price willing to be paid by the sender in wei. Used in pre-1559 transactions.",
+                                "$ref": "#/components/schemas/uint"
+                            },
+                            "maxPriorityFeePerGas": {
+                                "title": "max priority fee per gas",
+                                "description": "Maximum fee per gas the sender is willing to pay to miners in wei. Used in 1559 transactions.",
+                                "$ref": "#/components/schemas/uint"
+                            },
+                            "maxFeePerGas": {
+                                "title": "max fee per gas",
+                                "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei. Used in 1559 transactions.",
+                                "$ref": "#/components/schemas/uint"
+                            }
+                        }
+                    }
+                }
+            ],
+            "result": {
+                "name": "TransactionHash",
+                "description": "The transaction hash of the sent transaction.",
+                "schema": {
+                    "$ref": "#/components/schemas/bytes32"
+                }
+            }
+        },
+        {
             "name": "eth_getBlockByHash",
             "summary": "Returns information about a block by hash.",
             "params": [
@@ -1523,31 +1601,6 @@
                 "name": "Account",
                 "schema": {
                     "$ref": "#/components/schemas/AccountProof"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_sendTransaction",
-            "summary": "Signs and submits a transaction.",
-            "params": [
-                {
-                    "name": "Transaction",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/GenericTransaction"
-                    }
-                }
-            ],
-            "result": {
-                "name": "Transaction hash",
-                "schema": {
-                    "$ref": "#/components/schemas/hash32"
                 }
             },
             "tags": [
