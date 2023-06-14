@@ -647,25 +647,34 @@
     },
     {
       "name": "eth_sendTransaction",
-      "summary": "Creates new message call transaction or a contract creation for signed transactions.",
-      "description": "Creates new message call transaction or a contract creation, if the data field contains code.",
+      "description": "Creates a new wallet confirmation to make an ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
       "params": [
         {
           "name": "Transaction",
           "required": true,
-          "description": "The transaction object.",
+          "description": "The transaction object to sign and send.",
           "schema": {
             "type": "object",
-            "title": "Transaction object generic to all types",
+            "title": "Transaction",
+            "description": "The parameters to customize a transaction. If a `to` address is not provided. It will be assumed that the transaction is a contract creation transaction, and the `data` field of the transaction will be used as the contract initialization code. `gasPrice` cannot be used together with `maxPriorityFeePerGas` and `maxFeePerGas`.",
+            "required": [
+              "from"
+            ],
+            "if": {
+              "properties": {
+                "to": {
+                  "not": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "data"
+              ]
+            },
             "properties": {
-              "type": {
-                "title": "type",
-                "$ref": "#/components/schemas/byte"
-              },
-              "nonce": {
-                "title": "nonce",
-                "$ref": "#/components/schemas/uint"
-              },
               "to": {
                 "title": "to address",
                 "$ref": "#/components/schemas/address"
@@ -688,17 +697,17 @@
               },
               "gasPrice": {
                 "title": "gas price",
-                "description": "The gas price willing to be paid by the sender in wei",
+                "description": "The gas price willing to be paid by the sender in wei. Used in pre-1559 transactions.",
                 "$ref": "#/components/schemas/uint"
               },
               "maxPriorityFeePerGas": {
                 "title": "max priority fee per gas",
-                "description": "Maximum fee per gas the sender is willing to pay to miners in wei",
+                "description": "Maximum fee per gas the sender is willing to pay to miners in wei. Used in 1559 transactions.",
                 "$ref": "#/components/schemas/uint"
               },
               "maxFeePerGas": {
                 "title": "max fee per gas",
-                "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei",
+                "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei. Used in 1559 transactions.",
                 "$ref": "#/components/schemas/uint"
               }
             }
@@ -707,7 +716,7 @@
       ],
       "result": {
         "name": "TransactionHash",
-        "description": "The transaction hash",
+        "description": "The transaction hash of the sent transaction.",
         "schema": {
           "$ref": "#/components/schemas/bytes32"
         }
