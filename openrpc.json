@@ -648,6 +648,7 @@
     {
       "name": "eth_sendTransaction",
       "description": "Creates a new wallet confirmation to make an ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
+      "summary": "Initiates a new transaction.",
       "params": [
         {
           "name": "Transaction",
