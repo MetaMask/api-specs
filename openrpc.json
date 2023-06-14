@@ -16,7 +16,12 @@
           "schema": {
             "title": "subscriptionType",
             "type": "string",
-            "enum": ["newHeads", "logs", "newPendingTransactions", "syncing"],
+            "enum": [
+              "newHeads",
+              "logs",
+              "newPendingTransactions",
+              "syncing"
+            ],
             "description": "The type of subscription to create. Must be one of:`newHeads`: new block headers - `logs`: logs matching a filter object - `newPendingTransactions`: new pending transactions - `syncing`: changes in syncing status"
           }
         },
@@ -49,7 +54,6 @@
         },
         "description": "A unique subscription ID that can be used to unsubscribe or identify incoming notifications."
       },
-
       "examples": [
         {
           "name": "eth_subscribe example",
@@ -87,7 +91,6 @@
         },
         "description": "A boolean value indicating whether the unsubscription was successful."
       },
-
       "examples": [
         {
           "name": "eth_unsubscribe example",
@@ -162,7 +165,9 @@
               "value": {
                 "chainId": "0x64",
                 "chainName": "Gnosis",
-                "rpcUrls": ["https://rpc.ankr.com/gnosis"],
+                "rpcUrls": [
+                  "https://rpc.ankr.com/gnosis"
+                ],
                 "iconUrls": [
                   "https://xdaichain.com/fake/example/url/xdai.svg",
                   "https://xdaichain.com/fake/example/url/xdai.png"
@@ -172,7 +177,9 @@
                   "symbol": "xDAI",
                   "decimals": 18
                 },
-                "blockExplorerUrls": ["https://blockscout.com/poa/xdai/"]
+                "blockExplorerUrls": [
+                  "https://blockscout.com/poa/xdai/"
+                ]
               }
             }
           ],
@@ -198,7 +205,9 @@
           "schema": {
             "title": "SwitchEthereumChainParameter",
             "type": "object",
-            "required": ["chainId"],
+            "required": [
+              "chainId"
+            ],
             "properties": {
               "chainId": {
                 "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the eth_chainId Ethereum RPC method.",
@@ -342,7 +351,9 @@
           "schema": {
             "type": "string",
             "description": "Currently only supports ERC-20 tokens.",
-            "enum": ["ERC20"]
+            "enum": [
+              "ERC20"
+            ]
           }
         },
         {
@@ -532,19 +543,46 @@
               "value": {
                 "types": {
                   "EIP712Domain": [
-                    { "name": "name", "type": "string" },
-                    { "name": "version", "type": "string" },
-                    { "name": "chainId", "type": "uint256" },
-                    { "name": "verifyingContract", "type": "address" }
+                    {
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "name": "version",
+                      "type": "string"
+                    },
+                    {
+                      "name": "chainId",
+                      "type": "uint256"
+                    },
+                    {
+                      "name": "verifyingContract",
+                      "type": "address"
+                    }
                   ],
                   "Person": [
-                    { "name": "name", "type": "string" },
-                    { "name": "wallet", "type": "address" }
+                    {
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "name": "wallet",
+                      "type": "address"
+                    }
                   ],
                   "Mail": [
-                    { "name": "from", "type": "Person" },
-                    { "name": "to", "type": "Person" },
-                    { "name": "contents", "type": "string" }
+                    {
+                      "name": "from",
+                      "type": "Person"
+                    },
+                    {
+                      "name": "to",
+                      "type": "Person"
+                    },
+                    {
+                      "name": "contents",
+                      "type": "string"
+                    }
                   ]
                 },
                 "primaryType": "Mail",
@@ -606,6 +644,84 @@
           "$ref": "#/components/schemas/bytes"
         }
       }
+    },
+    {
+      "name": "eth_sendTransaction",
+      "description": "Creates a new wallet confirmation to make an ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
+      "summary": "Initiates a new transaction.",
+      "params": [
+        {
+          "name": "Transaction",
+          "required": true,
+          "description": "The transaction object to sign and send.",
+          "schema": {
+            "type": "object",
+            "title": "Transaction",
+            "description": "The parameters to customize a transaction. If a `to` address is not provided. It will be assumed that the transaction is a contract creation transaction, and the `data` field of the transaction will be used as the contract initialization code. `gasPrice` cannot be used together with `maxPriorityFeePerGas` and `maxFeePerGas`.",
+            "required": [
+              "from"
+            ],
+            "if": {
+              "properties": {
+                "to": {
+                  "not": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "data"
+              ]
+            },
+            "properties": {
+              "to": {
+                "title": "to address",
+                "$ref": "#/components/schemas/address"
+              },
+              "from": {
+                "title": "from address",
+                "$ref": "#/components/schemas/address"
+              },
+              "gas": {
+                "title": "gas limit",
+                "$ref": "#/components/schemas/uint"
+              },
+              "value": {
+                "title": "value",
+                "$ref": "#/components/schemas/uint"
+              },
+              "data": {
+                "title": "data",
+                "$ref": "#/components/schemas/bytes"
+              },
+              "gasPrice": {
+                "title": "gas price",
+                "description": "The gas price willing to be paid by the sender in wei. Used in pre-1559 transactions.",
+                "$ref": "#/components/schemas/uint"
+              },
+              "maxPriorityFeePerGas": {
+                "title": "max priority fee per gas",
+                "description": "Maximum fee per gas the sender is willing to pay to miners in wei. Used in 1559 transactions.",
+                "$ref": "#/components/schemas/uint"
+              },
+              "maxFeePerGas": {
+                "title": "max fee per gas",
+                "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei. Used in 1559 transactions.",
+                "$ref": "#/components/schemas/uint"
+              }
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "TransactionHash",
+        "description": "The transaction hash of the sent transaction.",
+        "schema": {
+          "$ref": "#/components/schemas/bytes32"
+        }
+      }
     }
   ],
   "components": {
@@ -613,11 +729,18 @@
       "TypedData": {
         "title": "TypedData",
         "type": "object",
-        "required": ["types", "primaryType", "domain", "message"],
+        "required": [
+          "types",
+          "primaryType",
+          "domain",
+          "message"
+        ],
         "properties": {
           "types": {
             "type": "object",
-            "required": ["EIP712Domain"],
+            "required": [
+              "EIP712Domain"
+            ],
             "properties": {
               "EIP712Domain": {
                 "type": "array",
@@ -626,12 +749,19 @@
             },
             "additionalProperties": {
               "type": "array",
-              "required": ["name", "type"],
+              "required": [
+                "name",
+                "type"
+              ],
               "items": {
                 "type": "object",
                 "properties": {
-                  "name": { "type": "string" },
-                  "type": { "type": "string" }
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -640,14 +770,20 @@
             "type": "object",
             "description": "Contains the domain separator values specified in the EIP712Domain type."
           },
-          "primaryType": { "type": "string" },
-          "message": { "type": "object" }
+          "primaryType": {
+            "type": "string"
+          },
+          "message": {
+            "type": "object"
+          }
         }
       },
       "AddEthereumChainParameter": {
         "title": "AddEthereumChainParameter",
         "type": "object",
-        "required": ["chainId"],
+        "required": [
+          "chainId"
+        ],
         "properties": {
           "chainId": {
             "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the eth_chainId Ethereum RPC method. The wallet SHOULD compare the specified chain ID value with the eth_chainId return value from the endpoint. If these values aren't identical, the wallet MUST reject the request.",
@@ -687,7 +823,11 @@
         "title": "NativeCurrency",
         "type": "object",
         "description": "If provided, MUST describe the native currency of the chain using the name, symbol, and decimals fields.",
-        "required": ["decimals", "name", "symbol"],
+        "required": [
+          "decimals",
+          "name",
+          "symbol"
+        ],
         "properties": {
           "decimals": {
             "description": "A non-negative integer.",
