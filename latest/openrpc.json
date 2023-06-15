@@ -1896,11 +1896,18 @@
                             "type": "object",
                             "properties": {
                                 "type": {
-                                    "type": "string"
+                                    "title": "Type",
+                                    "type": "string",
+                                    "description": "Type of caveat."
                                 },
-                                "value": true,
+                                "value": {
+                                    "title": "CaveatValue",
+                                    "description": "Value of the caveat."
+                                },
                                 "name": {
-                                    "type": "string"
+                                    "title": "Name",
+                                    "type": "string",
+                                    "description": "Name of the caveat."
                                 }
                             }
                         }
