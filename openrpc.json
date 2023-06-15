@@ -870,6 +870,7 @@
               "type": "object",
               "properties": {
                 "type": {
+                  "title": "Type",
                   "type": "string",
                   "description": "Type of caveat."
                 },
@@ -878,6 +879,7 @@
                   "description": "Value of the caveat."
                 },
                 "name": {
+                  "title": "Name",
                   "type": "string",
                   "description": "Name of the caveat."
                 }
