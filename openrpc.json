@@ -343,40 +343,44 @@
         }
       ],
       "summary": "Tracks a token in MetaMask.",
-      "description": "Requests that the user track the specified token in MetaMask. Returns a boolean indicating if the token was successfully added. Once added, the token is indistinguishable from those added using legacy methods, such as a centralized registry. Originally introduced by [EIP-747](https://eips.ethereum.org/EIPS/eip-747), however the current specification for EIP-747 has diverged from the implementation in MetaMask. The implementation in MetaMask, described below, matches the version of EIP-747 found here: https://github.com/ethereum/EIPs/blob/36102e0c82630e2654fd019f54914330d1c37f74/EIPS/eip-747.md",
+      "description": "Requests that the user track the specified token in MetaMask. Returns a boolean indicating if the token was successfully added. Once added, the token is indistinguishable from those added using legacy methods, such as a centralized registry. Introduced by [EIP-747](https://eips.ethereum.org/EIPS/eip-747).",
       "paramStructure": "by-name",
       "params": [
         {
           "name": "type",
           "schema": {
             "type": "string",
-            "description": "Currently only supports ERC-20 tokens.",
-            "enum": [
-              "ERC20"
-            ]
-          }
+            "description": "Supports ERC-20, ERC-721, and ERC-1155 tokens.",
+            "enum": ["ERC20", "ERC721", "ERC1155"]
+          },
+          "required": true
         },
         {
           "name": "options",
           "schema": {
             "type": "object",
+            "required": ["address"],
             "properties": {
               "address": {
                 "description": "The address of the token contract.",
                 "type": "string"
               },
               "symbol": {
-                "description": "A ticker symbol or shorthand, up to 11 characters.",
+                "description": "A ticker symbol or shorthand, up to 11 characters (optional for ERC-20 tokens).",
                 "minLength": 2,
                 "maxLength": 11,
                 "type": "string"
               },
               "decimals": {
-                "description": "The number of token decimals.",
+                "description": "The number of token decimals (optional for ERC-20 tokens).",
                 "type": "number"
               },
               "image": {
-                "description": "A string URL of the token logo.",
+                "description": "A string URL of the token logo (optional for ERC-20 tokens).",
+                "type": "string"
+              },
+              "tokenId": {
+                "description": "The unique identifier of the NFT (required for ERC-721 and ERC-1155 tokens).",
                 "type": "string"
               }
             }
@@ -392,7 +396,7 @@
       },
       "examples": [
         {
-          "name": "wallet_watchAsset example",
+          "name": "wallet_watchAsset_ERC20_example",
           "params": [
             {
               "name": "type",
@@ -410,6 +414,46 @@
           ],
           "result": {
             "name": "wallet_watchAssetExampleResult",
+            "value": true
+          }
+        },
+        {
+          "name": "wallet_watchAsset_ERC721_example",
+          "params": [
+            {
+              "name": "type",
+              "value": "ERC721"
+            },
+            {
+              "name": "options",
+              "value": {
+                "address": "0x123456789abcdef0123456789abcdef01234567",
+                "tokenId": "42"
+              }
+            }
+          ],
+          "result": {
+            "name": "wallet_watchAssetERC721ExampleResult",
+            "value": true
+          }
+        },
+        {
+          "name": "wallet_watchAsset_ERC1155_example",
+          "params": [
+            {
+              "name": "type",
+              "value": "ERC1155"
+            },
+            {
+              "name": "options",
+              "value": {
+                "address": "0xabcdef0123456789abcdef0123456789abcdef01",
+                "tokenId": "1337"
+              }
+            }
+          ],
+          "result": {
+            "name": "wallet_watchAssetERC1155ExampleResult",
             "value": true
           }
         }
