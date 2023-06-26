@@ -343,14 +343,14 @@
         }
       ],
       "summary": "Tracks a token in MetaMask.",
-      "description": "Requests that the user track the specified token in MetaMask. Returns a boolean indicating if the token was successfully added. Once added, the token is indistinguishable from those added using legacy methods, such as a centralized registry. Introduced by [EIP-747](https://eips.ethereum.org/EIPS/eip-747).",
+      "description": "Requests that the user track the specified token in MetaMask. Returns a boolean indicating if the token was successfully added. Once added, the token is indistinguishable from those added using legacy methods, such as a centralized registry. Introduced by [EIP-747](https://eips.ethereum.org/EIPS/eip-747). Currently support for ERC721 and ERC1155 tokens is limited to the extension (not on mobile) and is considered experimental. See [MIP-1](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-1.md) and [MIP proposal lifecycle](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/PROCESS-GUIDE.md#proposal-lifecycle) for more information.",
       "paramStructure": "by-name",
       "params": [
         {
           "name": "type",
           "schema": {
             "type": "string",
-            "description": "Supports ERC-20, ERC-721, and ERC-1155 tokens.",
+            "description": "Supports ERC-20, ERC-721, and ERC-1155 tokens. Currently support for ERC721 and ERC1155 tokens is limited to the extension (not on mobile) and is considered experimental. See [MIP-1](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-1.md) and [MIP proposal lifecycle](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/PROCESS-GUIDE.md#proposal-lifecycle) for more information.",
             "enum": ["ERC20", "ERC721", "ERC1155"]
           },
           "required": true
