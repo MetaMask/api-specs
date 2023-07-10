@@ -426,6 +426,10 @@
           "message": "Suggested NFT is not owned by the selected account."
         },
         {
+          "code": -32000,
+          "message": "Suggested NFT of type ${standard} does not match received type ${type}"
+        },
+        {
           "code": -32002,
           "message": "Unable to verify ownership. Possibly because the standard is not supported or the user's currently selected network does not match the chain of the asset in question."
         }
