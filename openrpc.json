@@ -298,6 +298,11 @@
             "value": {}
           }
         }
+      ],
+      "errors": [
+        {
+          "$ref": "#/components/errors/UserRejected"
+        }
       ]
     },
     {
