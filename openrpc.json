@@ -566,6 +566,31 @@
       "tags": [
         {
           "$ref": "#/components/tags/MetaMask"
+        }
+      ],
+      "name": "eth_requestAccounts",
+      "description": "Requests that the user provide an Ethereum address to be identified by. This method is specified by [EIP-1102](https://eips.ethereum.org/EIPS/eip-1102). Internally, this method calls `wallet_requestPermissions` for permission to call `eth_accounts`.",
+      "summary": "Requests that the user provide an Ethereum address.",
+      "params": [],
+      "result": {
+        "name": "AddressList",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/UserRejected"
+        }
+      ]
+    },
+    {
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
         },
         {
           "$ref": "#/components/tags/Restricted"
@@ -994,6 +1019,12 @@
       "Mobile": {
         "name": "Mobile",
         "description": "Mobile-specific methods."
+      }
+    },
+    "errors": {
+      "UserRejected": {
+        "code": 4001,
+        "message": "User rejected the request."
       }
     }
   }
