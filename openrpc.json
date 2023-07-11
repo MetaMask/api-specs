@@ -285,9 +285,13 @@
     },
     {
       "name": "wallet_revokePermissions",
+      "x-experimental": true,
       "tags": [
         {
           "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Experimental"
         }
       ],
       "summary": "Revoke wallet permissions.",
@@ -300,23 +304,38 @@
           "schema": {
             "type": "object",
             "properties": {
+              "id": {
+                "type": "string",
+                "description": "The id of the permission to be revoked"
+              },
               "target": {
                 "type": "string",
-                "description": "The target name of the permission",
-                "enum": ["eth_accounts"]
+                "description": "The target name of the permission, also referred to as parentCapability",
+                "examples": [
+                  "eth_accounts",
+                  "wallet_snap",
+                  "snap_dialog",
+                  "snap_notify",
+                  "snap_manageState"
+                ]
               },
               "caveatType": {
                 "type": "string",
                 "description": "The type of the caveat to update",
-                "enum": ["restrictReturnedAccounts"]
+                "examples": ["restrictReturnedAccounts"]
               },
               "caveatValue": {
                 "type": "array",
                 "description": "The value of the caveat to be revoked from the target permission",
+                "examples": ["0x71C7656EC7ab88b098defB751B7401B5f6d8976F"],
                 "items": {
                   "type": "string"
                 }
               }
+            },
+            "dependencies": {
+              "target": ["caveatType"],
+              "caveatType": ["target", "caveatValue"]
             }
           }
         }
@@ -814,6 +833,10 @@
       "Mobile": {
         "name": "Mobile",
         "description": "Mobile-specific methods."
+      },
+      "Experimental": {
+        "name": "Experimental",
+        "description": "Experimental methods."
       }
     }
   }
