@@ -12,6 +12,17 @@ const getFilteredExecutionAPIs = () => {
 
 // fetch, merge and write
 getFilteredExecutionAPIs().then((EthereumOpenRPC) => {
+  EthereumOpenRPC.methods.forEach((method) => {
+    const tag = {
+      name: "Ethereum API",
+      description: "Ethereum Node JSON-RPC method",
+    };
+    if (method.tags) {
+      method.tags.push(tag);
+    } else {
+      method.tags = [tag];
+    }
+  });
   fs.writeFileSync(__dirname + "/src/build/openrpc.json",
     JSON.stringify(
       mergeOpenRPC(MetaMaskOpenRPC, EthereumOpenRPC),
@@ -25,7 +36,8 @@ const unneeded = [
   /eth_signTransaction/,
   /eth_sign/,
   /debug_.*/,
-  /engine_.*/
+  /engine_.*/,
+  /eth_createAccessList/
 ];
 
 const filterExecutionAPIs = (openrpcDocument) => {

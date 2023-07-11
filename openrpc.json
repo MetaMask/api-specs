@@ -16,7 +16,12 @@
           "schema": {
             "title": "subscriptionType",
             "type": "string",
-            "enum": ["newHeads", "logs", "newPendingTransactions", "syncing"],
+            "enum": [
+              "newHeads",
+              "logs",
+              "newPendingTransactions",
+              "syncing"
+            ],
             "description": "The type of subscription to create. Must be one of:`newHeads`: new block headers - `logs`: logs matching a filter object - `newPendingTransactions`: new pending transactions - `syncing`: changes in syncing status"
           }
         },
@@ -33,7 +38,10 @@
               },
               "topics": {
                 "type": "array",
-                "description": "An array of topics to filter the logs by. Optional."
+                "description": "An array of topics to filter the logs by.",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -46,7 +54,6 @@
         },
         "description": "A unique subscription ID that can be used to unsubscribe or identify incoming notifications."
       },
-
       "examples": [
         {
           "name": "eth_subscribe example",
@@ -84,7 +91,6 @@
         },
         "description": "A boolean value indicating whether the unsubscription was successful."
       },
-
       "examples": [
         {
           "name": "eth_unsubscribe example",
@@ -159,7 +165,9 @@
               "value": {
                 "chainId": "0x64",
                 "chainName": "Gnosis",
-                "rpcUrls": ["https://rpc.ankr.com/gnosis"],
+                "rpcUrls": [
+                  "https://rpc.ankr.com/gnosis"
+                ],
                 "iconUrls": [
                   "https://xdaichain.com/fake/example/url/xdai.svg",
                   "https://xdaichain.com/fake/example/url/xdai.png"
@@ -169,7 +177,9 @@
                   "symbol": "xDAI",
                   "decimals": 18
                 },
-                "blockExplorerUrls": ["https://blockscout.com/poa/xdai/"]
+                "blockExplorerUrls": [
+                  "https://blockscout.com/poa/xdai/"
+                ]
               }
             }
           ],
@@ -195,7 +205,9 @@
           "schema": {
             "title": "SwitchEthereumChainParameter",
             "type": "object",
-            "required": ["chainId"],
+            "required": [
+              "chainId"
+            ],
             "properties": {
               "chainId": {
                 "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the eth_chainId Ethereum RPC method.",
@@ -251,9 +263,14 @@
           "schema": {
             "title": "requestPermissionObject",
             "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": true
+            },
             "properties": {
               "eth_accounts": {
-                "type": "object"
+                "type": "object",
+                "additionalProperties": true
               }
             }
           }
@@ -407,42 +424,95 @@
         }
       ],
       "summary": "Tracks a token in MetaMask.",
-      "description": "Requests that the user track the specified token in MetaMask. Returns a boolean indicating if the token was successfully added. Once added, the token is indistinguishable from those added using legacy methods, such as a centralized registry. Originally introduced by [EIP-747](https://eips.ethereum.org/EIPS/eip-747), however the current specification for EIP-747 has diverged from the implementation in MetaMask. The implementation in MetaMask, described below, matches the version of EIP-747 found here: https://github.com/ethereum/EIPs/blob/36102e0c82630e2654fd019f54914330d1c37f74/EIPS/eip-747.md",
+      "description": "Requests that the user track the specified token in MetaMask. Returns a boolean indicating if the token was successfully added. Once added, the token is indistinguishable from those added using legacy methods, such as a centralized registry. Introduced by [EIP-747](https://eips.ethereum.org/EIPS/eip-747). Currently support for ERC721 and ERC1155 tokens is limited to the extension (not on mobile) and is considered experimental. See [MIP-1](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-1.md) and [MIP proposal lifecycle](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/PROCESS-GUIDE.md#proposal-lifecycle) for more information.",
       "paramStructure": "by-name",
       "params": [
         {
           "name": "type",
           "schema": {
             "type": "string",
-            "description": "Currently only supports ERC-20 tokens.",
-            "enum": ["ERC20"]
-          }
+            "description": "Supports ERC-20, ERC-721, and ERC-1155 tokens. Currently support for ERC721 and ERC1155 tokens is limited to the extension (not on mobile) and is considered experimental. See [MIP-1](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-1.md) and [MIP proposal lifecycle](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/PROCESS-GUIDE.md#proposal-lifecycle) for more information.",
+            "enum": ["ERC20", "ERC721", "ERC1155"]
+          },
+          "required": true
         },
         {
           "name": "options",
           "schema": {
+            "title": "WatchAssetOptions",
             "type": "object",
+            "required": ["address"],
             "properties": {
               "address": {
                 "description": "The address of the token contract.",
                 "type": "string"
               },
               "symbol": {
-                "description": "A ticker symbol or shorthand, up to 11 characters.",
+                "description": "A ticker symbol or shorthand, up to 11 characters (optional for ERC-20 tokens).",
                 "minLength": 2,
                 "maxLength": 11,
                 "type": "string"
               },
               "decimals": {
-                "description": "The number of token decimals.",
+                "description": "The number of token decimals (optional for ERC-20 tokens).",
                 "type": "number"
               },
               "image": {
-                "description": "A string URL of the token logo.",
+                "description": "A string URL of the token logo (optional for ERC-20 tokens).",
+                "type": "string"
+              },
+              "tokenId": {
+                "description": "The unique identifier of the NFT (required for ERC-721 and ERC-1155 tokens).",
                 "type": "string"
               }
             }
           }
+        }
+      ],
+      "errors": [
+        {
+          "code": -32602,
+          "message": "Must specify address, symbol, and decimals."
+        },
+        {
+          "code": -32602,
+          "message": "Invalid symbol: not a string."
+        },
+        {
+          "code": -32602,
+          "message": "Invalid symbol '${symbol}': longer than 11 characters."
+        },
+        {
+          "code": -32602,
+          "message": "Invalid decimals '${decimals}': must be 0 <= 36."
+        },
+        {
+          "code": -32602,
+          "message": "Invalid address '${address}'."
+        },
+        {
+          "code": -32602,
+          "message": "Asset type is required"
+        },
+        {
+          "code": -32602,
+          "message": "Both address and tokenId are required"
+        },
+        {
+          "code": -32602,
+          "message": "Invalid address"
+        },
+        {
+          "code": -32000,
+          "message": "Suggested NFT is not owned by the selected account."
+        },
+        {
+          "code": -32000,
+          "message": "Suggested NFT of type ${standard} does not match received type ${type}"
+        },
+        {
+          "code": -32002,
+          "message": "Unable to verify ownership. Possibly because the standard is not supported or the user's currently selected network does not match the chain of the asset in question."
         }
       ],
       "result": {
@@ -454,7 +524,7 @@
       },
       "examples": [
         {
-          "name": "wallet_watchAsset example",
+          "name": "wallet_watchAsset_ERC20_example",
           "params": [
             {
               "name": "type",
@@ -472,6 +542,46 @@
           ],
           "result": {
             "name": "wallet_watchAssetExampleResult",
+            "value": true
+          }
+        },
+        {
+          "name": "wallet_watchAsset_ERC721_example",
+          "params": [
+            {
+              "name": "type",
+              "value": "ERC721"
+            },
+            {
+              "name": "options",
+              "value": {
+                "address": "0x123456789abcdef0123456789abcdef01234567",
+                "tokenId": "42"
+              }
+            }
+          ],
+          "result": {
+            "name": "wallet_watchAssetERC721ExampleResult",
+            "value": true
+          }
+        },
+        {
+          "name": "wallet_watchAsset_ERC1155_example",
+          "params": [
+            {
+              "name": "type",
+              "value": "ERC1155"
+            },
+            {
+              "name": "options",
+              "value": {
+                "address": "0xabcdef0123456789abcdef0123456789abcdef01",
+                "tokenId": "1337"
+              }
+            }
+          ],
+          "result": {
+            "name": "wallet_watchAssetERC1155ExampleResult",
             "value": true
           }
         }
@@ -605,19 +715,46 @@
               "value": {
                 "types": {
                   "EIP712Domain": [
-                    { "name": "name", "type": "string" },
-                    { "name": "version", "type": "string" },
-                    { "name": "chainId", "type": "uint256" },
-                    { "name": "verifyingContract", "type": "address" }
+                    {
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "name": "version",
+                      "type": "string"
+                    },
+                    {
+                      "name": "chainId",
+                      "type": "uint256"
+                    },
+                    {
+                      "name": "verifyingContract",
+                      "type": "address"
+                    }
                   ],
                   "Person": [
-                    { "name": "name", "type": "string" },
-                    { "name": "wallet", "type": "address" }
+                    {
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "name": "wallet",
+                      "type": "address"
+                    }
                   ],
                   "Mail": [
-                    { "name": "from", "type": "Person" },
-                    { "name": "to", "type": "Person" },
-                    { "name": "contents", "type": "string" }
+                    {
+                      "name": "from",
+                      "type": "Person"
+                    },
+                    {
+                      "name": "to",
+                      "type": "Person"
+                    },
+                    {
+                      "name": "contents",
+                      "type": "string"
+                    }
                   ]
                 },
                 "primaryType": "Mail",
@@ -679,6 +816,84 @@
           "$ref": "#/components/schemas/bytes"
         }
       }
+    },
+    {
+      "name": "eth_sendTransaction",
+      "description": "Creates a new wallet confirmation to make an ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
+      "summary": "Initiates a new transaction.",
+      "params": [
+        {
+          "name": "Transaction",
+          "required": true,
+          "description": "The transaction object to sign and send.",
+          "schema": {
+            "type": "object",
+            "title": "Transaction",
+            "description": "The parameters to customize a transaction. If a `to` address is not provided. It will be assumed that the transaction is a contract creation transaction, and the `data` field of the transaction will be used as the contract initialization code. `gasPrice` cannot be used together with `maxPriorityFeePerGas` and `maxFeePerGas`.",
+            "required": [
+              "from"
+            ],
+            "if": {
+              "properties": {
+                "to": {
+                  "not": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "data"
+              ]
+            },
+            "properties": {
+              "to": {
+                "title": "to address",
+                "$ref": "#/components/schemas/address"
+              },
+              "from": {
+                "title": "from address",
+                "$ref": "#/components/schemas/address"
+              },
+              "gas": {
+                "title": "gas limit",
+                "$ref": "#/components/schemas/uint"
+              },
+              "value": {
+                "title": "value",
+                "$ref": "#/components/schemas/uint"
+              },
+              "data": {
+                "title": "data",
+                "$ref": "#/components/schemas/bytes"
+              },
+              "gasPrice": {
+                "title": "gas price",
+                "description": "The gas price willing to be paid by the sender in wei. Used in pre-1559 transactions.",
+                "$ref": "#/components/schemas/uint"
+              },
+              "maxPriorityFeePerGas": {
+                "title": "max priority fee per gas",
+                "description": "Maximum fee per gas the sender is willing to pay to miners in wei. Used in 1559 transactions.",
+                "$ref": "#/components/schemas/uint"
+              },
+              "maxFeePerGas": {
+                "title": "max fee per gas",
+                "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei. Used in 1559 transactions.",
+                "$ref": "#/components/schemas/uint"
+              }
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "TransactionHash",
+        "description": "The transaction hash of the sent transaction.",
+        "schema": {
+          "$ref": "#/components/schemas/bytes32"
+        }
+      }
     }
   ],
   "components": {
@@ -686,11 +901,18 @@
       "TypedData": {
         "title": "TypedData",
         "type": "object",
-        "required": ["types", "primaryType", "domain", "message"],
+        "required": [
+          "types",
+          "primaryType",
+          "domain",
+          "message"
+        ],
         "properties": {
           "types": {
             "type": "object",
-            "required": ["EIP712Domain"],
+            "required": [
+              "EIP712Domain"
+            ],
             "properties": {
               "EIP712Domain": {
                 "type": "array",
@@ -699,12 +921,19 @@
             },
             "additionalProperties": {
               "type": "array",
-              "required": ["name", "type"],
+              "required": [
+                "name",
+                "type"
+              ],
               "items": {
                 "type": "object",
                 "properties": {
-                  "name": { "type": "string" },
-                  "type": { "type": "string" }
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -713,14 +942,20 @@
             "type": "object",
             "description": "Contains the domain separator values specified in the EIP712Domain type."
           },
-          "primaryType": { "type": "string" },
-          "message": { "type": "object" }
+          "primaryType": {
+            "type": "string"
+          },
+          "message": {
+            "type": "object"
+          }
         }
       },
       "AddEthereumChainParameter": {
         "title": "AddEthereumChainParameter",
         "type": "object",
-        "required": ["chainId"],
+        "required": [
+          "chainId"
+        ],
         "properties": {
           "chainId": {
             "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the eth_chainId Ethereum RPC method. The wallet SHOULD compare the specified chain ID value with the eth_chainId return value from the endpoint. If these values aren't identical, the wallet MUST reject the request.",
@@ -760,7 +995,11 @@
         "title": "NativeCurrency",
         "type": "object",
         "description": "If provided, MUST describe the native currency of the chain using the name, symbol, and decimals fields.",
-        "required": ["decimals", "name", "symbol"],
+        "required": [
+          "decimals",
+          "name",
+          "symbol"
+        ],
         "properties": {
           "decimals": {
             "description": "A non-negative integer.",
@@ -803,11 +1042,18 @@
               "type": "object",
               "properties": {
                 "type": {
-                  "type": "string"
+                  "title": "Type",
+                  "type": "string",
+                  "description": "Type of caveat."
                 },
-                "value": true,
+                "value": {
+                  "title": "CaveatValue",
+                  "description": "Value of the caveat."
+                },
                 "name": {
-                  "type": "string"
+                  "title": "Name",
+                  "type": "string",
+                  "description": "Name of the caveat."
                 }
               }
             }
