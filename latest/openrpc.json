@@ -298,6 +298,11 @@
                         "value": {}
                     }
                 }
+            ],
+            "errors": [
+                {
+                    "$ref": "#/components/errors/UserRejected"
+                }
             ]
         },
         {
@@ -343,44 +348,101 @@
                 }
             ],
             "summary": "Tracks a token in MetaMask.",
-            "description": "Requests that the user track the specified token in MetaMask. Returns a boolean indicating if the token was successfully added. Once added, the token is indistinguishable from those added using legacy methods, such as a centralized registry. Originally introduced by [EIP-747](https://eips.ethereum.org/EIPS/eip-747), however the current specification for EIP-747 has diverged from the implementation in MetaMask. The implementation in MetaMask, described below, matches the version of EIP-747 found here: https://github.com/ethereum/EIPs/blob/36102e0c82630e2654fd019f54914330d1c37f74/EIPS/eip-747.md",
+            "description": "Requests that the user track the specified token in MetaMask. Returns a boolean indicating if the token was successfully added. Once added, the token is indistinguishable from those added using legacy methods, such as a centralized registry. Introduced by [EIP-747](https://eips.ethereum.org/EIPS/eip-747). Currently support for ERC721 and ERC1155 tokens is limited to the extension (not on mobile) and is considered experimental. See [MIP-1](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-1.md) and [MIP proposal lifecycle](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/PROCESS-GUIDE.md#proposal-lifecycle) for more information.",
             "paramStructure": "by-name",
             "params": [
                 {
                     "name": "type",
                     "schema": {
                         "type": "string",
-                        "description": "Currently only supports ERC-20 tokens.",
+                        "description": "Supports ERC-20, ERC-721, and ERC-1155 tokens. Currently support for ERC721 and ERC1155 tokens is limited to the extension (not on mobile) and is considered experimental. See [MIP-1](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-1.md) and [MIP proposal lifecycle](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/PROCESS-GUIDE.md#proposal-lifecycle) for more information.",
                         "enum": [
-                            "ERC20"
+                            "ERC20",
+                            "ERC721",
+                            "ERC1155"
                         ]
-                    }
+                    },
+                    "required": true
                 },
                 {
                     "name": "options",
                     "schema": {
+                        "title": "WatchAssetOptions",
                         "type": "object",
+                        "required": [
+                            "address"
+                        ],
                         "properties": {
                             "address": {
                                 "description": "The address of the token contract.",
                                 "type": "string"
                             },
                             "symbol": {
-                                "description": "A ticker symbol or shorthand, up to 11 characters.",
+                                "description": "A ticker symbol or shorthand, up to 11 characters (optional for ERC-20 tokens).",
                                 "minLength": 2,
                                 "maxLength": 11,
                                 "type": "string"
                             },
                             "decimals": {
-                                "description": "The number of token decimals.",
+                                "description": "The number of token decimals (optional for ERC-20 tokens).",
                                 "type": "number"
                             },
                             "image": {
-                                "description": "A string URL of the token logo.",
+                                "description": "A string URL of the token logo (optional for ERC-20 tokens).",
+                                "type": "string"
+                            },
+                            "tokenId": {
+                                "description": "The unique identifier of the NFT (required for ERC-721 and ERC-1155 tokens).",
                                 "type": "string"
                             }
                         }
                     }
+                }
+            ],
+            "errors": [
+                {
+                    "code": -32602,
+                    "message": "Must specify address, symbol, and decimals."
+                },
+                {
+                    "code": -32602,
+                    "message": "Invalid symbol: not a string."
+                },
+                {
+                    "code": -32602,
+                    "message": "Invalid symbol '${symbol}': longer than 11 characters."
+                },
+                {
+                    "code": -32602,
+                    "message": "Invalid decimals '${decimals}': must be 0 <= 36."
+                },
+                {
+                    "code": -32602,
+                    "message": "Invalid address '${address}'."
+                },
+                {
+                    "code": -32602,
+                    "message": "Asset type is required"
+                },
+                {
+                    "code": -32602,
+                    "message": "Both address and tokenId are required"
+                },
+                {
+                    "code": -32602,
+                    "message": "Invalid address"
+                },
+                {
+                    "code": -32000,
+                    "message": "Suggested NFT is not owned by the selected account."
+                },
+                {
+                    "code": -32000,
+                    "message": "Suggested NFT of type ${standard} does not match received type ${type}"
+                },
+                {
+                    "code": -32002,
+                    "message": "Unable to verify ownership. Possibly because the standard is not supported or the user's currently selected network does not match the chain of the asset in question."
                 }
             ],
             "result": {
@@ -392,7 +454,7 @@
             },
             "examples": [
                 {
-                    "name": "wallet_watchAsset example",
+                    "name": "wallet_watchAsset_ERC20_example",
                     "params": [
                         {
                             "name": "type",
@@ -410,6 +472,46 @@
                     ],
                     "result": {
                         "name": "wallet_watchAssetExampleResult",
+                        "value": true
+                    }
+                },
+                {
+                    "name": "wallet_watchAsset_ERC721_example",
+                    "params": [
+                        {
+                            "name": "type",
+                            "value": "ERC721"
+                        },
+                        {
+                            "name": "options",
+                            "value": {
+                                "address": "0x123456789abcdef0123456789abcdef01234567",
+                                "tokenId": "42"
+                            }
+                        }
+                    ],
+                    "result": {
+                        "name": "wallet_watchAssetERC721ExampleResult",
+                        "value": true
+                    }
+                },
+                {
+                    "name": "wallet_watchAsset_ERC1155_example",
+                    "params": [
+                        {
+                            "name": "type",
+                            "value": "ERC1155"
+                        },
+                        {
+                            "name": "options",
+                            "value": {
+                                "address": "0xabcdef0123456789abcdef0123456789abcdef01",
+                                "tokenId": "1337"
+                            }
+                        }
+                    ],
+                    "result": {
+                        "name": "wallet_watchAssetERC1155ExampleResult",
                         "value": true
                     }
                 }
@@ -474,6 +576,31 @@
                     "type": "string"
                 }
             }
+        },
+        {
+            "tags": [
+                {
+                    "$ref": "#/components/tags/MetaMask"
+                }
+            ],
+            "name": "eth_requestAccounts",
+            "description": "Requests that the user provide an Ethereum address to be identified by. This method is specified by [EIP-1102](https://eips.ethereum.org/EIPS/eip-1102). Internally, this method calls `wallet_requestPermissions` for permission to call `eth_accounts`.",
+            "summary": "Requests that the user provide an Ethereum address.",
+            "params": [],
+            "result": {
+                "name": "AddressList",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/address"
+                    }
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/UserRejected"
+                }
+            ]
         },
         {
             "tags": [
@@ -724,219 +851,6 @@
             }
         },
         {
-            "name": "eth_getBlockByHash",
-            "summary": "Returns information about a block by hash.",
-            "params": [
-                {
-                    "name": "Block hash",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/hash32"
-                    }
-                },
-                {
-                    "name": "Hydrated transactions",
-                    "required": true,
-                    "schema": {
-                        "title": "hydrated",
-                        "type": "boolean"
-                    }
-                }
-            ],
-            "result": {
-                "name": "Block information",
-                "schema": {
-                    "$ref": "#/components/schemas/Block"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_getBlockByNumber",
-            "summary": "Returns information about a block by number.",
-            "params": [
-                {
-                    "name": "Block",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/BlockNumberOrTag"
-                    }
-                },
-                {
-                    "name": "Hydrated transactions",
-                    "required": true,
-                    "schema": {
-                        "title": "hydrated",
-                        "type": "boolean"
-                    }
-                }
-            ],
-            "result": {
-                "name": "Block information",
-                "schema": {
-                    "$ref": "#/components/schemas/Block"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_getBlockTransactionCountByHash",
-            "summary": "Returns the number of transactions in a block from a block matching the given block hash.",
-            "params": [
-                {
-                    "name": "Block hash",
-                    "schema": {
-                        "$ref": "#/components/schemas/hash32"
-                    }
-                }
-            ],
-            "result": {
-                "name": "Transaction count",
-                "schema": {
-                    "$ref": "#/components/schemas/uint"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_getBlockTransactionCountByNumber",
-            "summary": "Returns the number of transactions in a block matching the given block number.",
-            "params": [
-                {
-                    "name": "Block",
-                    "schema": {
-                        "$ref": "#/components/schemas/BlockNumberOrTag"
-                    }
-                }
-            ],
-            "result": {
-                "name": "Transaction count",
-                "schema": {
-                    "$ref": "#/components/schemas/uint"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_getUncleCountByBlockHash",
-            "summary": "Returns the number of uncles in a block from a block matching the given block hash.",
-            "params": [
-                {
-                    "name": "Block hash",
-                    "schema": {
-                        "$ref": "#/components/schemas/hash32"
-                    }
-                }
-            ],
-            "result": {
-                "name": "Uncle count",
-                "schema": {
-                    "$ref": "#/components/schemas/uint"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_getUncleCountByBlockNumber",
-            "summary": "Returns the number of transactions in a block matching the given block number.",
-            "params": [
-                {
-                    "name": "Block",
-                    "schema": {
-                        "$ref": "#/components/schemas/BlockNumberOrTag"
-                    }
-                }
-            ],
-            "result": {
-                "name": "Uncle count",
-                "schema": {
-                    "$ref": "#/components/schemas/uint"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_chainId",
-            "summary": "Returns the chain ID of the current network.",
-            "params": [],
-            "result": {
-                "name": "Chain ID",
-                "schema": {
-                    "$ref": "#/components/schemas/uint"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_syncing",
-            "summary": "Returns an object with data about the sync status or false.",
-            "params": [],
-            "result": {
-                "name": "Syncing status",
-                "schema": {
-                    "$ref": "#/components/schemas/SyncingStatus"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_coinbase",
-            "summary": "Returns the client coinbase address.",
-            "params": [],
-            "result": {
-                "name": "Coinbase address",
-                "schema": {
-                    "$ref": "#/components/schemas/address"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
             "name": "eth_blockNumber",
             "summary": "Returns the number of most recent block.",
             "params": [],
@@ -986,6 +900,40 @@
             ]
         },
         {
+            "name": "eth_chainId",
+            "summary": "Returns the chain ID of the current network.",
+            "params": [],
+            "result": {
+                "name": "Chain ID",
+                "schema": {
+                    "$ref": "#/components/schemas/uint"
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
+            "name": "eth_coinbase",
+            "summary": "Returns the client coinbase address.",
+            "params": [],
+            "result": {
+                "name": "Coinbase address",
+                "schema": {
+                    "$ref": "#/components/schemas/address"
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
             "name": "eth_estimateGas",
             "summary": "Generates and returns an estimate of how much gas is necessary to allow the transaction to complete.",
             "params": [
@@ -1007,42 +955,6 @@
             "result": {
                 "name": "Gas used",
                 "schema": {
-                    "$ref": "#/components/schemas/uint"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_gasPrice",
-            "summary": "Returns the current price per gas in wei.",
-            "params": [],
-            "result": {
-                "name": "Gas price",
-                "schema": {
-                    "title": "Gas price",
-                    "$ref": "#/components/schemas/uint"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_maxPriorityFeePerGas",
-            "summary": "Returns the current maxPriorityFeePerGas per gas in wei.",
-            "params": [],
-            "result": {
-                "name": "Max priority fee per gas",
-                "schema": {
-                    "title": "Max priority fee per gas",
                     "$ref": "#/components/schemas/uint"
                 }
             },
@@ -1101,6 +1013,7 @@
                         "baseFeePerGas",
                         "gasUsedRatio"
                     ],
+                    "additionalProperties": false,
                     "properties": {
                         "oldestBlock": {
                             "title": "oldestBlock",
@@ -1113,6 +1026,14 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/components/schemas/uint"
+                            }
+                        },
+                        "gasUsedRatio": {
+                            "title": "gasUsedRatio",
+                            "description": "An array of block gas used ratios. These are calculated as the ratio of gasUsed and gasLimit.",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/ratio"
                             }
                         },
                         "reward": {
@@ -1141,18 +1062,44 @@
             ]
         },
         {
-            "name": "eth_newFilter",
-            "summary": "Creates a filter object, based on filter options, to notify when the state changes (logs).",
+            "name": "eth_gasPrice",
+            "summary": "Returns the current price per gas in wei.",
+            "params": [],
+            "result": {
+                "name": "Gas price",
+                "schema": {
+                    "title": "Gas price",
+                    "$ref": "#/components/schemas/uint"
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
+            "name": "eth_getBalance",
+            "summary": "Returns the balance of the account of given address.",
             "params": [
                 {
-                    "name": "Filter",
+                    "name": "Address",
+                    "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/Filter"
+                        "$ref": "#/components/schemas/address"
+                    }
+                },
+                {
+                    "name": "Block",
+                    "required": false,
+                    "schema": {
+                        "$ref": "#/components/schemas/BlockNumberOrTagOrHash"
                     }
                 }
             ],
             "result": {
-                "name": "Filter Identifier",
+                "name": "Balance",
                 "schema": {
                     "$ref": "#/components/schemas/uint"
                 }
@@ -1165,54 +1112,172 @@
             ]
         },
         {
-            "name": "eth_newBlockFilter",
-            "summary": "Creates a filter in the node, to notify when a new block arrives.",
-            "params": [],
-            "result": {
-                "name": "Filter Identifier",
-                "schema": {
-                    "$ref": "#/components/schemas/uint"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_newPendingTransactionFilter",
-            "summary": "Creates a filter in the node, to notify when new pending transactions arrive.",
-            "params": [],
-            "result": {
-                "name": "Filter Identifier",
-                "schema": {
-                    "$ref": "#/components/schemas/uint"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_uninstallFilter",
-            "summary": "Uninstalls a filter with given id.",
+            "name": "eth_getBlockByHash",
+            "summary": "Returns information about a block by hash.",
             "params": [
                 {
-                    "name": "Filter Identifier",
+                    "name": "Block hash",
+                    "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/uint"
+                        "$ref": "#/components/schemas/hash32"
+                    }
+                },
+                {
+                    "name": "Hydrated transactions",
+                    "required": true,
+                    "schema": {
+                        "title": "hydrated",
+                        "type": "boolean"
                     }
                 }
             ],
             "result": {
-                "name": "Success",
+                "name": "Block information",
                 "schema": {
-                    "type": "boolean"
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/notFound"
+                        },
+                        {
+                            "$ref": "#/components/schemas/Block"
+                        }
+                    ]
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
+            "name": "eth_getBlockByNumber",
+            "summary": "Returns information about a block by number.",
+            "params": [
+                {
+                    "name": "Block",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BlockNumberOrTag"
+                    }
+                },
+                {
+                    "name": "Hydrated transactions",
+                    "required": true,
+                    "schema": {
+                        "title": "hydrated",
+                        "type": "boolean"
+                    }
+                }
+            ],
+            "result": {
+                "name": "Block information",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/notFound"
+                        },
+                        {
+                            "$ref": "#/components/schemas/Block"
+                        }
+                    ]
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
+            "name": "eth_getBlockTransactionCountByHash",
+            "summary": "Returns the number of transactions in a block from a block matching the given block hash.",
+            "params": [
+                {
+                    "name": "Block hash",
+                    "schema": {
+                        "$ref": "#/components/schemas/hash32"
+                    }
+                }
+            ],
+            "result": {
+                "name": "Transaction count",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/notFound"
+                        },
+                        {
+                            "title": "Transaction count",
+                            "$ref": "#/components/schemas/uint"
+                        }
+                    ]
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
+            "name": "eth_getBlockTransactionCountByNumber",
+            "summary": "Returns the number of transactions in a block matching the given block number.",
+            "params": [
+                {
+                    "name": "Block",
+                    "schema": {
+                        "$ref": "#/components/schemas/BlockNumberOrTag"
+                    }
+                }
+            ],
+            "result": {
+                "name": "Transaction count",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/notFound"
+                        },
+                        {
+                            "title": "Transaction count",
+                            "$ref": "#/components/schemas/uint"
+                        }
+                    ]
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
+            "name": "eth_getCode",
+            "summary": "Returns code at a given address.",
+            "params": [
+                {
+                    "name": "Address",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/address"
+                    }
+                },
+                {
+                    "name": "Block",
+                    "required": false,
+                    "schema": {
+                        "$ref": "#/components/schemas/BlockNumberOrTagOrHash"
+                    }
+                }
+            ],
+            "result": {
+                "name": "Bytecode",
+                "schema": {
+                    "$ref": "#/components/schemas/bytes"
                 }
             },
             "tags": [
@@ -1295,146 +1360,8 @@
             ]
         },
         {
-            "name": "eth_mining",
-            "summary": "Returns whether the client is actively mining new blocks.",
-            "params": [],
-            "result": {
-                "name": "Mining status",
-                "schema": {
-                    "title": "miningStatus",
-                    "type": "boolean"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_hashrate",
-            "summary": "Returns the number of hashes per second that the node is mining with.",
-            "params": [],
-            "result": {
-                "name": "Mining status",
-                "schema": {
-                    "title": "Hashrate",
-                    "$ref": "#/components/schemas/uint"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_getWork",
-            "summary": "Returns the hash of the current block, the seedHash, and the boundary condition to be met (“target”).",
-            "params": [],
-            "result": {
-                "name": "Current work",
-                "schema": {
-                    "type": "array",
-                    "items": [
-                        {
-                            "title": "Proof-of-work hash",
-                            "$ref": "#/components/schemas/bytes32"
-                        },
-                        {
-                            "title": "seed hash",
-                            "$ref": "#/components/schemas/bytes32"
-                        },
-                        {
-                            "title": "difficulty",
-                            "$ref": "#/components/schemas/bytes32"
-                        }
-                    ]
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_submitWork",
-            "summary": "Used for submitting a proof-of-work solution.",
-            "params": [
-                {
-                    "name": "nonce",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/bytes8"
-                    }
-                },
-                {
-                    "name": "hash",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/bytes32"
-                    }
-                },
-                {
-                    "name": "digest",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/bytes32"
-                    }
-                }
-            ],
-            "result": {
-                "name": "Success",
-                "schema": {
-                    "type": "boolean"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_submitHashrate",
-            "summary": "Used for submitting mining hashrate.",
-            "params": [
-                {
-                    "name": "Hashrate",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/bytes32"
-                    }
-                },
-                {
-                    "name": "ID",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/bytes32"
-                    }
-                }
-            ],
-            "result": {
-                "name": "Success",
-                "schema": {
-                    "type": "boolean"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_getBalance",
-            "summary": "Returns the balance of the account of given address.",
+            "name": "eth_getProof",
+            "summary": "Returns the merkle proof for a given account and optionally some storage keys.",
             "params": [
                 {
                     "name": "Address",
@@ -1444,17 +1371,28 @@
                     }
                 },
                 {
+                    "name": "StorageKeys",
+                    "required": true,
+                    "schema": {
+                        "title": "Storage keys",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/bytesMax32"
+                        }
+                    }
+                },
+                {
                     "name": "Block",
-                    "required": false,
+                    "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BlockNumberOrTagOrHash"
                     }
                 }
             ],
             "result": {
-                "name": "Balance",
+                "name": "Account",
                 "schema": {
-                    "$ref": "#/components/schemas/uint"
+                    "$ref": "#/components/schemas/AccountProof"
                 }
             },
             "tags": [
@@ -1504,6 +1442,116 @@
             ]
         },
         {
+            "name": "eth_getTransactionByBlockHashAndIndex",
+            "summary": "Returns information about a transaction by block hash and transaction index position.",
+            "params": [
+                {
+                    "name": "Block hash",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/hash32"
+                    }
+                },
+                {
+                    "name": "Transaction index",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/uint"
+                    }
+                }
+            ],
+            "result": {
+                "name": "Transaction information",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/notFound"
+                        },
+                        {
+                            "$ref": "#/components/schemas/TransactionInfo"
+                        }
+                    ]
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
+            "name": "eth_getTransactionByBlockNumberAndIndex",
+            "summary": "Returns information about a transaction by block number and transaction index position.",
+            "params": [
+                {
+                    "name": "Block",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BlockNumberOrTag"
+                    }
+                },
+                {
+                    "name": "Transaction index",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/uint"
+                    }
+                }
+            ],
+            "result": {
+                "name": "Transaction information",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/notFound"
+                        },
+                        {
+                            "$ref": "#/components/schemas/TransactionInfo"
+                        }
+                    ]
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
+            "name": "eth_getTransactionByHash",
+            "summary": "Returns the information about a transaction requested by transaction hash.",
+            "params": [
+                {
+                    "name": "Transaction hash",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/hash32"
+                    }
+                }
+            ],
+            "result": {
+                "name": "Transaction information",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/notFound"
+                        },
+                        {
+                            "$ref": "#/components/schemas/TransactionInfo"
+                        }
+                    ]
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
             "name": "eth_getTransactionCount",
             "summary": "Returns the number of transactions sent from an address.",
             "params": [
@@ -1536,28 +1584,28 @@
             ]
         },
         {
-            "name": "eth_getCode",
-            "summary": "Returns code at a given address.",
+            "name": "eth_getTransactionReceipt",
+            "summary": "Returns the receipt of a transaction by transaction hash.",
             "params": [
                 {
-                    "name": "Address",
+                    "name": "Transaction hash",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/address"
-                    }
-                },
-                {
-                    "name": "Block",
-                    "required": false,
-                    "schema": {
-                        "$ref": "#/components/schemas/BlockNumberOrTagOrHash"
+                        "$ref": "#/components/schemas/hash32"
                     }
                 }
             ],
             "result": {
-                "name": "Bytecode",
+                "name": "Receipt information",
                 "schema": {
-                    "$ref": "#/components/schemas/bytes"
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/notFound"
+                        },
+                        {
+                            "$ref": "#/components/schemas/ReceiptInfo"
+                        }
+                    ]
                 }
             },
             "tags": [
@@ -1568,39 +1616,136 @@
             ]
         },
         {
-            "name": "eth_getProof",
-            "summary": "Returns the merkle proof for a given account and optionally some storage keys.",
+            "name": "eth_getUncleCountByBlockHash",
+            "summary": "Returns the number of uncles in a block from a block matching the given block hash.",
             "params": [
                 {
-                    "name": "Address",
-                    "required": true,
+                    "name": "Block hash",
                     "schema": {
-                        "$ref": "#/components/schemas/address"
-                    }
-                },
-                {
-                    "name": "StorageKeys",
-                    "required": true,
-                    "schema": {
-                        "title": "Storage keys",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/bytesMax32"
-                        }
-                    }
-                },
-                {
-                    "name": "Block",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/BlockNumberOrTagOrHash"
+                        "$ref": "#/components/schemas/hash32"
                     }
                 }
             ],
             "result": {
-                "name": "Account",
+                "name": "Uncle count",
                 "schema": {
-                    "$ref": "#/components/schemas/AccountProof"
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/notFound"
+                        },
+                        {
+                            "title": "Uncle count",
+                            "$ref": "#/components/schemas/uint"
+                        }
+                    ]
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
+            "name": "eth_getUncleCountByBlockNumber",
+            "summary": "Returns the number of transactions in a block matching the given block number.",
+            "params": [
+                {
+                    "name": "Block",
+                    "schema": {
+                        "$ref": "#/components/schemas/BlockNumberOrTag"
+                    }
+                }
+            ],
+            "result": {
+                "name": "Uncle count",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/notFound"
+                        },
+                        {
+                            "title": "Uncle count",
+                            "$ref": "#/components/schemas/uint"
+                        }
+                    ]
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
+            "name": "eth_maxPriorityFeePerGas",
+            "summary": "Returns the current maxPriorityFeePerGas per gas in wei.",
+            "params": [],
+            "result": {
+                "name": "Max priority fee per gas",
+                "schema": {
+                    "title": "Max priority fee per gas",
+                    "$ref": "#/components/schemas/uint"
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
+            "name": "eth_newBlockFilter",
+            "summary": "Creates a filter in the node, to notify when a new block arrives.",
+            "params": [],
+            "result": {
+                "name": "Filter Identifier",
+                "schema": {
+                    "$ref": "#/components/schemas/uint"
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
+            "name": "eth_newFilter",
+            "summary": "Creates a filter object, based on filter options, to notify when the state changes (logs).",
+            "params": [
+                {
+                    "name": "Filter",
+                    "schema": {
+                        "$ref": "#/components/schemas/Filter"
+                    }
+                }
+            ],
+            "result": {
+                "name": "Filter Identifier",
+                "schema": {
+                    "$ref": "#/components/schemas/uint"
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
+            "name": "eth_newPendingTransactionFilter",
+            "summary": "Creates a filter in the node, to notify when new pending transactions arrive.",
+            "params": [],
+            "result": {
+                "name": "Filter Identifier",
+                "schema": {
+                    "$ref": "#/components/schemas/uint"
                 }
             },
             "tags": [
@@ -1636,21 +1781,13 @@
             ]
         },
         {
-            "name": "eth_getTransactionByHash",
-            "summary": "Returns the information about a transaction requested by transaction hash.",
-            "params": [
-                {
-                    "name": "Transaction hash",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/hash32"
-                    }
-                }
-            ],
+            "name": "eth_syncing",
+            "summary": "Returns an object with data about the sync status or false.",
+            "params": [],
             "result": {
-                "name": "Transaction information",
+                "name": "Syncing status",
                 "schema": {
-                    "$ref": "#/components/schemas/TransactionInfo"
+                    "$ref": "#/components/schemas/SyncingStatus"
                 }
             },
             "tags": [
@@ -1661,84 +1798,20 @@
             ]
         },
         {
-            "name": "eth_getTransactionByBlockHashAndIndex",
-            "summary": "Returns information about a transaction by block hash and transaction index position.",
+            "name": "eth_uninstallFilter",
+            "summary": "Uninstalls a filter with given id.",
             "params": [
                 {
-                    "name": "Block hash",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/hash32"
-                    }
-                },
-                {
-                    "name": "Transaction index",
-                    "required": true,
+                    "name": "Filter Identifier",
                     "schema": {
                         "$ref": "#/components/schemas/uint"
                     }
                 }
             ],
             "result": {
-                "name": "Transaction information",
+                "name": "Success",
                 "schema": {
-                    "$ref": "#/components/schemas/TransactionInfo"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_getTransactionByBlockNumberAndIndex",
-            "summary": "Returns information about a transaction by block number and transaction index position.",
-            "params": [
-                {
-                    "name": "Block",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/BlockNumberOrTag"
-                    }
-                },
-                {
-                    "name": "Transaction index",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/uint"
-                    }
-                }
-            ],
-            "result": {
-                "name": "Transaction information",
-                "schema": {
-                    "$ref": "#/components/schemas/TransactionInfo"
-                }
-            },
-            "tags": [
-                {
-                    "name": "Ethereum API",
-                    "description": "Ethereum Node JSON-RPC method"
-                }
-            ]
-        },
-        {
-            "name": "eth_getTransactionReceipt",
-            "summary": "Returns the receipt of a transaction by transaction hash.",
-            "params": [
-                {
-                    "name": "Transaction hash",
-                    "schema": {
-                        "$ref": "#/components/schemas/hash32"
-                    }
-                }
-            ],
-            "result": {
-                "name": "Receipt Information",
-                "schema": {
-                    "$ref": "#/components/schemas/ReceiptInfo"
+                    "type": "boolean"
                 }
             },
             "tags": [
@@ -1750,7 +1823,12 @@
         }
     ],
     "components": {
-        "errors": {},
+        "errors": {
+            "UserRejected": {
+                "code": 4001,
+                "message": "User rejected the request."
+            }
+        },
         "schemas": {
             "TypedData": {
                 "title": "TypedData",
@@ -1957,6 +2035,11 @@
                 "type": "string",
                 "pattern": "^0x[0-9a-f]{64}$"
             },
+            "bytes48": {
+                "title": "48 hex encoded bytes",
+                "type": "string",
+                "pattern": "^0x[0-9a-f]{96}$"
+            },
             "bytes256": {
                 "title": "256 hex encoded bytes",
                 "type": "string",
@@ -1965,7 +2048,13 @@
             "bytes65": {
                 "title": "65 hex encoded bytes",
                 "type": "string",
-                "pattern": "^0x[0-9a-f]{65}$"
+                "pattern": "^0x[0-9a-f]{130}$"
+            },
+            "ratio": {
+                "title": "normalized ratio",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
             },
             "uint": {
                 "title": "hex encoded unsigned integer",
@@ -1987,10 +2076,15 @@
                 "type": "string",
                 "pattern": "^0x[0-9a-f]{64}$"
             },
+            "notFound": {
+                "title": "Not Found (null)",
+                "type": "null"
+            },
             "Block": {
                 "title": "Block object",
                 "type": "object",
                 "required": [
+                    "hash",
                     "parentHash",
                     "sha3Uncles",
                     "miner",
@@ -2009,7 +2103,12 @@
                     "transactions",
                     "uncles"
                 ],
+                "additionalProperties": false,
                 "properties": {
+                    "hash": {
+                        "title": "Hash",
+                        "$ref": "#/components/schemas/hash32"
+                    },
                     "parentHash": {
                         "title": "Parent block hash",
                         "$ref": "#/components/schemas/hash32"
@@ -2040,7 +2139,7 @@
                     },
                     "difficulty": {
                         "title": "Difficulty",
-                        "$ref": "#/components/schemas/bytes"
+                        "$ref": "#/components/schemas/uint"
                     },
                     "number": {
                         "title": "Number",
@@ -2099,7 +2198,7 @@
                                 "title": "Full transactions",
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/components/schemas/TransactionSigned"
+                                    "$ref": "#/components/schemas/TransactionInfo"
                                 }
                             }
                         ]
@@ -2170,6 +2269,7 @@
                     "hash",
                     "rlp"
                 ],
+                "additionalProperties": false,
                 "properties": {
                     "block": {
                         "title": "Block",
@@ -2191,6 +2291,7 @@
                     {
                         "title": "Syncing progress",
                         "type": "object",
+                        "additionalProperties": false,
                         "properties": {
                             "startingBlock": {
                                 "title": "Starting block",
@@ -2242,6 +2343,7 @@
             "Filter": {
                 "title": "filter",
                 "type": "object",
+                "additionalProperties": false,
                 "properties": {
                     "fromBlock": {
                         "title": "from block",
@@ -2303,6 +2405,7 @@
                 "required": [
                     "transactionHash"
                 ],
+                "additionalProperties": false,
                 "properties": {
                     "removed": {
                         "title": "removed",
@@ -2347,7 +2450,7 @@
             },
             "ReceiptInfo": {
                 "type": "object",
-                "title": "Receipt info",
+                "title": "Receipt information",
                 "required": [
                     "blockHash",
                     "blockNumber",
@@ -2360,7 +2463,12 @@
                     "transactionIndex",
                     "effectiveGasPrice"
                 ],
+                "additionalProperties": false,
                 "properties": {
+                    "type": {
+                        "title": "type",
+                        "$ref": "#/components/schemas/byte"
+                    },
                     "transactionHash": {
                         "title": "transaction hash",
                         "$ref": "#/components/schemas/hash32"
@@ -2384,7 +2492,16 @@
                     "to": {
                         "title": "to",
                         "description": "Address of the receiver or null in a contract creation transaction.",
-                        "$ref": "#/components/schemas/address"
+                        "oneOf": [
+                            {
+                                "title": "Contract Creation (null)",
+                                "type": "null"
+                            },
+                            {
+                                "title": "Recipient Address",
+                                "$ref": "#/components/schemas/address"
+                            }
+                        ]
                     },
                     "cumulativeGasUsed": {
                         "title": "cumulative gas used",
@@ -2449,6 +2566,7 @@
                     "storageHash",
                     "storageProof"
                 ],
+                "additionalProperties": false,
                 "properties": {
                     "address": {
                         "title": "address",
@@ -2494,6 +2612,7 @@
                     "value",
                     "proof"
                 ],
+                "additionalProperties": false,
                 "properties": {
                     "key": {
                         "title": "key",
@@ -2515,6 +2634,7 @@
             "AccessListEntry": {
                 "title": "Access list entry",
                 "type": "object",
+                "additionalProperties": false,
                 "properties": {
                     "address": {
                         "$ref": "#/components/schemas/address"
@@ -2545,13 +2665,15 @@
                     "input",
                     "maxFeePerGas",
                     "maxPriorityFeePerGas",
+                    "gasPrice",
                     "chainId",
                     "accessList"
                 ],
                 "properties": {
                     "type": {
                         "title": "type",
-                        "$ref": "#/components/schemas/byte"
+                        "type": "string",
+                        "pattern": "^0x2$"
                     },
                     "nonce": {
                         "title": "nonce",
@@ -2559,7 +2681,16 @@
                     },
                     "to": {
                         "title": "to address",
-                        "$ref": "#/components/schemas/address"
+                        "oneOf": [
+                            {
+                                "title": "Contract Creation (null)",
+                                "type": "null"
+                            },
+                            {
+                                "title": "Address",
+                                "$ref": "#/components/schemas/address"
+                            }
+                        ]
                     },
                     "gas": {
                         "title": "gas limit",
@@ -2581,6 +2712,11 @@
                     "maxFeePerGas": {
                         "title": "max fee per gas",
                         "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei",
+                        "$ref": "#/components/schemas/uint"
+                    },
+                    "gasPrice": {
+                        "title": "gas price",
+                        "description": "The effective gas price paid by the sender in wei. For transactions not yet included in a block, this value should be set equal to the max fee per gas. This field is DEPRECATED, please transition to using effectiveGasPrice in the receipt object going forward.",
                         "$ref": "#/components/schemas/uint"
                     },
                     "accessList": {
@@ -2611,7 +2747,8 @@
                 "properties": {
                     "type": {
                         "title": "type",
-                        "$ref": "#/components/schemas/byte"
+                        "type": "string",
+                        "pattern": "^0x1$"
                     },
                     "nonce": {
                         "title": "nonce",
@@ -2619,7 +2756,16 @@
                     },
                     "to": {
                         "title": "to address",
-                        "$ref": "#/components/schemas/address"
+                        "oneOf": [
+                            {
+                                "title": "Contract Creation (null)",
+                                "type": "null"
+                            },
+                            {
+                                "title": "Address",
+                                "$ref": "#/components/schemas/address"
+                            }
+                        ]
                     },
                     "gas": {
                         "title": "gas limit",
@@ -2664,7 +2810,8 @@
                 "properties": {
                     "type": {
                         "title": "type",
-                        "$ref": "#/components/schemas/byte"
+                        "type": "string",
+                        "pattern": "^0x0$"
                     },
                     "nonce": {
                         "title": "nonce",
@@ -2672,7 +2819,16 @@
                     },
                     "to": {
                         "title": "to address",
-                        "$ref": "#/components/schemas/address"
+                        "oneOf": [
+                            {
+                                "title": "Contract Creation (null)",
+                                "type": "null"
+                            },
+                            {
+                                "title": "Address",
+                                "$ref": "#/components/schemas/address"
+                            }
+                        ]
                     },
                     "gas": {
                         "title": "gas limit",
@@ -2731,6 +2887,11 @@
                                 "description": "The parity (0 for even, 1 for odd) of the y-value of the secp256k1 signature.",
                                 "$ref": "#/components/schemas/uint"
                             },
+                            "v": {
+                                "title": "v",
+                                "description": "For backwards compatibility, `v` is optionally provided as an alternative to `yParity`. This field is DEPRECATED and all use of it should migrate to `yParity`.",
+                                "$ref": "#/components/schemas/uint"
+                            },
                             "r": {
                                 "title": "r",
                                 "$ref": "#/components/schemas/uint"
@@ -2761,6 +2922,11 @@
                             "yParity": {
                                 "title": "yParity",
                                 "description": "The parity (0 for even, 1 for odd) of the y-value of the secp256k1 signature.",
+                                "$ref": "#/components/schemas/uint"
+                            },
+                            "v": {
+                                "title": "v",
+                                "description": "For backwards compatibility, `v` is optionally provided as an alternative to `yParity`. This field is DEPRECATED and all use of it should migrate to `yParity`.",
                                 "$ref": "#/components/schemas/uint"
                             },
                             "r": {
@@ -2832,6 +2998,7 @@
                             "hash",
                             "transactionIndex"
                         ],
+                        "unevaluatedProperties": false,
                         "properties": {
                             "blockHash": {
                                 "title": "block hash",
@@ -2863,6 +3030,7 @@
             "GenericTransaction": {
                 "type": "object",
                 "title": "Transaction object generic to all types",
+                "additionalProperties": false,
                 "properties": {
                     "type": {
                         "title": "type",
@@ -2874,7 +3042,16 @@
                     },
                     "to": {
                         "title": "to address",
-                        "$ref": "#/components/schemas/address"
+                        "oneOf": [
+                            {
+                                "title": "Contract Creation (null)",
+                                "type": "null"
+                            },
+                            {
+                                "title": "Address",
+                                "$ref": "#/components/schemas/address"
+                            }
+                        ]
                     },
                     "from": {
                         "title": "from address",
@@ -2928,6 +3105,7 @@
                     "address",
                     "amount"
                 ],
+                "additionalProperties": false,
                 "properties": {
                     "index": {
                         "title": "index of withdrawal",
@@ -3035,6 +3213,35 @@
                         "items": {
                             "$ref": "#/components/schemas/WithdrawalV1"
                         }
+                    }
+                }
+            },
+            "PayloadAttributesV3": {
+                "title": "Payload attributes object V3",
+                "type": "object",
+                "required": [
+                    "timestamp",
+                    "prevRandao",
+                    "suggestedFeeRecipient",
+                    "withdrawals",
+                    "parentBeaconBlockRoot"
+                ],
+                "properties": {
+                    "timestamp": {
+                        "$ref": "#/components/schemas/PayloadAttributesV2/properties/timestamp"
+                    },
+                    "prevRandao": {
+                        "$ref": "#/components/schemas/PayloadAttributesV2/properties/prevRandao"
+                    },
+                    "suggestedFeeRecipient": {
+                        "$ref": "#/components/schemas/PayloadAttributesV2/properties/suggestedFeeRecipient"
+                    },
+                    "withdrawals": {
+                        "$ref": "#/components/schemas/PayloadAttributesV2/properties/withdrawals"
+                    },
+                    "parentBeaconBlockRoot": {
+                        "title": "Parent beacon block root",
+                        "$ref": "#/components/schemas/hash32"
                     }
                 }
             },
@@ -3288,6 +3495,84 @@
                     }
                 }
             },
+            "ExecutionPayloadV3": {
+                "title": "Execution payload object V3",
+                "type": "object",
+                "required": [
+                    "parentHash",
+                    "feeRecipient",
+                    "stateRoot",
+                    "receiptsRoot",
+                    "logsBloom",
+                    "prevRandao",
+                    "blockNumber",
+                    "gasLimit",
+                    "gasUsed",
+                    "timestamp",
+                    "extraData",
+                    "baseFeePerGas",
+                    "blockHash",
+                    "transactions",
+                    "withdrawals",
+                    "dataGasUsed",
+                    "excessDataGas"
+                ],
+                "properties": {
+                    "parentHash": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/parentHash"
+                    },
+                    "feeRecipient": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/feeRecipient"
+                    },
+                    "stateRoot": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/stateRoot"
+                    },
+                    "receiptsRoot": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/receiptsRoot"
+                    },
+                    "logsBloom": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/logsBloom"
+                    },
+                    "prevRandao": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/prevRandao"
+                    },
+                    "blockNumber": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/blockNumber"
+                    },
+                    "gasLimit": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/gasLimit"
+                    },
+                    "gasUsed": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/gasUsed"
+                    },
+                    "timestamp": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/timestamp"
+                    },
+                    "extraData": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/extraData"
+                    },
+                    "baseFeePerGas": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/baseFeePerGas"
+                    },
+                    "blockHash": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/blockHash"
+                    },
+                    "transactions": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/transactions"
+                    },
+                    "withdrawals": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV2/properties/withdrawals"
+                    },
+                    "dataGasUsed": {
+                        "title": "Data gas used",
+                        "$ref": "#/components/schemas/uint64"
+                    },
+                    "excessDataGas": {
+                        "title": "Excess data gas",
+                        "$ref": "#/components/schemas/uint64"
+                    }
+                }
+            },
             "ExecutionPayloadBodyV1": {
                 "title": "Execution payload body object V1",
                 "type": "object",
@@ -3306,6 +3591,38 @@
                         ],
                         "items": {
                             "$ref": "#/components/schemas/WithdrawalV1"
+                        }
+                    }
+                }
+            },
+            "BlobsBundleV1": {
+                "title": "Blobs bundle object V1",
+                "type": "object",
+                "required": [
+                    "commitments",
+                    "proofs",
+                    "blobs"
+                ],
+                "properties": {
+                    "commitments": {
+                        "title": "Commitments",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/bytes48"
+                        }
+                    },
+                    "proofs": {
+                        "title": "Proofs",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/bytes48"
+                        }
+                    },
+                    "blobs": {
+                        "title": "Blobs",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/bytes"
                         }
                     }
                 }
