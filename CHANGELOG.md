@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.2]
+### Uncategorized
+- Added eth_requestAccounts ([#163](https://github.com/MetaMask/api-specs/pull/163))
+- add new wallet_watchAsset error ([#162](https://github.com/MetaMask/api-specs/pull/162))
+- MIP-1 proposed watch asset changes ([#138](https://github.com/MetaMask/api-specs/pull/138))
+
 ## [0.4.1]
 ### Uncategorized
 - Fixed permission caveat value + added descriptions ([#160](https://github.com/MetaMask/api-specs/pull/160))
@@ -103,7 +109,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.4.1...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.4.2...HEAD
+[0.4.2]: https://github.com/MetaMask/api-specs/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/MetaMask/api-specs/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/MetaMask/api-specs/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/MetaMask/api-specs/compare/v0.3.0...v0.3.1
