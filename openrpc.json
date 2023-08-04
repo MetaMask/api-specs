@@ -512,6 +512,36 @@
       ]
     },
     {
+      "name": "wallet_scanQRCode",
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Mobile"
+        }
+      ],
+      "summary": "Requests that the user scan a QR code.",
+      "description": "Requests that the user scan a QR code using their device camera. Introduced by [EIP-945](https://github.com/ethereum/EIPs/issues/945).",
+      "params": [
+        {
+          "name": "regex",
+          "required": false,
+          "description": "An array containing a regular expression (regex) string for matching arbitrary QR code strings.",
+          "schema": {
+            "type": "array"
+          }
+        }
+      ],
+      "result": {
+        "name": "ScanQRCodeResult",
+        "description": "A string corresponding to the scanned QR code. If a regex string is provided, the resulting string matches it. If no regex string is provided, the resulting string matches an Ethereum address. If neither condition is met, the method returns an error.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    {
       "name": "eth_decrypt",
       "tags": [
         {
