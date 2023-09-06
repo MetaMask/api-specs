@@ -541,18 +541,7 @@
           "type": "string",
           "title": "ScanQRCodeResult"
         }
-      },
-      "examples": [
-        {
-          "name": "wallet_scanQRCode example",
-          "params": [
-            {
-              "name": "regex",
-              "value": "\\\\D"
-            }
-          ]
-        }
-      ]
+      }
     },
     {
       "name": "eth_decrypt",
