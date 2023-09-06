@@ -529,7 +529,8 @@
           "required": false,
           "description": "An array containing a regular expression (regex) string for matching arbitrary QR code strings.",
           "schema": {
-            "type": "array"
+            "type": "array",
+            "title": "regex"
           }
         }
       ],
@@ -537,9 +538,21 @@
         "name": "ScanQRCodeResult",
         "description": "A string corresponding to the scanned QR code. If a regex string is provided, the resulting string matches it. If no regex string is provided, the resulting string matches an Ethereum address. If neither condition is met, the method returns an error.",
         "schema": {
-          "type": "string"
+          "type": "string",
+          "title": "ScanQRCodeResult"
         }
-      }
+      },
+      "examples": [
+        {
+          "name": "wallet_scanQRCode example",
+          "params": [
+            {
+              "name": "regex",
+              "value": "\\\\D"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "eth_decrypt",
