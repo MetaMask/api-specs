@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.3]
+### Uncategorized
+- Added web3_clientVersion ([#164](https://github.com/MetaMask/api-specs/pull/164))
+- build(deps): bump @babel/traverse from 7.20.13 to 7.23.2 ([#170](https://github.com/MetaMask/api-specs/pull/170))
+- Edit descriptions ([#166](https://github.com/MetaMask/api-specs/pull/166))
+- Doc wallet_scanQRCode ([#167](https://github.com/MetaMask/api-specs/pull/167))
+
 ## [0.4.2]
 ### Uncategorized
 - Added eth_requestAccounts ([#163](https://github.com/MetaMask/api-specs/pull/163))
@@ -109,7 +116,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.4.2...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.4.3...HEAD
+[0.4.3]: https://github.com/MetaMask/api-specs/compare/v0.4.2...v0.4.3
 [0.4.2]: https://github.com/MetaMask/api-specs/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/MetaMask/api-specs/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/MetaMask/api-specs/compare/v0.3.1...v0.4.0
