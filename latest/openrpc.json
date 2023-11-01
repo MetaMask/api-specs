@@ -8,7 +8,7 @@
         {
             "name": "eth_subscribe",
             "summary": "Subscribes to specific Ethereum events, returning a subscription ID used to receive notifications.",
-            "description": "The eth_subscribe method allows clients to subscribe to specific events on the Ethereum network, such as new blocks, new pending transactions, or changes in the state of an account. When an event occurs, a notification is sent to the client with the corresponding data. To stop receiving notifications, the client can unsubscribe using the eth_unsubscribe method.",
+            "description": "Subscribes to specific events on the Ethereum network, such as new blocks, new pending transactions, or changes in the state of an account. When an event occurs, a notification is sent to the client with the corresponding data. To stop receiving notifications, the client can unsubscribe using `eth_unsubscribe`.",
             "params": [
                 {
                     "name": "subscriptionType",
@@ -22,19 +22,23 @@
                             "newPendingTransactions",
                             "syncing"
                         ],
-                        "description": "The type of subscription to create. Must be one of:`newHeads`: new block headers - `logs`: logs matching a filter object - `newPendingTransactions`: new pending transactions - `syncing`: changes in syncing status"
+                        "description": "The type of subscription to create. Must be one of the following: \n1. `newHeads` - New block headers. \n2. `logs` - Logs matching a filter object. \n3. `newPendingTransactions` - New pending transactions. \n4. `syncing` - Changes in syncing status."
                     }
                 },
                 {
                     "name": "filterOptions",
+                    "required": false,
                     "schema": {
                         "title": "filterOptions",
                         "type": "object",
-                        "description": "An optional object containing filter options specific to the subscription type. Only applicable for 'logs' subscription type.",
+                        "description": "(Optional) An object containing filter options specific to the subscription type. Only applicable for the `logs` subscription type.",
+                        "required": [
+                            "topics"
+                        ],
                         "properties": {
                             "address": {
                                 "type": "string",
-                                "description": "A single address or an array of addresses to filter the logs by. Optional."
+                                "description": "(Optional) A single address or an array of addresses to filter the logs by."
                             },
                             "topics": {
                                 "type": "array",
@@ -72,15 +76,15 @@
         },
         {
             "name": "eth_unsubscribe",
-            "summary": "Unsubscribes from a specific Ethereum event, using the subscription ID provided by eth_subscribe.",
-            "description": "The eth_unsubscribe method allows clients to unsubscribe from specific events on the Ethereum network, to which they have previously subscribed using the eth_subscribe method. The client needs to provide the subscription ID obtained from eth_subscribe to stop receiving notifications for the corresponding event.",
+            "summary": "Unsubscribes from a specific Ethereum event, using the subscription ID provided by `eth_subscribe`.",
+            "description": "Unsubscribes from specific events on the Ethereum network, to which the client has been previously subscribed using `eth_subscribe`. The client must provide the subscription ID obtained from `eth_subscribe` to stop receiving notifications for the corresponding event.",
             "params": [
                 {
                     "name": "subscriptionId",
                     "required": true,
                     "schema": {
                         "type": "string",
-                        "description": "The unique subscription ID obtained from the eth_subscribe method, used to identify the subscription to be unsubscribed."
+                        "description": "The unique subscription ID obtained from `eth_subscribe`, used to identify the subscription to be unsubscribed."
                     }
                 }
             ],
@@ -115,7 +119,7 @@
                 }
             ],
             "summary": "Adds an Ethereum chain to the wallet.",
-            "description": "Creates a confirmation asking the user to add the specified chain to the wallet application. The caller must specify a chain ID and some chain metadata. The wallet application may refuse or accept the request. `null` is returned if the chain is added, and an error otherwise. Introduced by [EIP 3085](https://eips.ethereum.org/EIPS/eip-3085).",
+            "description": "Creates a confirmation asking the user to add the specified chain to the wallet application. The caller must specify a chain ID and some chain metadata. The wallet application may refuse or accept the request. `null` is returned if the chain is added, and an error otherwise. Introduced by [EIP-3085](https://eips.ethereum.org/EIPS/eip-3085).",
             "params": [
                 {
                     "name": "AddEthereumChainParameter",
@@ -198,7 +202,7 @@
                 }
             ],
             "summary": "Switches the wallet's active Ethereum chain.",
-            "description": "Requests that the wallet switches its active Ethereum chain. Introduced by [EIP 3326](https://ethereum-magicians.org/t/eip-3326-wallet-switchethereumchain).",
+            "description": "Requests that the wallet switches its active Ethereum chain. Introduced by [EIP-3326](https://ethereum-magicians.org/t/eip-3326-wallet-switchethereumchain).",
             "params": [
                 {
                     "name": "SwitchEthereumChainParameter",
@@ -210,7 +214,7 @@
                         ],
                         "properties": {
                             "chainId": {
-                                "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the eth_chainId Ethereum RPC method.",
+                                "description": "The chain ID as a `0x`-prefixed hexadecimal string, per the `eth_chainId` method.",
                                 "type": "string"
                             }
                         }
@@ -226,7 +230,7 @@
             "errors": [
                 {
                     "code": 4902,
-                    "message": "Unrecognized chain ID. Try adding the chain using `wallet_addEthereumChain` first."
+                    "message": "Unrecognized chain ID. Try adding the chain using wallet_addEthereumChain first."
                 }
             ],
             "examples": [
@@ -348,14 +352,14 @@
                 }
             ],
             "summary": "Tracks a token in MetaMask.",
-            "description": "Requests that the user track the specified token in MetaMask. Returns a boolean indicating if the token was successfully added. Once added, the token is indistinguishable from those added using legacy methods, such as a centralized registry. Introduced by [EIP-747](https://eips.ethereum.org/EIPS/eip-747). Currently support for ERC721 and ERC1155 tokens is limited to the extension (not on mobile) and is considered experimental. See [MIP-1](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-1.md) and [MIP proposal lifecycle](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/PROCESS-GUIDE.md#proposal-lifecycle) for more information.",
+            "description": "Requests that the user track the specified token in MetaMask. Returns a boolean indicating if the token was successfully added. Once added, the token is indistinguishable from those added using legacy methods, such as a centralized registry. Introduced by [EIP-747](https://eips.ethereum.org/EIPS/eip-747).",
             "paramStructure": "by-name",
             "params": [
                 {
                     "name": "type",
                     "schema": {
                         "type": "string",
-                        "description": "Supports ERC-20, ERC-721, and ERC-1155 tokens. Currently support for ERC721 and ERC1155 tokens is limited to the extension (not on mobile) and is considered experimental. See [MIP-1](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-1.md) and [MIP proposal lifecycle](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/PROCESS-GUIDE.md#proposal-lifecycle) for more information.",
+                        "description": "Supports ERC-20, ERC-721, and ERC-1155 tokens. Support for ERC-721 and ERC-1155 tokens is experimental and currently only available on the extension (not on mobile). See [MIP-1](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-1.md) and [MIP proposal lifecycle](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/PROCESS-GUIDE.md#proposal-lifecycle) for more information.",
                         "enum": [
                             "ERC20",
                             "ERC721",
@@ -422,15 +426,15 @@
                 },
                 {
                     "code": -32602,
-                    "message": "Asset type is required"
+                    "message": "Asset type is required."
                 },
                 {
                     "code": -32602,
-                    "message": "Both address and tokenId are required"
+                    "message": "Both address and tokenId are required."
                 },
                 {
                     "code": -32602,
-                    "message": "Invalid address"
+                    "message": "Invalid address."
                 },
                 {
                     "code": -32000,
@@ -438,7 +442,7 @@
                 },
                 {
                     "code": -32000,
-                    "message": "Suggested NFT of type ${standard} does not match received type ${type}"
+                    "message": "Suggested NFT of type ${standard} does not match received type ${type}."
                 },
                 {
                     "code": -32002,
@@ -454,7 +458,7 @@
             },
             "examples": [
                 {
-                    "name": "wallet_watchAsset_ERC20_example",
+                    "name": "wallet_watchAsset ERC-20 example",
                     "params": [
                         {
                             "name": "type",
@@ -476,7 +480,7 @@
                     }
                 },
                 {
-                    "name": "wallet_watchAsset_ERC721_example",
+                    "name": "wallet_watchAsset ERC-721 example",
                     "params": [
                         {
                             "name": "type",
@@ -496,7 +500,7 @@
                     }
                 },
                 {
-                    "name": "wallet_watchAsset_ERC1155_example",
+                    "name": "wallet_watchAsset ERC-1155 example",
                     "params": [
                         {
                             "name": "type",
@@ -516,6 +520,38 @@
                     }
                 }
             ]
+        },
+        {
+            "name": "wallet_scanQRCode",
+            "tags": [
+                {
+                    "$ref": "#/components/tags/MetaMask"
+                },
+                {
+                    "$ref": "#/components/tags/Mobile"
+                }
+            ],
+            "summary": "Requests that the user scan a QR code.",
+            "description": "Requests that the user scan a QR code using their device camera. Introduced by [EIP-945](https://github.com/ethereum/EIPs/issues/945).",
+            "params": [
+                {
+                    "name": "regex",
+                    "required": false,
+                    "description": "An array containing a regular expression (regex) string for matching arbitrary QR code strings.",
+                    "schema": {
+                        "type": "array",
+                        "title": "regex"
+                    }
+                }
+            ],
+            "result": {
+                "name": "ScanQRCodeResult",
+                "description": "A string corresponding to the scanned QR code. If a regex string is provided, the resulting string matches it. If no regex string is provided, the resulting string matches an Ethereum address. If neither condition is met, the method returns an error.",
+                "schema": {
+                    "type": "string",
+                    "title": "ScanQRCodeResult"
+                }
+            }
         },
         {
             "name": "eth_decrypt",
@@ -633,7 +669,7 @@
                 }
             ],
             "summary": "Presents a structured data message for the user to sign.",
-            "description": "Presents a data message for the user to sign in a structured and readable format and returns the signed response. Introduced By [EIP-712](https://eips.ethereum.org/EIPS/eip-712).",
+            "description": "Presents a data message for the user to sign in a structured and readable format and returns the signed response. Introduced by [EIP-712](https://eips.ethereum.org/EIPS/eip-712).",
             "params": [
                 {
                     "name": "Address",
@@ -774,7 +810,7 @@
         },
         {
             "name": "eth_sendTransaction",
-            "description": "Creates a new wallet confirmation to make an ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
+            "description": "Creates a new wallet confirmation to make an Ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
             "summary": "Initiates a new transaction.",
             "params": [
                 {
@@ -825,7 +861,7 @@
                             },
                             "gasPrice": {
                                 "title": "gas price",
-                                "description": "The gas price willing to be paid by the sender in wei. Used in pre-1559 transactions.",
+                                "description": "The gas price the sender is willing to pay to miners in wei. Used in pre-1559 transactions.",
                                 "$ref": "#/components/schemas/uint"
                             },
                             "maxPriorityFeePerGas": {
@@ -847,6 +883,42 @@
                 "description": "The transaction hash of the sent transaction.",
                 "schema": {
                     "$ref": "#/components/schemas/bytes32"
+                }
+            }
+        },
+        {
+            "name": "web3_clientVersion",
+            "description": "Returns the current MetaMask client version. This differs slightly per client. For example, the browser extension returns a string like `MetaMask/v10.33.1`, while the mobile app returns a string like `MetaMask/8.1.2/Mobile`.",
+            "summary": "Current client version.",
+            "params": [],
+            "examples": [
+                {
+                    "name": "MetaMaskClientVersionExample",
+                    "description": "Example version response from MetaMask.",
+                    "params": [],
+                    "result": {
+                        "name": "MetaMaskClientVersion",
+                        "description": "The current client version.",
+                        "value": "MetaMask/v10.33.1"
+                    }
+                },
+                {
+                    "name": "MetaMaskMobileClientVersionExample",
+                    "description": "Example version response from MetaMask Mobile.",
+                    "params": [],
+                    "result": {
+                        "name": "MetaMaskClientVersion",
+                        "description": "The current client version.",
+                        "value": "MetaMask/8.1.2/Mobile"
+                    }
+                }
+            ],
+            "result": {
+                "name": "CurrentVersion",
+                "description": "The current client version.",
+                "schema": {
+                    "title": "CurrentClientVersion",
+                    "type": "string"
                 }
             }
         },
@@ -1180,6 +1252,42 @@
                         },
                         {
                             "$ref": "#/components/schemas/Block"
+                        }
+                    ]
+                }
+            },
+            "tags": [
+                {
+                    "name": "Ethereum API",
+                    "description": "Ethereum Node JSON-RPC method"
+                }
+            ]
+        },
+        {
+            "name": "eth_getBlockReceipts",
+            "summary": "Returns the receipts of a block by number or hash.",
+            "params": [
+                {
+                    "name": "Block",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BlockNumberOrTagOrHash"
+                    }
+                }
+            ],
+            "result": {
+                "name": "Receipts information",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/notFound"
+                        },
+                        {
+                            "title": "Receipts information",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/ReceiptInfo"
+                            }
                         }
                     ]
                 }
@@ -1757,7 +1865,7 @@
         },
         {
             "name": "eth_sendRawTransaction",
-            "summary": "Submits a raw transaction.",
+            "summary": "Submits a raw transaction. For EIP-4844 transactions, the raw form must be the network form. This means it includes the blobs, KZG commitments, and KZG proofs.",
             "params": [
                 {
                     "name": "Transaction",
@@ -1848,7 +1956,7 @@
                         "properties": {
                             "EIP712Domain": {
                                 "type": "array",
-                                "description": "An array specifying one or more of the following domain separator values: 1) 'name' - The user-readable name of signing domain, i.e., the name of the dapp or the protocol. 2) 'version' - The current major version of the signing domain. 3) 'chainId' - The EIP-155 chain ID. 4) 'verifyingContract' - The address of the contract that will verify the signature. 5) 'salt' - A disambiguating salt for the protocol."
+                                "description": "An array specifying one or more of the following domain separator values: 1) `name` - The user-readable name of signing domain, i.e., the name of the dapp or the protocol. 2) `version` - The current major version of the signing domain. 3) `chainId` - The chain ID of the network. 4) `verifyingContract` - The address of the contract that will verify the signature. 5) `salt` - A disambiguating salt for the protocol."
                             }
                         },
                         "additionalProperties": {
@@ -1872,13 +1980,14 @@
                     },
                     "domain": {
                         "type": "object",
-                        "description": "Contains the domain separator values specified in the EIP712Domain type."
+                        "description": "Contains the domain separator values specified in the `EIP712Domain` type."
                     },
                     "primaryType": {
                         "type": "string"
                     },
                     "message": {
-                        "type": "object"
+                        "type": "object",
+                        "description": "The message you're proposing the user to sign."
                     }
                 }
             },
@@ -1890,22 +1999,22 @@
                 ],
                 "properties": {
                     "chainId": {
-                        "description": "MUST specify the integer ID of the chain as a hexadecimal string, per the eth_chainId Ethereum RPC method. The wallet SHOULD compare the specified chain ID value with the eth_chainId return value from the endpoint. If these values aren't identical, the wallet MUST reject the request.",
+                        "description": "The chain ID as a `0x`-prefixed hexadecimal string, per the `eth_chainId` method. MetaMask compares this chain ID value with the `eth_chainId` return value. If these values aren't identical, MetaMask rejects the request.",
                         "type": "string"
                     },
                     "blockExplorerUrls": {
-                        "description": "If provided, MUST specify one or more URLs pointing to block explorer sites for the chain.",
+                        "description": "(Optional) One or more URLs pointing to block explorer sites for the chain.",
                         "type": "array",
                         "items": {
                             "type": "string"
                         }
                     },
                     "chainName": {
-                        "description": "If provided, MUST specify a human-readable name for the chain.",
+                        "description": "(Optional) A human-readable name for the chain.",
                         "type": "string"
                     },
                     "iconUrls": {
-                        "description": "If provided, MUST specify one or more URLs pointing to reasonably sized images that can be used to visually identify the chain.",
+                        "description": "(Optional) One or more URLs pointing to reasonably sized images that can be used to visually identify the chain.",
                         "type": "array",
                         "items": {
                             "format": "uri",
@@ -1916,6 +2025,7 @@
                         "$ref": "#/components/schemas/NativeCurrency"
                     },
                     "rpcUrls": {
+                        "description": "One or more URLs pointing to RPC endpoints that can be used to communicate with the chain. At least one item is required, and only the first item is used.",
                         "type": "array",
                         "items": {
                             "type": "string"
@@ -1926,7 +2036,7 @@
             "NativeCurrency": {
                 "title": "NativeCurrency",
                 "type": "object",
-                "description": "If provided, MUST describe the native currency of the chain using the name, symbol, and decimals fields.",
+                "description": "(Optional) Describes the native currency of the chain using the name, symbol, and decimals fields.",
                 "required": [
                     "decimals",
                     "name",
@@ -1939,11 +2049,11 @@
                         "type": "integer"
                     },
                     "name": {
-                        "description": "SHOULD be human-readable.",
+                        "description": "A human-readable name.",
                         "type": "string"
                     },
                     "symbol": {
-                        "description": "SHOULD be human-readable.",
+                        "description": "A human-readable symbol.",
                         "type": "string"
                     }
                 }
@@ -1953,7 +2063,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "description": "Every capability document, except for the target, MUST have an associated ID.",
+                        "description": "The permission ID.",
                         "type": "string"
                     },
                     "@context": {
@@ -1964,11 +2074,11 @@
                         }
                     },
                     "invoker": {
-                        "description": "Links to one or more instances of cryptographic material (such as public keys) being granted authority to use this capability.",
+                        "description": "A URI of the dapp being granted this permission.",
                         "type": "string"
                     },
                     "caveats": {
-                        "description": "Every capability document MAY add restrictions on the way the capability may be used by adding to the caveat property. Capabilities inherit the restrictions from all caveat properties of their parents, and MAY add new caveats in addition to those of their parents.",
+                        "description": "The specific restrictions applied to the permitted method.",
                         "type": "array",
                         "items": {
                             "type": "object",
@@ -2181,6 +2291,18 @@
                         "title": "Withdrawals root",
                         "$ref": "#/components/schemas/hash32"
                     },
+                    "blobGasUsed": {
+                        "title": "Blob gas used",
+                        "$ref": "#/components/schemas/uint"
+                    },
+                    "excessBlobGas": {
+                        "title": "Excess blob gas",
+                        "$ref": "#/components/schemas/uint"
+                    },
+                    "parentBeaconBlockRoot": {
+                        "title": "Parent Beacon Block Root",
+                        "$ref": "#/components/schemas/hash32"
+                    },
                     "size": {
                         "title": "Block size",
                         "$ref": "#/components/schemas/uint"
@@ -2273,7 +2395,7 @@
                 "properties": {
                     "block": {
                         "title": "Block",
-                        "$ref": "#/components/schemas/bytes"
+                        "$ref": "#/components/schemas/Block"
                     },
                     "hash": {
                         "title": "Hash",
@@ -2513,6 +2635,11 @@
                         "description": "The amount of gas used for this specific transaction alone.",
                         "$ref": "#/components/schemas/uint"
                     },
+                    "blobGasUsed": {
+                        "title": "blob gas used",
+                        "description": "The amount of blob gas used for this specific transaction. Only specified for blob transactions as defined by EIP-4844.",
+                        "$ref": "#/components/schemas/uint"
+                    },
                     "contractAddress": {
                         "title": "contract address",
                         "description": "The contract address created, if the transaction was a contract creation, otherwise null.",
@@ -2549,7 +2676,12 @@
                     },
                     "effectiveGasPrice": {
                         "title": "effective gas price",
-                        "description": "The actual value per gas deducted from the senders account. Before EIP-1559, this is equal to the transaction's gas price. After, it is equal to baseFeePerGas + min(maxFeePerGas - baseFeePerGas, maxPriorityFeePerGas).",
+                        "description": "The actual value per gas deducted from the sender's account. Before EIP-1559, this is equal to the transaction's gas price. After, it is equal to baseFeePerGas + min(maxFeePerGas - baseFeePerGas, maxPriorityFeePerGas).",
+                        "$ref": "#/components/schemas/uint"
+                    },
+                    "blobGasPrice": {
+                        "title": "blob gas price",
+                        "description": "The actual value per gas deducted from the sender's account for blob gas. Only specified for blob transactions as defined by EIP-4844.",
                         "$ref": "#/components/schemas/uint"
                     }
                 }
@@ -2628,6 +2760,83 @@
                         "items": {
                             "$ref": "#/components/schemas/bytes"
                         }
+                    }
+                }
+            },
+            "Transaction4844Unsigned": {
+                "type": "object",
+                "title": "EIP-4844 transaction.",
+                "required": [
+                    "type",
+                    "nonce",
+                    "to",
+                    "gas",
+                    "value",
+                    "input",
+                    "maxPriorityFeePerGas",
+                    "maxFeePerGas",
+                    "maxFeePerBlobGas",
+                    "accessList",
+                    "blobVersionedHashes",
+                    "chainId"
+                ],
+                "properties": {
+                    "type": {
+                        "title": "type",
+                        "$ref": "#/components/schemas/byte"
+                    },
+                    "nonce": {
+                        "title": "nonce",
+                        "$ref": "#/components/schemas/uint"
+                    },
+                    "to": {
+                        "title": "to address",
+                        "$ref": "#/components/schemas/address"
+                    },
+                    "gas": {
+                        "title": "gas limit",
+                        "$ref": "#/components/schemas/uint"
+                    },
+                    "value": {
+                        "title": "value",
+                        "$ref": "#/components/schemas/uint"
+                    },
+                    "input": {
+                        "title": "input data",
+                        "$ref": "#/components/schemas/bytes"
+                    },
+                    "maxPriorityFeePerGas": {
+                        "title": "max priority fee per gas",
+                        "description": "Maximum fee per gas the sender is willing to pay to miners in wei",
+                        "$ref": "#/components/schemas/uint"
+                    },
+                    "maxFeePerGas": {
+                        "title": "max fee per gas",
+                        "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei",
+                        "$ref": "#/components/schemas/uint"
+                    },
+                    "maxFeePerBlobGas": {
+                        "title": "max fee per blob gas",
+                        "description": "The maximum total fee per gas the sender is willing to pay for blob gas in wei",
+                        "$ref": "#/components/schemas/uint"
+                    },
+                    "accessList": {
+                        "title": "accessList",
+                        "description": "EIP-2930 access list",
+                        "$ref": "#/components/schemas/AccessList"
+                    },
+                    "blobVersionedHashes": {
+                        "title": "blobVersionedHashes",
+                        "description": "List of versioned blob hashes associated with the transaction's EIP-4844 data blobs.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/hash32"
+                        }
+                    },
+                    "chainId": {
+                        "title": "chainId",
+                        "description": "Chain ID that this transaction is valid on.",
+                        "$ref": "#/components/schemas/uint"
                     }
                 }
             },
@@ -2857,6 +3066,9 @@
             "TransactionUnsigned": {
                 "oneOf": [
                     {
+                        "$ref": "#/components/schemas/Transaction4844Unsigned"
+                    },
+                    {
                         "$ref": "#/components/schemas/Transaction1559Unsigned"
                     },
                     {
@@ -2864,6 +3076,38 @@
                     },
                     {
                         "$ref": "#/components/schemas/TransactionLegacyUnsigned"
+                    }
+                ]
+            },
+            "Transaction4844Signed": {
+                "title": "Signed 4844 Transaction",
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Transaction4844Unsigned"
+                    },
+                    {
+                        "title": "EIP-4844 transaction signature properties.",
+                        "required": [
+                            "yParity",
+                            "r",
+                            "s"
+                        ],
+                        "properties": {
+                            "yParity": {
+                                "title": "yParity",
+                                "description": "The parity (0 for even, 1 for odd) of the y-value of the secp256k1 signature.",
+                                "$ref": "#/components/schemas/uint"
+                            },
+                            "r": {
+                                "title": "r",
+                                "$ref": "#/components/schemas/uint"
+                            },
+                            "s": {
+                                "title": "s",
+                                "$ref": "#/components/schemas/uint"
+                            }
+                        }
                     }
                 ]
             },
@@ -2975,6 +3219,9 @@
             "TransactionSigned": {
                 "oneOf": [
                     {
+                        "$ref": "#/components/schemas/Transaction4844Signed"
+                    },
+                    {
                         "$ref": "#/components/schemas/Transaction1559Signed"
                     },
                     {
@@ -3084,10 +3331,31 @@
                         "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei",
                         "$ref": "#/components/schemas/uint"
                     },
+                    "maxFeePerBlobGas": {
+                        "title": "max fee per blob gas",
+                        "description": "The maximum total fee per gas the sender is willing to pay for blob gas in wei",
+                        "$ref": "#/components/schemas/uint"
+                    },
                     "accessList": {
                         "title": "accessList",
                         "description": "EIP-2930 access list",
                         "$ref": "#/components/schemas/AccessList"
+                    },
+                    "blobVersionedHashes": {
+                        "title": "blobVersionedHashes",
+                        "description": "List of versioned blob hashes associated with the transaction's EIP-4844 data blobs.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/hash32"
+                        }
+                    },
+                    "blobs": {
+                        "title": "blobs",
+                        "description": "Raw blob data.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/bytes"
+                        }
                     },
                     "chainId": {
                         "title": "chainId",
@@ -3514,8 +3782,8 @@
                     "blockHash",
                     "transactions",
                     "withdrawals",
-                    "dataGasUsed",
-                    "excessDataGas"
+                    "blobGasUsed",
+                    "excessBlobGas"
                 ],
                 "properties": {
                     "parentHash": {
@@ -3563,12 +3831,12 @@
                     "withdrawals": {
                         "$ref": "#/components/schemas/ExecutionPayloadV2/properties/withdrawals"
                     },
-                    "dataGasUsed": {
-                        "title": "Data gas used",
+                    "blobGasUsed": {
+                        "title": "Blob gas used",
                         "$ref": "#/components/schemas/uint64"
                     },
-                    "excessDataGas": {
-                        "title": "Excess data gas",
+                    "excessBlobGas": {
+                        "title": "Excess blob gas",
                         "$ref": "#/components/schemas/uint64"
                     }
                 }
