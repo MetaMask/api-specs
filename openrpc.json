@@ -877,6 +877,42 @@
           "$ref": "#/components/schemas/bytes32"
         }
       }
+    },
+    {
+      "name": "web3_clientVersion",
+      "description": "Returns the current MetaMask client version. This differs slightly per client. For example, the browser extension returns a string like `MetaMask/v10.33.1`, while the mobile app returns a string like `MetaMask/8.1.2/Mobile`.",
+      "summary": "Current client version.",
+      "params": [],
+      "examples": [
+        {
+          "name": "MetaMaskClientVersionExample",
+          "description": "Example version response from MetaMask.",
+          "params": [],
+          "result": {
+            "name": "MetaMaskClientVersion",
+            "description": "The current client version.",
+            "value": "MetaMask/v10.33.1"
+          }
+        },
+        {
+          "name": "MetaMaskMobileClientVersionExample",
+          "description": "Example version response from MetaMask Mobile.",
+          "params": [],
+          "result": {
+            "name": "MetaMaskClientVersion",
+            "description": "The current client version.",
+            "value": "MetaMask/8.1.2/Mobile"
+          }
+        }
+      ],
+      "result": {
+        "name": "CurrentVersion",
+        "description": "The current client version.",
+        "schema": {
+          "title": "CurrentClientVersion",
+          "type": "string"
+        }
+      }
     }
   ],
   "components": {
