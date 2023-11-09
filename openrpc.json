@@ -3,7 +3,7 @@
   "info": {
     "title": "MetaMask JSON-RPC API Reference",
     "version": "1.0.0",
-    "description": "This section provides a detailed API reference for interacting with the MetaMask wallet via JSON-RPC methods. This API builds on a set of standard Ethereum methods with MetaMask-specific enhancements and is designed for seamless integration into decentralized applications. You can explore the APIs using the interactive playground for hands-on experimentation with individual RPC methods. Try them out with the pre-configured examples or enter custom parameters. If there are custom parameters you would like to reuse from the playground, then bookmarks can be used to pre-fill any custom parameters you configured."
+    "description": "This section provides an interactive reference for the MetaMask JSON-RPC API. This API builds on a set of standard Ethereum methods with MetaMask-specific enhancements, and is designed for seamless integration into dapps. You can try out individual RPC methods using the pre-configured examples or enter custom parameters. You can also use bookmarks to reuse and pre-fill any custom parameters."
   },
   "methods": [
     {
