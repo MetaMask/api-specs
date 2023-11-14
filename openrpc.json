@@ -2,7 +2,8 @@
   "openrpc": "1.2.4",
   "info": {
     "title": "MetaMask JSON-RPC API Reference",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "description": "This section provides an interactive reference for the MetaMask JSON-RPC API. This API builds on a set of standard Ethereum methods with MetaMask-specific enhancements, and is designed for seamless integration into dapps. You can try out individual RPC methods using the pre-configured examples or enter custom parameters. You can also use bookmarks to reuse and pre-fill any custom parameters."
   },
   "methods": [
     {
