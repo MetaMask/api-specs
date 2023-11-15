@@ -1095,9 +1095,11 @@
         }
       },
       "Caveats": {
+        "title": "Caveats",
         "description": "Every capability document MAY add restrictions on the way the capability may be used by adding to the caveat property. Capabilities inherit the restrictions from all caveat properties of their parents, and MAY add new caveats in addition to those of their parents.",
         "type": "array",
         "items": {
+          "title": "Caveat",
           "type": "object",
           "properties": {
             "type": {
