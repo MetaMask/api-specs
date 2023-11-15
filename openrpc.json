@@ -302,7 +302,6 @@
     },
     {
       "name": "wallet_revokePermissions",
-      "x-experimental": true,
       "tags": [
         {
           "$ref": "#/components/tags/MetaMask"
@@ -311,8 +310,8 @@
           "$ref": "#/components/tags/Experimental"
         }
       ],
-      "summary": "Revoke wallet permissions.",
-      "description": "Revoke previously granted permissions for a specific dapp identified by origin (invoker)",
+      "summary": "Revoke the current dapp permissions.",
+      "description": "Revoke previously granted permissions for the current dapp identified by origin",
       "paramStructure": "by-name",
       "params": [
         {
@@ -320,39 +319,18 @@
           "required": false,
           "schema": {
             "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "The id of the permission to be revoked"
-              },
-              "target": {
-                "type": "string",
-                "description": "The target name of the permission, also referred to as parentCapability",
-                "examples": [
-                  "eth_accounts",
-                  "wallet_snap",
-                  "snap_dialog",
-                  "snap_notify",
-                  "snap_manageState"
-                ]
-              },
-              "caveatType": {
-                "type": "string",
-                "description": "The type of the caveat to update",
-                "examples": ["restrictReturnedAccounts"]
-              },
-              "caveatValue": {
-                "type": "array",
-                "description": "The value of the caveat to be revoked from the target permission",
-                "examples": ["0x71C7656EC7ab88b098defB751B7401B5f6d8976F"],
-                "items": {
-                  "type": "string"
+            "title": "PermissionKey",
+            "patternProperties": {
+              ".*": {
+                "type": "object",
+                "title": "Permission",
+                "additionalProperties": false,
+                "properties": {
+                  "caveats": {
+                    "$ref": "#/components/schemas/Caveats"
+                  }
                 }
               }
-            },
-            "dependencies": {
-              "target": ["caveatType"],
-              "caveatType": ["target", "caveatValue"]
             }
           }
         }
@@ -364,12 +342,7 @@
           "$ref": "#/components/schemas/PermissionsList"
         }
       },
-      "errors": [
-        {
-          "code": 404,
-          "message": "revoked permission was not found"
-        }
-      ],
+      "errors": [],
       "examples": [
         {
           "name": "wallet_revokePermissions example of revoking all permissions",
@@ -432,7 +405,11 @@
           "schema": {
             "type": "string",
             "description": "Supports ERC-20, ERC-721, and ERC-1155 tokens. Currently support for ERC721 and ERC1155 tokens is limited to the extension (not on mobile) and is considered experimental. See [MIP-1](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-1.md) and [MIP proposal lifecycle](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/PROCESS-GUIDE.md#proposal-lifecycle) for more information.",
-            "enum": ["ERC20", "ERC721", "ERC1155"]
+            "enum": [
+              "ERC20",
+              "ERC721",
+              "ERC1155"
+            ]
           },
           "required": true
         },
@@ -441,7 +418,9 @@
           "schema": {
             "title": "WatchAssetOptions",
             "type": "object",
-            "required": ["address"],
+            "required": [
+              "address"
+            ],
             "properties": {
               "address": {
                 "description": "The address of the token contract.",
@@ -1016,46 +995,49 @@
           }
         }
       },
-      "Permission": {
-        "title": "Permission",
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "Every capability document, except for the target, MUST have an associated ID.",
-            "type": "string"
-          },
-          "@context": {
-            "description": "When two people communicate with one another, the conversation takes place in a shared environment, typically called 'the context of the conversation.' This shared context allows the individuals to use shortcut terms, such as the first name of a mutual friend, to communicate more quickly without losing accuracy. A context in JSON-LD works the same way: it allows two applications to use shortcut terms to communicate more efficiently without losing accuracy.",
-            "type": "array",
-            "items": {
-              "type": "string"
+      "Caveats": {
+        "description": "Every capability document MAY add restrictions on the way the capability may be used by adding to the caveat property. Capabilities inherit the restrictions from all caveat properties of their parents, and MAY add new caveats in addition to those of their parents.",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "title": "Type",
+              "type": "string",
+              "description": "Type of caveat."
+            },
+            "value": {
+              "title": "CaveatValue",
+              "description": "Value of the caveat."
+            },
+            "name": {
+              "title": "Name",
+              "type": "string",
+              "description": "Name of the caveat."
             }
-          },
-          "invoker": {
-            "description": "Links to one or more instances of cryptographic material (such as public keys) being granted authority to use this capability.",
-            "type": "string"
-          },
-          "caveats": {
-            "description": "Every capability document MAY add restrictions on the way the capability may be used by adding to the caveat property. Capabilities inherit the restrictions from all caveat properties of their parents, and MAY add new caveats in addition to those of their parents.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "title": "Type",
-                  "type": "string",
-                  "description": "Type of caveat."
-                },
-                "value": {
-                  "title": "CaveatValue",
-                  "description": "Value of the caveat."
-                },
-                "name": {
-                  "title": "Name",
-                  "type": "string",
-                  "description": "Name of the caveat."
-                }
+          }
+        },
+        "Permission": {
+          "title": "Permission",
+          "type": "object",
+          "properties": {
+            "id": {
+              "description": "Every capability document, except for the target, MUST have an associated ID.",
+              "type": "string"
+            },
+            "@context": {
+              "description": "When two people communicate with one another, the conversation takes place in a shared environment, typically called 'the context of the conversation.' This shared context allows the individuals to use shortcut terms, such as the first name of a mutual friend, to communicate more quickly without losing accuracy. A context in JSON-LD works the same way: it allows two applications to use shortcut terms to communicate more efficiently without losing accuracy.",
+              "type": "array",
+              "items": {
+                "type": "string"
               }
+            },
+            "invoker": {
+              "description": "Links to one or more instances of cryptographic material (such as public keys) being granted authority to use this capability.",
+              "type": "string"
+            },
+            "caveats": {
+              "$ref": "#/components/schemas/Caveats"
             }
           }
         }
