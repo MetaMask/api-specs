@@ -6,6 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.4]
+### Uncategorized
+- Add description for index page ([#172](https://github.com/MetaMask/api-specs/pull/172))
+
+## [0.4.3]
+### Uncategorized
+- Added web3_clientVersion ([#164](https://github.com/MetaMask/api-specs/pull/164))
+- build(deps): bump @babel/traverse from 7.20.13 to 7.23.2 ([#170](https://github.com/MetaMask/api-specs/pull/170))
+- Edit descriptions ([#166](https://github.com/MetaMask/api-specs/pull/166))
+- Doc wallet_scanQRCode ([#167](https://github.com/MetaMask/api-specs/pull/167))
+
+## [0.4.2]
+### Uncategorized
+- Added eth_requestAccounts ([#163](https://github.com/MetaMask/api-specs/pull/163))
+- add new wallet_watchAsset error ([#162](https://github.com/MetaMask/api-specs/pull/162))
+- MIP-1 proposed watch asset changes ([#138](https://github.com/MetaMask/api-specs/pull/138))
+
 ## [0.4.1]
 ### Uncategorized
 - Fixed permission caveat value + added descriptions ([#160](https://github.com/MetaMask/api-specs/pull/160))
@@ -103,7 +120,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.4.1...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.4.4...HEAD
+[0.4.4]: https://github.com/MetaMask/api-specs/compare/v0.4.3...v0.4.4
+[0.4.3]: https://github.com/MetaMask/api-specs/compare/v0.4.2...v0.4.3
+[0.4.2]: https://github.com/MetaMask/api-specs/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/MetaMask/api-specs/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/MetaMask/api-specs/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/MetaMask/api-specs/compare/v0.3.0...v0.3.1
