@@ -320,7 +320,6 @@
       ],
       "summary": "Revoke the current dapp permissions.",
       "description": "Revoke previously granted permissions for the current dapp identified by origin",
-      "paramStructure": "by-name",
       "params": [
         {
           "name": "permission",
