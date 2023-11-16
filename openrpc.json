@@ -344,7 +344,7 @@
       ],
       "result": {
         "name": "UpdatedPermissionsAfterRevoke",
-        "description": "The list of the revoked permissions objects",
+        "description": "The permissions list after the permission has been revoked",
         "schema": {
           "$ref": "#/components/schemas/PermissionsList"
         }
