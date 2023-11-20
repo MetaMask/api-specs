@@ -264,18 +264,7 @@
           "name": "requestPermissionsObject",
           "required": true,
           "schema": {
-            "title": "requestPermissionObject",
-            "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "additionalProperties": true
-            },
-            "properties": {
-              "eth_accounts": {
-                "type": "object",
-                "additionalProperties": true
-              }
-            }
+            "$ref": "#/components/schemas/PermissionObject"
           }
         }
       ],
@@ -322,23 +311,10 @@
       "description": "Revoke previously granted permissions for the current dapp identified by origin",
       "params": [
         {
-          "name": "permission",
-          "required": false,
+          "name": "revokePermissionObject",
+          "required": true,
           "schema": {
-            "type": "object",
-            "title": "PermissionKey",
-            "patternProperties": {
-              ".*": {
-                "type": "object",
-                "title": "Permission",
-                "additionalProperties": false,
-                "properties": {
-                  "caveats": {
-                    "$ref": "#/components/schemas/Caveats"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/schemas/PermissionObject"
           }
         }
       ],
@@ -352,8 +328,15 @@
       "errors": [],
       "examples": [
         {
-          "name": "wallet_revokePermissions example of revoking all permissions",
-          "params": [],
+          "name": "wallet_revokePermissions example of revoking the eth_accounts permission",
+          "params": [
+            {
+              "name": "revokePermissionObject",
+              "value": {
+                "eth_accounts": {}
+              }
+            }
+          ],
           "result": {
             "name": "UpdatedPermissionsAfterRevoke",
             "value": []
@@ -1115,6 +1098,20 @@
               "type": "string",
               "description": "Name of the caveat."
             }
+          }
+        }
+      },
+      "PermissionObject": {
+        "type": "object",
+        "title": "PermissionObject",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "properties": {
+          "eth_accounts": {
+            "type": "object",
+            "additionalProperties": true
           }
         }
       },
