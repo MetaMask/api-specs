@@ -264,18 +264,7 @@
           "name": "requestPermissionsObject",
           "required": true,
           "schema": {
-            "title": "requestPermissionObject",
-            "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "additionalProperties": true
-            },
-            "properties": {
-              "eth_accounts": {
-                "type": "object",
-                "additionalProperties": true
-              }
-            }
+            "$ref": "#/components/schemas/PermissionObject"
           }
         }
       ],
@@ -305,6 +294,53 @@
       "errors": [
         {
           "$ref": "#/components/errors/UserRejected"
+        }
+      ]
+    },
+    {
+      "name": "wallet_revokePermissions",
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Experimental"
+        }
+      ],
+      "summary": "Revoke the current dapp permissions.",
+      "description": "Revoke previously granted permissions for the current dapp identified by origin",
+      "params": [
+        {
+          "name": "revokePermissionObject",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/PermissionObject"
+          }
+        }
+      ],
+      "result": {
+        "name": "UpdatedPermissionsAfterRevoke",
+        "description": "The permissions list after the permission has been revoked",
+        "schema": {
+          "$ref": "#/components/schemas/PermissionsList"
+        }
+      },
+      "errors": [],
+      "examples": [
+        {
+          "name": "wallet_revokePermissions example of revoking the eth_accounts permission",
+          "params": [
+            {
+              "name": "revokePermissionObject",
+              "value": {
+                "eth_accounts": {}
+              }
+            }
+          ],
+          "result": {
+            "name": "UpdatedPermissionsAfterRevoke",
+            "value": []
+          }
         }
       ]
     },
@@ -368,7 +404,9 @@
           "schema": {
             "title": "WatchAssetOptions",
             "type": "object",
-            "required": ["address"],
+            "required": [
+              "address"
+            ],
             "properties": {
               "address": {
                 "description": "The address of the token contract.",
@@ -1038,6 +1076,45 @@
           }
         }
       },
+      "Caveats": {
+        "title": "Caveats",
+        "description": "Every capability document MAY add restrictions on the way the capability may be used by adding to the caveat property. Capabilities inherit the restrictions from all caveat properties of their parents, and MAY add new caveats in addition to those of their parents.",
+        "type": "array",
+        "items": {
+          "title": "Caveat",
+          "type": "object",
+          "properties": {
+            "type": {
+              "title": "Type",
+              "type": "string",
+              "description": "Type of caveat."
+            },
+            "value": {
+              "title": "CaveatValue",
+              "description": "Value of the caveat."
+            },
+            "name": {
+              "title": "Name",
+              "type": "string",
+              "description": "Name of the caveat."
+            }
+          }
+        }
+      },
+      "PermissionObject": {
+        "type": "object",
+        "title": "PermissionObject",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "properties": {
+          "eth_accounts": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
       "Permission": {
         "title": "Permission",
         "type": "object",
@@ -1058,27 +1135,7 @@
             "type": "string"
           },
           "caveats": {
-            "description": "The specific restrictions applied to the permitted method.",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "title": "Type",
-                  "type": "string",
-                  "description": "Type of caveat."
-                },
-                "value": {
-                  "title": "CaveatValue",
-                  "description": "Value of the caveat."
-                },
-                "name": {
-                  "title": "Name",
-                  "type": "string",
-                  "description": "Name of the caveat."
-                }
-              }
-            }
+            "$ref": "#/components/schemas/Caveats"
           }
         }
       },
@@ -1101,6 +1158,10 @@
       "Mobile": {
         "name": "Mobile",
         "description": "Mobile-specific methods."
+      },
+      "Experimental": {
+        "name": "Experimental",
+        "description": "Experimental methods."
       }
     },
     "errors": {
