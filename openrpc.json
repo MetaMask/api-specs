@@ -1013,7 +1013,10 @@
         "title": "AddEthereumChainParameter",
         "type": "object",
         "required": [
-          "chainId"
+          "chainId",
+          "chainName",
+          "rpcUrls",
+          "nativeCurrency"
         ],
         "properties": {
           "chainId": {
