@@ -307,8 +307,8 @@
           "$ref": "#/components/tags/Experimental"
         }
       ],
-      "summary": "Revoke the current dapp permissions.",
-      "description": "Revoke previously granted permissions for the current dapp identified by origin",
+      "summary": "Revokes the current dapp permissions.",
+      "description": "Revokes previously granted permissions for the current dapp identified by origin. This method is specified by [MIP-2](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md) and is only available for the browser extension.",
       "params": [
         {
           "name": "revokePermissionObject",
