@@ -1018,7 +1018,10 @@
         "title": "AddEthereumChainParameter",
         "type": "object",
         "required": [
-          "chainId"
+          "chainId",
+          "chainName",
+          "nativeCurrency",
+          "rpcUrls"
         ],
         "properties": {
           "chainId": {
@@ -1050,7 +1053,9 @@
           "rpcUrls": {
             "description": "One or more URLs pointing to RPC endpoints that can be used to communicate with the chain. At least one item is required, and only the first item is used.",
             "type": "array",
+            "minItems": 1,
             "items": {
+              "format": "uri",
               "type": "string"
             }
           }
