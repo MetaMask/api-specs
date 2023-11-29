@@ -319,10 +319,9 @@
         }
       ],
       "result": {
-        "name": "UpdatedPermissionsAfterRevoke",
-        "description": "The permissions list after the permission has been revoked",
+        "name": "RevokePermissionsResult",
         "schema": {
-          "$ref": "#/components/schemas/PermissionsList"
+          "type": "null"
         }
       },
       "errors": [],
@@ -339,7 +338,7 @@
           ],
           "result": {
             "name": "UpdatedPermissionsAfterRevoke",
-            "value": []
+            "value": null
           }
         }
       ]
