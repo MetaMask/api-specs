@@ -337,7 +337,7 @@
             }
           ],
           "result": {
-            "name": "UpdatedPermissionsAfterRevoke",
+            "name": "RevokePermissionsResult",
             "value": null
           }
         }
