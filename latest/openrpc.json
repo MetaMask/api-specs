@@ -266,18 +266,7 @@
                     "name": "requestPermissionsObject",
                     "required": true,
                     "schema": {
-                        "title": "requestPermissionObject",
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "object",
-                            "additionalProperties": true
-                        },
-                        "properties": {
-                            "eth_accounts": {
-                                "type": "object",
-                                "additionalProperties": true
-                            }
-                        }
+                        "$ref": "#/components/schemas/PermissionObject"
                     }
                 }
             ],
@@ -307,6 +296,52 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/UserRejected"
+                }
+            ]
+        },
+        {
+            "name": "wallet_revokePermissions",
+            "tags": [
+                {
+                    "$ref": "#/components/tags/MetaMask"
+                },
+                {
+                    "$ref": "#/components/tags/Experimental"
+                }
+            ],
+            "summary": "Revoke the current dapp permissions.",
+            "description": "Revoke previously granted permissions for the current dapp identified by origin",
+            "params": [
+                {
+                    "name": "revokePermissionObject",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/PermissionObject"
+                    }
+                }
+            ],
+            "result": {
+                "name": "RevokePermissionsResult",
+                "schema": {
+                    "type": "null"
+                }
+            },
+            "errors": [],
+            "examples": [
+                {
+                    "name": "wallet_revokePermissions example of revoking the eth_accounts permission",
+                    "params": [
+                        {
+                            "name": "revokePermissionObject",
+                            "value": {
+                                "eth_accounts": {}
+                            }
+                        }
+                    ],
+                    "result": {
+                        "name": "RevokePermissionsResult",
+                        "value": null
+                    }
                 }
             ]
         },
@@ -559,10 +594,13 @@
             "tags": [
                 {
                     "$ref": "#/components/tags/MetaMask"
+                },
+                {
+                    "$ref": "#/components/tags/Deprecated"
                 }
             ],
             "summary": "Decrypts an encrypted message.",
-            "description": "Requests that MetaMask decrypt the specified encrypted message. The message must have been encrypted using the public encryption key of the specified Ethereum address. Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
+            "description": "This method is deprecated and may be removed in the future. \n\n Requests that MetaMask decrypt the specified encrypted message. The message must have been encrypted using the public encryption key of the specified Ethereum address. Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
             "params": [
                 {
                     "name": "EncryptedMessage",
@@ -592,11 +630,14 @@
             "tags": [
                 {
                     "$ref": "#/components/tags/MetaMask"
+                },
+                {
+                    "$ref": "#/components/tags/Deprecated"
                 }
             ],
             "name": "eth_getEncryptionPublicKey",
             "summary": "Gets a public key used for encryption.",
-            "description": "Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
+            "description": "This method is deprecated and may be removed in the future. \n\n Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
             "params": [
                 {
                     "name": "Address",
@@ -1996,7 +2037,10 @@
                 "title": "AddEthereumChainParameter",
                 "type": "object",
                 "required": [
-                    "chainId"
+                    "chainId",
+                    "chainName",
+                    "nativeCurrency",
+                    "rpcUrls"
                 ],
                 "properties": {
                     "chainId": {
@@ -2028,7 +2072,9 @@
                     "rpcUrls": {
                         "description": "One or more URLs pointing to RPC endpoints that can be used to communicate with the chain. At least one item is required, and only the first item is used.",
                         "type": "array",
+                        "minItems": 1,
                         "items": {
+                            "format": "uri",
                             "type": "string"
                         }
                     }
@@ -2059,6 +2105,45 @@
                     }
                 }
             },
+            "Caveats": {
+                "title": "Caveats",
+                "description": "Every capability document MAY add restrictions on the way the capability may be used by adding to the caveat property. Capabilities inherit the restrictions from all caveat properties of their parents, and MAY add new caveats in addition to those of their parents.",
+                "type": "array",
+                "items": {
+                    "title": "Caveat",
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "title": "Type",
+                            "type": "string",
+                            "description": "Type of caveat."
+                        },
+                        "value": {
+                            "title": "CaveatValue",
+                            "description": "Value of the caveat."
+                        },
+                        "name": {
+                            "title": "Name",
+                            "type": "string",
+                            "description": "Name of the caveat."
+                        }
+                    }
+                }
+            },
+            "PermissionObject": {
+                "type": "object",
+                "title": "PermissionObject",
+                "additionalProperties": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "properties": {
+                    "eth_accounts": {
+                        "type": "object",
+                        "additionalProperties": true
+                    }
+                }
+            },
             "Permission": {
                 "title": "Permission",
                 "type": "object",
@@ -2079,27 +2164,7 @@
                         "type": "string"
                     },
                     "caveats": {
-                        "description": "The specific restrictions applied to the permitted method.",
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "type": {
-                                    "title": "Type",
-                                    "type": "string",
-                                    "description": "Type of caveat."
-                                },
-                                "value": {
-                                    "title": "CaveatValue",
-                                    "description": "Value of the caveat."
-                                },
-                                "name": {
-                                    "title": "Name",
-                                    "type": "string",
-                                    "description": "Name of the caveat."
-                                }
-                            }
-                        }
+                        "$ref": "#/components/schemas/Caveats"
                     }
                 }
             },
@@ -3932,6 +3997,14 @@
             "Mobile": {
                 "name": "Mobile",
                 "description": "Mobile-specific methods."
+            },
+            "Experimental": {
+                "name": "Experimental",
+                "description": "Experimental methods."
+            },
+            "Deprecated": {
+                "name": "Deprecated",
+                "description": "Deprecated methods."
             }
         },
         "contentDescriptors": {},
