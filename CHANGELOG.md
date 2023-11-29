@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0]
+### Uncategorized
+- Fix `wallet_addEthereumChain` request ([#174](https://github.com/MetaMask/api-specs/pull/174))
+- Changed revokePermissions result type to be null ([#176](https://github.com/MetaMask/api-specs/pull/176))
+- Add deprecation label to decryption methods ([#175](https://github.com/MetaMask/api-specs/pull/175))
+- Wallet revoke permissions ([#145](https://github.com/MetaMask/api-specs/pull/145))
+
 ## [0.4.4]
 ### Uncategorized
 - Add description for index page ([#172](https://github.com/MetaMask/api-specs/pull/172))
@@ -120,7 +127,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.4.4...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/MetaMask/api-specs/compare/v0.4.4...v0.5.0
 [0.4.4]: https://github.com/MetaMask/api-specs/compare/v0.4.3...v0.4.4
 [0.4.3]: https://github.com/MetaMask/api-specs/compare/v0.4.2...v0.4.3
 [0.4.2]: https://github.com/MetaMask/api-specs/compare/v0.4.1...v0.4.2
