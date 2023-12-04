@@ -1036,7 +1036,7 @@
             }
           },
           "chainName": {
-            "description": "(Optional) A human-readable name for the chain.",
+            "description": "A human-readable name for the chain.",
             "type": "string"
           },
           "iconUrls": {
@@ -1064,10 +1064,9 @@
       "NativeCurrency": {
         "title": "NativeCurrency",
         "type": "object",
-        "description": "(Optional) Describes the native currency of the chain using the name, symbol, and decimals fields.",
+        "description": "Describes the native currency of the chain using the name, symbol, and decimals fields.",
         "required": [
           "decimals",
-          "name",
           "symbol"
         ],
         "properties": {
