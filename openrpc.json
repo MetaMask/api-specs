@@ -276,7 +276,7 @@
       },
       "examples": [
         {
-          "name": "wallet_requestPermissions example",
+          "name": "wallet_requestPermissions example of requesting the eth_accounts permission",
           "params": [
             {
               "name": "requestPermissionObject",
@@ -287,7 +287,54 @@
           ],
           "result": {
             "name": "permissionList",
-            "value": {}
+            "value": {
+              "eth_accounts": {}
+            }
+          }
+        },
+        {
+          "name": "wallet_requestPermissions example of requesting the wallet_snap permission",
+          "params": [
+            {
+              "name": "requestPermissionObject",
+              "value": {
+                "wallet_snap": {
+                  "caveats": [
+                    {
+                      "type": "snapIds",
+                      "value": {
+                        "npm:@metamask/example-snap": {
+                          "version": "1.0.0"
+                        },
+                        "npm:fooSnap": {
+                          "version": "1.2.1"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "permissionList",
+            "value": {
+              "wallet_snap": {
+                "caveats": [
+                  {
+                    "type": "snapIds",
+                    "value": {
+                      "npm:@metamask/example-snap": {
+                        "version": "1.0.0"
+                      },
+                      "npm:fooSnap": {
+                        "version": "1.2.1"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
           }
         }
       ],
@@ -582,6 +629,237 @@
           "title": "ScanQRCodeResult"
         }
       }
+    },
+    {
+      "name": "wallet_getSnaps",
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Snaps"
+        }
+      ],
+      "summary": "Gets the dapp's permitted Snaps.",
+      "description": "Returns the IDs of the requesting dapp's permitted Snaps and some relevant metadata.",
+      "params": [],
+      "result": {
+        "name": "GetSnapsResult",
+        "description": "An object mapping the IDs of permitted Snaps to their metadata.",
+        "schema": {
+          "$ref": "#/components/schemas/SnapsMap"
+        }
+      },
+      "examples": [
+        {
+          "name": "wallet_getSnaps example",
+          "params": [],
+          "result": {
+            "name": "wallet_getSnapsResult",
+            "value": {
+              "npm:@metamask/example-snap": {
+                "version": "1.0.0",
+                "id": "npm:@metamask/example-snap",
+                "enabled": true,
+                "blocked": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "wallet_requestSnaps",
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Snaps"
+        }
+      ],
+      "summary": "Requests permission to communicate with Snaps.",
+      "description": "Requests permission for a dapp to communicate with the specified Snaps and attempts to install them if they're not already installed. If the installation of any Snap fails, returns the error that caused the failure.",
+      "params": [
+        {
+          "name": "RequestSnapsParameter",
+          "description": "An object mapping the IDs of requested Snaps to optional SemVer version ranges.",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "description": "(Optional) A SemVer version range for the Snap. This uses the same semantics as npm package.json ranges. If specified, MetaMask attempts to install a version of the Snap that satisfies the range. If a compatible version of the Snap is already installed, the request succeeds. If an incompatible version is installed, MetaMask attempts to update the Snap to the latest version that satisfies the range. The request succeeds if the Snap is succesfully installed."
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "RequestSnapsResult",
+        "description": "An object mapping the IDs of installed Snaps to their metadata.",
+        "schema": {
+          "$ref": "#/components/schemas/SnapsMap"
+        }
+      },
+      "examples": [
+        {
+          "name": "wallet_requestSnaps example",
+          "params": [
+            {
+              "name": "RequestSnapsParameter",
+              "value": {
+                "npm:@metamask/example-snap": {},
+                "npm:fooSnap": {
+                  "version": "^1.0.2"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "wallet_requestSnapsResult",
+            "value": {
+              "npm:@metamask/example-snap": {
+                "version": "1.0.0",
+                "id": "npm:@metamask/example-snap",
+                "enabled": true,
+                "blocked": false
+              },
+              "npm:fooSnap": {
+                "version": "1.0.5",
+                "id": "npm:fooSnap",
+                "enabled": true,
+                "blocked": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "wallet_snap",
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Snaps"
+        },
+        {
+          "$ref": "#/components/tags/Restricted"
+        }
+      ],
+      "summary": "Calls a Snap method.",
+      "description": "Calls the specified JSON-RPC API method of the specified Snap. The Snap must be installed and the caller must have permission to communicate with the Snap, or the request is rejected. \n\n A dapp must request the `wallet_snap` permission using `wallet_requestPermissions` in order to call this method. When requesting this permission, specify a caveat of type `snapIds`. Specify each requested Snap as an entry in the `value` field of the caveat. Each Snap entry can include a `version` to install. The default is the latest version. \n\n Most dapps only make one call to `wallet_requestPermissions`. Consecutive calls to `wallet_requestPermissions` for the `wallet_snap` permission overwrites a dapp's existing permissions to interact with Snaps. To deal with this, you must write custom logic to merge existing Snap IDs with new ones you're requesting. Use `wallet_getSnaps` to get a list of a website's permitted Snaps. \n\n This method is synonymous to `wallet_invokeSnap`.",
+      "params": [
+        {
+          "name": "SnapParameter",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "snapId": {
+                "description": "The ID of the Snap to invoke."
+              },
+              "request": {
+                "description": "The JSON-RPC request object to send to the invoked Snap."
+              }
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "SnapResult",
+        "description": "Result of the Snap method call.",
+        "schema": {
+          "type": "object"
+        }
+      },
+      "examples": [
+        {
+          "name": "wallet_snap example",
+          "params": [
+            {
+              "name": "SnapParameter",
+              "value": {
+                "snapId": "npm:@metamask/example-snap",
+                "request": {
+                  "method": "hello"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "wallet_snapResult",
+            "value": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "wallet_invokeSnap",
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Snaps"
+        },
+        {
+          "$ref": "#/components/tags/Restricted"
+        }
+      ],
+      "summary": "Calls a Snap method.",
+      "description": "Calls the specified JSON-RPC API method of the specified Snap. The Snap must be installed and the caller must have permission to communicate with the Snap, or the request is rejected. \n\n A dapp must request the `wallet_invokeSnap` permission using `wallet_requestPermissions` in order to call this method. When requesting this permission, specify a caveat of type `snapIds`. Specify each requested Snap as an entry in the `value` field of the caveat. Each Snap entry can include a `version` to install. The default is the latest version. \n\n Most dapps only make one call to `wallet_requestPermissions`. Consecutive calls to `wallet_requestPermissions` for the `wallet_invokeSnap` permission overwrites a dapp's existing permissions to interact with Snaps. To deal with this, you must write custom logic to merge existing Snap IDs with new ones you're requesting. Use `wallet_getSnaps` to get a list of a website's permitted Snaps. \n\n This method is synonymous to `wallet_snap`.",
+      "params": [
+        {
+          "name": "InvokeSnapParameter",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "snapId": {
+                "description": "The ID of the Snap to invoke."
+              },
+              "request": {
+                "description": "The JSON-RPC request object to send to the invoked Snap."
+              }
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "InvokeSnapResult",
+        "description": "Result of the Snap method call.",
+        "schema": {
+          "type": "object"
+        }
+      },
+      "examples": [
+        {
+          "name": "wallet_invokeSnap example",
+          "params": [
+            {
+              "name": "InvokeSnapParameter",
+              "value": {
+                "snapId": "npm:@metamask/example-snap",
+                "request": {
+                  "method": "hello"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "wallet_invokeSnapResult",
+            "value": {}
+          }
+        }
+      ]
     },
     {
       "name": "eth_decrypt",
@@ -1118,7 +1396,8 @@
           "additionalProperties": true
         },
         "properties": {
-          "eth_accounts": {
+          "permission": {
+            "description": "The requested permission.",
             "type": "object",
             "additionalProperties": true
           }
@@ -1153,6 +1432,36 @@
         "items": {
           "$ref": "#/components/schemas/Permission"
         }
+      },
+      "SnapsMap": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "The ID of the Snap.",
+                "type": "string"
+              },
+              "initialPermissions": {
+                "description": "The initial permissions of the Snap, which will be request when the Snap is installed.",
+                "type": "object"
+              },
+              "version": {
+                "description": "The version of the Snap.",
+                "type": "string"
+              },
+              "enabled": {
+                "description": "Indicates whether the Snap is enabled.",
+                "type": "boolean"
+              },
+              "blocked": {
+                "description": "Indicates whether the Snap is blocked.",
+                "type": "boolean"
+              }
+            }
+          }
+        }
       }
     },
     "tags": {
@@ -1167,6 +1476,10 @@
       "Mobile": {
         "name": "Mobile",
         "description": "Mobile-specific methods."
+      },
+      "Snaps": {
+        "name": "Snaps",
+        "description": "Methods related to interacting with Snaps."
       },
       "Experimental": {
         "name": "Experimental",
