@@ -686,6 +686,7 @@
           "description": "An object mapping the IDs of requested Snaps to optional SemVer version ranges.",
           "required": true,
           "schema": {
+            "title": "RequestSnapsParameter",
             "type": "object",
             "properties": {
               "id": {
@@ -761,6 +762,7 @@
           "name": "SnapParameter",
           "required": true,
           "schema": {
+            "title": "SnapParameter",
             "type": "object",
             "properties": {
               "snapId": {
@@ -777,6 +779,7 @@
         "name": "SnapResult",
         "description": "Result of the Snap method call.",
         "schema": {
+          "title": "SnapResult",
           "type": "object"
         }
       },
@@ -821,6 +824,7 @@
           "name": "InvokeSnapParameter",
           "required": true,
           "schema": {
+            "title": "InvokeSnapParameter",
             "type": "object",
             "properties": {
               "snapId": {
@@ -837,6 +841,7 @@
         "name": "InvokeSnapResult",
         "description": "Result of the Snap method call.",
         "schema": {
+          "title": "InvokeSnapResult",
           "type": "object"
         }
       },
@@ -1428,12 +1433,14 @@
         }
       },
       "PermissionsList": {
+        "title": "PermissionsList",
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/Permission"
         }
       },
       "SnapsMap": {
+        "title": "SnapsMap",
         "type": "object",
         "properties": {
           "id": {
@@ -1444,7 +1451,7 @@
                 "type": "string"
               },
               "initialPermissions": {
-                "description": "The initial permissions of the Snap, which will be request when the Snap is installed.",
+                "description": "The initial permissions of the Snap, which will be requested when the Snap is installed.",
                 "type": "object"
               },
               "version": {
