@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0]
+### Uncategorized
+- Document Snap `wallet_*` methods ([#181](https://github.com/MetaMask/api-specs/pull/181))
+- more addEthereumChain spec fixes ([#180](https://github.com/MetaMask/api-specs/pull/180))
+- Add info to revokePermissions description ([#178](https://github.com/MetaMask/api-specs/pull/178))
+
 ## [0.5.0]
 ### Uncategorized
 - Fix `wallet_addEthereumChain` request ([#174](https://github.com/MetaMask/api-specs/pull/174))
@@ -127,7 +133,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/MetaMask/api-specs/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/MetaMask/api-specs/compare/v0.4.4...v0.5.0
 [0.4.4]: https://github.com/MetaMask/api-specs/compare/v0.4.3...v0.4.4
 [0.4.3]: https://github.com/MetaMask/api-specs/compare/v0.4.2...v0.4.3
