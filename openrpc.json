@@ -641,7 +641,7 @@
         }
       ],
       "summary": "Gets the dapp's permitted Snaps.",
-      "description": "Returns the IDs of the requesting dapp's permitted Snaps and some relevant metadata.",
+      "description": "Returns the IDs of the dapp's permitted Snaps and some relevant metadata.",
       "params": [],
       "result": {
         "name": "GetSnapsResult",
@@ -756,7 +756,7 @@
         }
       ],
       "summary": "Calls a Snap method.",
-      "description": "Calls the specified JSON-RPC API method of the specified Snap. The Snap must be installed and the caller must have permission to communicate with the Snap, or the request is rejected. \n\n A dapp must request the `wallet_snap` permission using `wallet_requestPermissions` in order to call this method. When requesting this permission, specify a caveat of type `snapIds`. Specify each requested Snap as an entry in the `value` field of the caveat. Each Snap entry can include a `version` to install. The default is the latest version. \n\n Most dapps only make one call to `wallet_requestPermissions`. Consecutive calls to `wallet_requestPermissions` for the `wallet_snap` permission overwrites a dapp's existing permissions to interact with Snaps. To deal with this, you must write custom logic to merge existing Snap IDs with new ones you're requesting. Use `wallet_getSnaps` to get a list of a website's permitted Snaps. \n\n This method is synonymous to `wallet_invokeSnap`.",
+      "description": "Calls the specified JSON-RPC API method of the specified Snap. The Snap must be installed and the dapp must have permission to communicate with the Snap, or the request is rejected. The dapp can install the Snap and request permission to communicate with it using `wallet_requestSnaps`. \n\n This method is synonymous to `wallet_invokeSnap`.",
       "params": [
         {
           "name": "SnapParameter",
@@ -818,7 +818,7 @@
         }
       ],
       "summary": "Calls a Snap method.",
-      "description": "Calls the specified JSON-RPC API method of the specified Snap. The Snap must be installed and the caller must have permission to communicate with the Snap, or the request is rejected. \n\n A dapp must request the `wallet_invokeSnap` permission using `wallet_requestPermissions` in order to call this method. When requesting this permission, specify a caveat of type `snapIds`. Specify each requested Snap as an entry in the `value` field of the caveat. Each Snap entry can include a `version` to install. The default is the latest version. \n\n Most dapps only make one call to `wallet_requestPermissions`. Consecutive calls to `wallet_requestPermissions` for the `wallet_invokeSnap` permission overwrites a dapp's existing permissions to interact with Snaps. To deal with this, you must write custom logic to merge existing Snap IDs with new ones you're requesting. Use `wallet_getSnaps` to get a list of a website's permitted Snaps. \n\n This method is synonymous to `wallet_snap`.",
+      "description": "Calls the specified JSON-RPC API method of the specified Snap. The Snap must be installed and the dapp must have permission to communicate with the Snap, or the request is rejected. The dapp can install the Snap and request permission to communicate with it using `wallet_requestSnaps`. \n\n This method is synonymous to `wallet_snap`.",
       "params": [
         {
           "name": "InvokeSnapParameter",
