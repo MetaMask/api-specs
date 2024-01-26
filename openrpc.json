@@ -766,10 +766,20 @@
             "type": "object",
             "properties": {
               "snapId": {
-                "description": "The ID of the Snap to invoke."
+                "description": "The ID of the Snap to invoke.",
+                "type": "string"
               },
               "request": {
-                "description": "The JSON-RPC request object to send to the invoked Snap."
+                "description": "The JSON-RPC request object to send to the invoked Snap.",
+                "type": "object",
+                "properties": {
+                  "method": {
+                    "type": "string"
+                  },
+                  "params": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
