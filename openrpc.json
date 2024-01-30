@@ -778,7 +778,7 @@
                     "type": "string"
                   },
                   "params": {
-                    "type": "string"
+                    "type": "object"
                   }
                 }
               }
@@ -850,7 +850,7 @@
                     "type": "string"
                   },
                   "params": {
-                    "type": "string"
+                    "type": "object"
                   }
                 }
               }
