@@ -699,7 +699,8 @@
                                 "type": "object",
                                 "properties": {
                                     "version": {
-                                        "description": "(Optional) A SemVer version range for the Snap. This uses the same semantics as npm package.json ranges. If specified, MetaMask attempts to install a version of the Snap that satisfies the range. If a compatible version of the Snap is already installed, the request succeeds. If an incompatible version is installed, MetaMask attempts to update the Snap to the latest version that satisfies the range. The request succeeds if the Snap is succesfully installed."
+                                        "description": "(Optional) A SemVer version range for the Snap. This uses the same semantics as npm package.json ranges. If specified, MetaMask attempts to install a version of the Snap that satisfies the range. If a compatible version of the Snap is already installed, the request succeeds. If an incompatible version is installed, MetaMask attempts to update the Snap to the latest version that satisfies the range. The request succeeds if the Snap is succesfully installed.",
+                                        "type": "string"
                                     }
                                 }
                             }
@@ -772,10 +773,20 @@
                         "type": "object",
                         "properties": {
                             "snapId": {
-                                "description": "The ID of the Snap to invoke."
+                                "description": "The ID of the Snap to invoke.",
+                                "type": "string"
                             },
                             "request": {
-                                "description": "The JSON-RPC request object to send to the invoked Snap."
+                                "description": "The JSON-RPC request object to send to the invoked Snap.",
+                                "type": "object",
+                                "properties": {
+                                    "method": {
+                                        "type": "string"
+                                    },
+                                    "params": {
+                                        "type": "object"
+                                    }
+                                }
                             }
                         }
                     }
@@ -834,10 +845,20 @@
                         "type": "object",
                         "properties": {
                             "snapId": {
-                                "description": "The ID of the Snap to invoke."
+                                "description": "The ID of the Snap to invoke.",
+                                "type": "string"
                             },
                             "request": {
-                                "description": "The JSON-RPC request object to send to the invoked Snap."
+                                "description": "The JSON-RPC request object to send to the invoked Snap.",
+                                "type": "object",
+                                "properties": {
+                                    "method": {
+                                        "type": "string"
+                                    },
+                                    "params": {
+                                        "type": "object"
+                                    }
+                                }
                             }
                         }
                     }
@@ -1489,7 +1510,7 @@
                 },
                 {
                     "name": "Block",
-                    "required": false,
+                    "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BlockNumberOrTagOrHash"
                     }
@@ -1701,7 +1722,7 @@
                 },
                 {
                     "name": "Block",
-                    "required": false,
+                    "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BlockNumberOrTagOrHash"
                     }
@@ -1855,7 +1876,7 @@
                 },
                 {
                     "name": "Block",
-                    "required": false,
+                    "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BlockNumberOrTagOrHash"
                     }
@@ -1997,7 +2018,7 @@
                 },
                 {
                     "name": "Block",
-                    "required": false,
+                    "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BlockNumberOrTagOrHash"
                     }
@@ -2853,6 +2874,10 @@
                         "title": "Address(es)",
                         "oneOf": [
                             {
+                                "title": "Any Address",
+                                "type": "null"
+                            },
+                            {
                                 "title": "Address",
                                 "$ref": "#/components/schemas/address"
                             },
@@ -2870,18 +2895,23 @@
             },
             "FilterTopics": {
                 "title": "Filter Topics",
-                "type": "array",
-                "items": {
-                    "$ref": "#/components/schemas/FilterTopic"
-                }
-            },
-            "FilterTopic": {
-                "title": "Filter Topic List Entry",
                 "oneOf": [
                     {
                         "title": "Any Topic Match",
                         "type": "null"
                     },
+                    {
+                        "title": "Specified Filter Topics",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FilterTopic"
+                        }
+                    }
+                ]
+            },
+            "FilterTopic": {
+                "title": "Filter Topic List Entry",
+                "oneOf": [
                     {
                         "title": "Single Topic Match",
                         "$ref": "#/components/schemas/bytes32"
