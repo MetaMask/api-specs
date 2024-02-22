@@ -6,6 +6,216 @@
     "description": "This section provides an interactive reference for the JSON-RPC API of MetaMask's [Wallet API](/wallet/concepts/wallet-api). The API builds on a set of standard Ethereum methods with MetaMask-specific enhancements, and is designed for seamless integration into dapps.\n\nView the JSON-RPC API methods by selecting them in the left sidebar. You can test the methods directly in the page in the API playground, using the pre-configured examples or custom parameters. You can also save URLs with custom parameters using your browser's bookmarks.\n\nEach method may have one or more of the following labels:\n\n- **MetaMask** - The functionalities of these methods are specific to MetaMask, and may or may not be supported by other wallets.\n- **Restricted** - These methods are restricted, which require requesting permission using [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions)\n- **Mobile** - These methods are only available on MetaMask Mobile.\n- **Experimental** - These methods are experimental, and may be changed in the future.\n- **Deprecated** - These methods are deprecated, and may be removed in the future.\n- **Snaps** - These methods are related to interacting with [Snaps](/snaps).\n- **Ethereum API** - These are standard Ethereum JSON-RPC API methods. See the [Ethereum wiki](https://eth.wiki/json-rpc/API#json-rpc-methods) for more information about these methods."
   },
   "methods": [
+        {
+          "name": "wallet_addEthereumChain",
+          "tags": [
+            {
+              "$ref": "#/components/tags/MetaMask"
+            }
+          ],
+          "summary": "Adds an Ethereum chain to the wallet.",
+          "description": "Creates a confirmation asking the user to add the specified chain to the wallet application. The caller must specify a chain ID and some chain metadata. The wallet application may refuse or accept the request. `null` is returned if the chain is added, and an error otherwise. Introduced by [EIP-3085](https://eips.ethereum.org/EIPS/eip-3085).",
+          "params": [
+            {
+              "name": "AddEthereumChainParameter",
+              "schema": {
+                "$ref": "#/components/schemas/AddEthereumChainParameter"
+              }
+            }
+          ],
+          "errors": [
+            {
+              "code": -32602,
+              "message": "Expected null or array with at least one valid string HTTPS URL 'blockExplorerUrl'. Received: ${blockExplorerUrls}"
+            },
+            {
+              "code": -32602,
+              "message": "Expected 0x-prefixed, unpadded, non-zero hexadecimal string 'chainId'. Received:\n${chainId}"
+            },
+            {
+              "code": -32602,
+              "message": "Invalid chain ID \"${_chainId}\": numerical value greater than max safe value. Received:\n${chainId}"
+            },
+            {
+              "code": -32602,
+              "message": "May not specify default MetaMask chain."
+            },
+            {
+              "code": -32602,
+              "message": "Expected 2-6 character string 'nativeCurrency.symbol'. Received:\n${ticker}"
+            },
+            {
+              "code": -32602,
+              "message": "nativeCurrency.symbol does not match currency symbol for a network the user already has added with the same chainId. Received:\n${ticker}"
+            }
+          ],
+          "result": {
+            "name": "AddEthereumChainResult",
+            "schema": {
+              "type": "null"
+            }
+          },
+          "examples": [
+            {
+              "name": "wallet_addEthereumChain example",
+              "params": [
+                {
+                  "name": "AddEthereumChainParameter",
+                  "value": {
+                    "chainId": "0x64",
+                    "chainName": "Gnosis",
+                    "rpcUrls": [
+                      "https://rpc.ankr.com/gnosis"
+                    ],
+                    "iconUrls": [
+                      "https://xdaichain.com/fake/example/url/xdai.svg"
+                    ],
+                    "nativeCurrency": {
+                      "name": "xDAI",
+                      "symbol": "xDAI",
+                      "decimals": 18
+                    },
+                    "blockExplorerUrls": [
+                      "https://blockscout.com/poa/xdai/"
+                    ]
+                  }
+                }
+              ],
+              "result": {
+                "name": "wallet_addEthereumChainExampleResult",
+                "value": "null"
+              }
+            }
+          ]
+        },
+        {
+          "name": "wallet_switchEthereumChain",
+          "tags": [
+            {
+              "$ref": "#/components/tags/MetaMask"
+            }
+          ],
+          "summary": "Switches the wallet's active Ethereum chain.",
+          "description": "Requests that the wallet switches its active Ethereum chain. Introduced by [EIP-3326](https://ethereum-magicians.org/t/eip-3326-wallet-switchethereumchain).",
+          "params": [
+            {
+              "name": "SwitchEthereumChainParameter",
+              "schema": {
+                "title": "SwitchEthereumChainParameter",
+                "type": "object",
+                "required": [
+                  "chainId"
+                ],
+                "properties": {
+                  "chainId": {
+                    "description": "The chain ID as a `0x`-prefixed hexadecimal string...",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "SwitchEthereumChainResult",
+            "schema": {
+              "type": "null"
+            }
+          },
+          "errors": [
+            {
+              "code": 4902,
+              "message": "Unrecognized chain ID. Try adding the chain using wallet_addEthereumChain first."
+            }
+          ],
+          "examples": [
+            {
+              "name": "wallet_switchEthereumChain example",
+              "params": [
+                {
+                  "name": "SwitchEthereumChainParameter",
+                  "value": {
+                    "chainId": "0x64"
+                  }
+                }
+              ],
+              "result": {
+                "name": "wallet_switchEthereumChainExampleResult",
+                "value": "null"
+              }
+            }
+          ]
+        },
+        {
+          "name": "wallet_requestPermissions",
+          "tags": [
+            {
+              "$ref": "#/components/tags/MetaMask"
+            }
+          ],
+          "summary": "Requests additional permissions.",
+          "description": "Requests additional permissions from the user. Introduced by [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255).",
+          "params": [
+            {
+              "name": "requestPermissionsObject",
+              "required": true,
+              "schema": {
+                "$ref": "#/components/schemas/PermissionObject"
+              }
+            }
+          ],
+          "result": {
+            "name": "PermissionsList",
+            "schema": {
+              "$ref": "#/components/schemas/PermissionsList"
+            }
+          }
+        },
+        {
+          "name": "wallet_revokePermissions",
+          "tags": [
+            {
+              "$ref": "#/components/tags/MetaMask"
+            },
+            {
+              "$ref": "#/components/tags/Experimental"
+            }
+          ],
+          "summary": "Revokes the current dapp permissions.",
+          "description": "Revokes previously granted permissions for the current dapp identified by origin. This method is specified by [MIP-2](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md) and is only available for the browser extension.",
+          "params": [
+            {
+              "name": "revokePermissionObject",
+              "required": true,
+              "schema": {
+                "$ref": "#/components/schemas/PermissionObject"
+              }
+            }
+          ],
+          "result": {
+            "name": "RevokePermissionsResult",
+            "schema": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "name": ,
+          "tags": [
+            {
+              "$ref": "#/components/tags/MetaMask"
+            }
+          ],
+          "summary": "Gets the user's permissions.",
+          "description": "Gets the user's permissions. Introduced by [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255).",
+          "params": [],
+          "result": {
+            "name": "PermissionsList",
+            "schema": {
+              "$ref": "#/components/schemas/PermissionsList"
+            }
+          }
+        }
+
     {
       "name": "eth_subscribe",
       "summary": "Subscribes to specific Ethereum events, returning a subscription ID used to receive notifications.",
@@ -251,6 +461,23 @@
       ]
     },
     {
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        }
+      ],
+      "name": "wallet_getPermissions",
+      "summary": "Gets the user's permissions.",
+      "description": "Gets the user's permissions. Introduced by [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255).",
+      "params": [],
+      "result": {
+        "name": "PermissionsList",
+        "schema": {
+          "$ref": "#/components/schemas/PermissionsList"
+        }
+      }
+    },
+    {
       "name": "wallet_requestPermissions",
       "tags": [
         {
@@ -389,23 +616,6 @@
           }
         }
       ]
-    },
-    {
-      "tags": [
-        {
-          "$ref": "#/components/tags/MetaMask"
-        }
-      ],
-      "name": "wallet_getPermissions",
-      "summary": "Gets the user's permissions.",
-      "description": "Gets the user's permissions. Introduced by [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255).",
-      "params": [],
-      "result": {
-        "name": "PermissionsList",
-        "schema": {
-          "$ref": "#/components/schemas/PermissionsList"
-        }
-      }
     },
     {
       "tags": [
