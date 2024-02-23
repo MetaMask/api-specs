@@ -1401,8 +1401,8 @@
           "$ref": "#/components/schemas/bytes32"
         }
       }
-    },
-  ],
+    }
+  ], 
   "components": {
     "schemas": {
       "TypedData": {
