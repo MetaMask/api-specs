@@ -948,6 +948,7 @@
       ]
     },
     {
+      "name": "eth_accounts",
       "tags": [
         {
           "$ref": "#/components/tags/MetaMask"
@@ -956,7 +957,6 @@
           "$ref": "#/components/tags/Restricted"
         }
       ],
-      "name": "eth_accounts",
       "description": "Returns a list of addresses for the accounts owned by the user.",
       "summary": "Gets a list of addresses for the user's accounts.",
       "params": [],
@@ -967,84 +967,6 @@
           "items": {
             "$ref": "#/components/schemas/address"
           }
-        }
-      }
-    },
-    {
-      "name": "eth_sendTransaction",
-      "description": "Creates a new wallet confirmation to make an Ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
-      "summary": "Initiates a new transaction.",
-      "params": [
-        {
-          "name": "Transaction",
-          "required": true,
-          "description": "The transaction object to sign and send.",
-          "schema": {
-            "type": "object",
-            "title": "Transaction",
-            "description": "The parameters to customize a transaction. If a `to` address is not provided. It will be assumed that the transaction is a contract creation transaction, and the `data` field of the transaction will be used as the contract initialization code. `gasPrice` cannot be used together with `maxPriorityFeePerGas` and `maxFeePerGas`.",
-            "required": [
-              "from"
-            ],
-            "if": {
-              "properties": {
-                "to": {
-                  "not": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            "then": {
-              "required": [
-                "data"
-              ]
-            },
-            "properties": {
-              "to": {
-                "title": "to address",
-                "$ref": "#/components/schemas/address"
-              },
-              "from": {
-                "title": "from address",
-                "$ref": "#/components/schemas/address"
-              },
-              "gas": {
-                "title": "gas limit",
-                "$ref": "#/components/schemas/uint"
-              },
-              "value": {
-                "title": "value",
-                "$ref": "#/components/schemas/uint"
-              },
-              "data": {
-                "title": "data",
-                "$ref": "#/components/schemas/bytes"
-              },
-              "gasPrice": {
-                "title": "gas price",
-                "description": "The gas price the sender is willing to pay to miners in wei. Used in pre-1559 transactions.",
-                "$ref": "#/components/schemas/uint"
-              },
-              "maxPriorityFeePerGas": {
-                "title": "max priority fee per gas",
-                "description": "Maximum fee per gas the sender is willing to pay to miners in wei. Used in 1559 transactions.",
-                "$ref": "#/components/schemas/uint"
-              },
-              "maxFeePerGas": {
-                "title": "max fee per gas",
-                "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei. Used in 1559 transactions.",
-                "$ref": "#/components/schemas/uint"
-              }
-            }
-          }
-        }
-      ],
-      "result": {
-        "name": "TransactionHash",
-        "description": "The transaction hash of the sent transaction.",
-        "schema": {
-          "$ref": "#/components/schemas/bytes32"
         }
       }
     },
@@ -1196,7 +1118,108 @@
       ]
     },
     {
-
+      "name": "eth_decrypt",
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Deprecated"
+        }
+      ],
+      "summary": "Decrypts an encrypted message.",
+      "description": "This method is deprecated and may be removed in the future. \n\n Requests that MetaMask decrypt the specified encrypted message. The message must have been encrypted using the public encryption key of the specified Ethereum address. Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
+      "params": [
+        {
+          "name": "EncryptedMessage",
+          "required": true,
+          "description": "The encrypted message to decrypt.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the Ethereum account that can decrypt the message.",
+          "schema": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      ],
+      "result": {
+        "name": "PermissionsList",
+        "schema": {
+          "$ref": "#/components/schemas/PermissionsList"
+        }
+      }
+    },
+    {
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Deprecated"
+        }
+      ],
+      "name": "eth_getEncryptionPublicKey",
+      "summary": "Gets a public key used for encryption.",
+      "description": "This method is deprecated and may be removed in the future. \n\n Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
+      "params": [
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the Ethereum account that can decrypt the message.",
+          "schema": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      ],
+      "result": {
+        "name": "EncryptionKey",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "web3_clientVersion",
+      "description": "Returns the current MetaMask client version. This differs slightly per client. For example, the browser extension returns a string like `MetaMask/v10.33.1`, while the mobile app returns a string like `MetaMask/8.1.2/Mobile`.",
+      "summary": "Current client version.",
+      "params": [],
+      "examples": [
+        {
+          "name": "MetaMaskClientVersionExample",
+          "description": "Example version response from MetaMask.",
+          "params": [],
+          "result": {
+            "name": "MetaMaskClientVersion",
+            "description": "The current client version.",
+            "value": "MetaMask/v10.33.1"
+          }
+        },
+        {
+          "name": "MetaMaskMobileClientVersionExample",
+          "description": "Example version response from MetaMask Mobile.",
+          "params": [],
+          "result": {
+            "name": "MetaMaskClientVersion",
+            "description": "The current client version.",
+            "value": "MetaMask/8.1.2/Mobile"
+          }
+        }
+      ],
+      "result": {
+        "name": "CurrentVersion",
+        "description": "The current client version.",
+        "schema": {
+          "title": "CurrentClientVersion",
+          "type": "string"
+        }
+      }
+    },
+    {
       "name": "eth_subscribe",
       "summary": "Subscribes to specific Ethereum events, returning a subscription ID used to receive notifications.",
       "description": "Subscribes to specific events on the Ethereum network, such as new blocks, new pending transactions, or changes in the state of an account. When an event occurs, a notification is sent to the client with the corresponding data. To stop receiving notifications, the client can unsubscribe using `eth_unsubscribe`.",
@@ -1301,104 +1324,80 @@
       ]
     },
     {
-      "name": "eth_decrypt",
-      "tags": [
-        {
-          "$ref": "#/components/tags/MetaMask"
-        },
-        {
-          "$ref": "#/components/tags/Deprecated"
-        }
-      ],
-      "summary": "Decrypts an encrypted message.",
-      "description": "This method is deprecated and may be removed in the future. \n\n Requests that MetaMask decrypt the specified encrypted message. The message must have been encrypted using the public encryption key of the specified Ethereum address. Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
+      "name": "eth_sendTransaction",
+      "description": "Creates a new wallet confirmation to make an Ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
+      "summary": "Initiates a new transaction.",
       "params": [
         {
-          "name": "EncryptedMessage",
+          "name": "Transaction",
           "required": true,
-          "description": "The encrypted message to decrypt.",
+          "description": "The transaction object to sign and send.",
           "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "Address",
-          "required": true,
-          "description": "The address of the Ethereum account that can decrypt the message.",
-          "schema": {
-            "$ref": "#/components/schemas/address"
+            "type": "object",
+            "title": "Transaction",
+            "description": "The parameters to customize a transaction. If a `to` address is not provided. It will be assumed that the transaction is a contract creation transaction, and the `data` field of the transaction will be used as the contract initialization code. `gasPrice` cannot be used together with `maxPriorityFeePerGas` and `maxFeePerGas`.",
+            "required": [
+              "from"
+            ],
+            "if": {
+              "properties": {
+                "to": {
+                  "not": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "data"
+              ]
+            },
+            "properties": {
+              "to": {
+                "title": "to address",
+                "$ref": "#/components/schemas/address"
+              },
+              "from": {
+                "title": "from address",
+                "$ref": "#/components/schemas/address"
+              },
+              "gas": {
+                "title": "gas limit",
+                "$ref": "#/components/schemas/uint"
+              },
+              "value": {
+                "title": "value",
+                "$ref": "#/components/schemas/uint"
+              },
+              "data": {
+                "title": "data",
+                "$ref": "#/components/schemas/bytes"
+              },
+              "gasPrice": {
+                "title": "gas price",
+                "description": "The gas price the sender is willing to pay to miners in wei. Used in pre-1559 transactions.",
+                "$ref": "#/components/schemas/uint"
+              },
+              "maxPriorityFeePerGas": {
+                "title": "max priority fee per gas",
+                "description": "Maximum fee per gas the sender is willing to pay to miners in wei. Used in 1559 transactions.",
+                "$ref": "#/components/schemas/uint"
+              },
+              "maxFeePerGas": {
+                "title": "max fee per gas",
+                "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei. Used in 1559 transactions.",
+                "$ref": "#/components/schemas/uint"
+              }
+            }
           }
         }
       ],
       "result": {
-        "name": "PermissionsList",
+        "name": "TransactionHash",
+        "description": "The transaction hash of the sent transaction.",
         "schema": {
-          "$ref": "#/components/schemas/PermissionsList"
-        }
-      }
-    },
-    {
-      "tags": [
-        {
-          "$ref": "#/components/tags/MetaMask"
-        },
-        {
-          "$ref": "#/components/tags/Deprecated"
-        }
-      ],
-      "name": "eth_getEncryptionPublicKey",
-      "summary": "Gets a public key used for encryption.",
-      "description": "This method is deprecated and may be removed in the future. \n\n Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
-      "params": [
-        {
-          "name": "Address",
-          "required": true,
-          "description": "The address of the Ethereum account that can decrypt the message.",
-          "schema": {
-            "$ref": "#/components/schemas/address"
-          }
-        }
-      ],
-      "result": {
-        "name": "EncryptionKey",
-        "schema": {
-          "type": "string"
-        }
-      }
-    },
-    {
-      "name": "web3_clientVersion",
-      "description": "Returns the current MetaMask client version. This differs slightly per client. For example, the browser extension returns a string like `MetaMask/v10.33.1`, while the mobile app returns a string like `MetaMask/8.1.2/Mobile`.",
-      "summary": "Current client version.",
-      "params": [],
-      "examples": [
-        {
-          "name": "MetaMaskClientVersionExample",
-          "description": "Example version response from MetaMask.",
-          "params": [],
-          "result": {
-            "name": "MetaMaskClientVersion",
-            "description": "The current client version.",
-            "value": "MetaMask/v10.33.1"
-          }
-        },
-        {
-          "name": "MetaMaskMobileClientVersionExample",
-          "description": "Example version response from MetaMask Mobile.",
-          "params": [],
-          "result": {
-            "name": "MetaMaskClientVersion",
-            "description": "The current client version.",
-            "value": "MetaMask/8.1.2/Mobile"
-          }
-        }
-      ],
-      "result": {
-        "name": "CurrentVersion",
-        "description": "The current client version.",
-        "schema": {
-          "title": "CurrentClientVersion",
-          "type": "string"
+          "$ref": "#/components/schemas/bytes32"
         }
       }
     }
