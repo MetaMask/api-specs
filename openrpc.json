@@ -923,155 +923,34 @@
       ]
     },
     {
-      "name": "eth_subscribe",
-      "summary": "Subscribes to specific Ethereum events, returning a subscription ID used to receive notifications.",
-      "description": "Subscribes to specific events on the Ethereum network, such as new blocks, new pending transactions, or changes in the state of an account. When an event occurs, a notification is sent to the client with the corresponding data. To stop receiving notifications, the client can unsubscribe using `eth_unsubscribe`.",
+      "name": "personal_sign",
+      "summary": "Presents a plain text signature challenge to the user.",
+      "description": "Presents a plain text signature challenge to the user and returns the signed response. Equivalent to `eth_sign` on some other wallets, and prepends a safe prefix to the signed message to prevent the challenge tricking users into signing a financial transaction. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` first.",
+      "deprecated": false,
       "params": [
         {
-          "name": "subscriptionType",
+          "name": "Challenge",
           "required": true,
-          "schema": {
-            "title": "subscriptionType",
-            "type": "string",
-            "enum": [
-              "newHeads",
-              "logs",
-              "newPendingTransactions",
-              "syncing"
-            ],
-            "description": "The type of subscription to create. Must be one of the following: \n1. `newHeads` - New block headers. \n2. `logs` - Logs matching a filter object. \n3. `newPendingTransactions` - New pending transactions. \n4. `syncing` - Changes in syncing status."
-          }
-        },
-        {
-          "name": "filterOptions",
-          "required": false,
-          "schema": {
-            "title": "filterOptions",
-            "type": "object",
-            "description": "(Optional) An object containing filter options specific to the subscription type. Only applicable for the `logs` subscription type.",
-            "required": ["topics"],
-            "properties": {
-              "address": {
-                "type": "string",
-                "description": "(Optional) A single address or an array of addresses to filter the logs by."
-              },
-              "topics": {
-                "type": "array",
-                "description": "An array of topics to filter the logs by.",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "result": {
-        "name": "subscriptionId",
-        "schema": {
-          "type": "string"
-        },
-        "description": "A unique subscription ID that can be used to unsubscribe or identify incoming notifications."
-      },
-      "examples": [
-        {
-          "name": "eth_subscribe example",
-          "params": [
-            {
-              "name": "subscriptionType",
-              "value": "newHeads"
-            }
-          ],
-          "result": {
-            "name": "eth_subscribeExampleResult",
-            "value": "0x1b84f2cdf29a204b79e450c1939b30c1"
-          }
-        }
-      ]
-    },
-    {
-      "name": "eth_unsubscribe",
-      "summary": "Unsubscribes from a specific Ethereum event, using the subscription ID provided by `eth_subscribe`.",
-      "description": "Unsubscribes from specific events on the Ethereum network, to which the client has been previously subscribed using `eth_subscribe`. The client must provide the subscription ID obtained from `eth_subscribe` to stop receiving notifications for the corresponding event.",
-      "params": [
-        {
-          "name": "subscriptionId",
-          "required": true,
+          "description": "A hex-encoded UTF-8 string to present to the user. See how to encode a string like this in the [`browser-string-hexer`](https://github.com/danfinlay/browser-string-hexer) module.",
           "schema": {
             "type": "string",
-            "description": "The unique subscription ID obtained from `eth_subscribe`, used to identify the subscription to be unsubscribed."
+            "pattern": "^0x[a-fA-F\\d]+$"
           }
-        }
-      ],
-      "result": {
-        "name": "unsubscribed",
-        "schema": {
-          "type": "boolean"
         },
-        "description": "A boolean value indicating whether the unsubscription was successful."
-      },
-      "examples": [
         {
-          "name": "eth_unsubscribe example",
-          "params": [
-            {
-              "name": "subscriptionId",
-              "value": "0x1b84f2cdf29a204b79e450c1939b30c1"
-            }
-          ],
-          "result": {
-            "name": "eth_unsubscribeExampleResult",
-            "value": true
-          }
-        }
-      ]
-    },
-    
-    {
-      "tags": [
-        {
-          "$ref": "#/components/tags/MetaMask"
-        }
-      ],
-      "name": "eth_requestAccounts",
-      "description": "Requests that the user provide an Ethereum address to be identified by. This method is specified by [EIP-1102](https://eips.ethereum.org/EIPS/eip-1102). Internally, this method calls `wallet_requestPermissions` for permission to call `eth_accounts`.",
-      "summary": "Requests that the user provide an Ethereum address.",
-      "params": [],
-      "result": {
-        "name": "AddressList",
-        "schema": {
-          "type": "array",
-          "items": {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the requested signing account.",
+          "schema": {
             "$ref": "#/components/schemas/address"
           }
         }
-      },
-      "errors": [
-        {
-          "$ref": "#/components/errors/UserRejected"
-        }
-      ]
-    },
-    {
-      "tags": [
-        {
-          "$ref": "#/components/tags/MetaMask"
-        },
-        {
-          "$ref": "#/components/tags/Restricted"
-        }
       ],
-      "name": "eth_accounts",
-      "description": "Returns a list of addresses for the accounts owned by the user.",
-      "summary": "Gets a list of addresses for the user's accounts.",
-      "params": [],
       "result": {
-        "name": "AddressList",
+        "name": "Signature",
+        "description": "A hex-encoded 129-byte array starting with `0x`.",
         "schema": {
-          "type": "array",
-          "items": {
-            "$ref": "#/components/schemas/address"
-          }
+          "$ref": "#/components/schemas/bytes"
         }
       }
     },
@@ -1257,34 +1136,191 @@
       }
     },
     {
-      "name": "personal_sign",
-      "summary": "Presents a plain text signature challenge to the user.",
-      "description": "Presents a plain text signature challenge to the user and returns the signed response. Equivalent to `eth_sign` on some other wallets, and prepends a safe prefix to the signed message to prevent the challenge tricking users into signing a financial transaction. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` first.",
-      "deprecated": false,
-      "params": [
+      "name": "web3_clientVersion",
+      "description": "Returns the current MetaMask client version. This differs slightly per client. For example, the browser extension returns a string like `MetaMask/v10.33.1`, while the mobile app returns a string like `MetaMask/8.1.2/Mobile`.",
+      "summary": "Current client version.",
+      "params": [],
+      "examples": [
         {
-          "name": "Challenge",
-          "required": true,
-          "description": "A hex-encoded UTF-8 string to present to the user. See how to encode a string like this in the [`browser-string-hexer`](https://github.com/danfinlay/browser-string-hexer) module.",
-          "schema": {
-            "type": "string",
-            "pattern": "^0x[a-fA-F\\d]+$"
+          "name": "MetaMaskClientVersionExample",
+          "description": "Example version response from MetaMask.",
+          "params": [],
+          "result": {
+            "name": "MetaMaskClientVersion",
+            "description": "The current client version.",
+            "value": "MetaMask/v10.33.1"
           }
         },
         {
-          "name": "Address",
-          "required": true,
-          "description": "The address of the requested signing account.",
-          "schema": {
-            "$ref": "#/components/schemas/address"
+          "name": "MetaMaskMobileClientVersionExample",
+          "description": "Example version response from MetaMask Mobile.",
+          "params": [],
+          "result": {
+            "name": "MetaMaskClientVersion",
+            "description": "The current client version.",
+            "value": "MetaMask/8.1.2/Mobile"
           }
         }
       ],
       "result": {
-        "name": "Signature",
-        "description": "A hex-encoded 129-byte array starting with `0x`.",
+        "name": "CurrentVersion",
+        "description": "The current client version.",
         "schema": {
-          "$ref": "#/components/schemas/bytes"
+          "title": "CurrentClientVersion",
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "eth_subscribe",
+      "summary": "Subscribes to specific Ethereum events, returning a subscription ID used to receive notifications.",
+      "description": "Subscribes to specific events on the Ethereum network, such as new blocks, new pending transactions, or changes in the state of an account. When an event occurs, a notification is sent to the client with the corresponding data. To stop receiving notifications, the client can unsubscribe using `eth_unsubscribe`.",
+      "params": [
+        {
+          "name": "subscriptionType",
+          "required": true,
+          "schema": {
+            "title": "subscriptionType",
+            "type": "string",
+            "enum": [
+              "newHeads",
+              "logs",
+              "newPendingTransactions",
+              "syncing"
+            ],
+            "description": "The type of subscription to create. Must be one of the following: \n1. `newHeads` - New block headers. \n2. `logs` - Logs matching a filter object. \n3. `newPendingTransactions` - New pending transactions. \n4. `syncing` - Changes in syncing status."
+          }
+        },
+        {
+          "name": "filterOptions",
+          "required": false,
+          "schema": {
+            "title": "filterOptions",
+            "type": "object",
+            "description": "(Optional) An object containing filter options specific to the subscription type. Only applicable for the `logs` subscription type.",
+            "required": ["topics"],
+            "properties": {
+              "address": {
+                "type": "string",
+                "description": "(Optional) A single address or an array of addresses to filter the logs by."
+              },
+              "topics": {
+                "type": "array",
+                "description": "An array of topics to filter the logs by.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "subscriptionId",
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique subscription ID that can be used to unsubscribe or identify incoming notifications."
+      },
+      "examples": [
+        {
+          "name": "eth_subscribe example",
+          "params": [
+            {
+              "name": "subscriptionType",
+              "value": "newHeads"
+            }
+          ],
+          "result": {
+            "name": "eth_subscribeExampleResult",
+            "value": "0x1b84f2cdf29a204b79e450c1939b30c1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "eth_unsubscribe",
+      "summary": "Unsubscribes from a specific Ethereum event, using the subscription ID provided by `eth_subscribe`.",
+      "description": "Unsubscribes from specific events on the Ethereum network, to which the client has been previously subscribed using `eth_subscribe`. The client must provide the subscription ID obtained from `eth_subscribe` to stop receiving notifications for the corresponding event.",
+      "params": [
+        {
+          "name": "subscriptionId",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "description": "The unique subscription ID obtained from `eth_subscribe`, used to identify the subscription to be unsubscribed."
+          }
+        }
+      ],
+      "result": {
+        "name": "unsubscribed",
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "A boolean value indicating whether the unsubscription was successful."
+      },
+      "examples": [
+        {
+          "name": "eth_unsubscribe example",
+          "params": [
+            {
+              "name": "subscriptionId",
+              "value": "0x1b84f2cdf29a204b79e450c1939b30c1"
+            }
+          ],
+          "result": {
+            "name": "eth_unsubscribeExampleResult",
+            "value": true
+          }
+        }
+      ]
+    },
+    
+    {
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        }
+      ],
+      "name": "eth_requestAccounts",
+      "description": "Requests that the user provide an Ethereum address to be identified by. This method is specified by [EIP-1102](https://eips.ethereum.org/EIPS/eip-1102). Internally, this method calls `wallet_requestPermissions` for permission to call `eth_accounts`.",
+      "summary": "Requests that the user provide an Ethereum address.",
+      "params": [],
+      "result": {
+        "name": "AddressList",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/UserRejected"
+        }
+      ]
+    },
+    {
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Restricted"
+        }
+      ],
+      "name": "eth_accounts",
+      "description": "Returns a list of addresses for the accounts owned by the user.",
+      "summary": "Gets a list of addresses for the user's accounts.",
+      "params": [],
+      "result": {
+        "name": "AddressList",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/address"
+          }
         }
       }
     },
@@ -1366,42 +1402,6 @@
         }
       }
     },
-    {
-      "name": "web3_clientVersion",
-      "description": "Returns the current MetaMask client version. This differs slightly per client. For example, the browser extension returns a string like `MetaMask/v10.33.1`, while the mobile app returns a string like `MetaMask/8.1.2/Mobile`.",
-      "summary": "Current client version.",
-      "params": [],
-      "examples": [
-        {
-          "name": "MetaMaskClientVersionExample",
-          "description": "Example version response from MetaMask.",
-          "params": [],
-          "result": {
-            "name": "MetaMaskClientVersion",
-            "description": "The current client version.",
-            "value": "MetaMask/v10.33.1"
-          }
-        },
-        {
-          "name": "MetaMaskMobileClientVersionExample",
-          "description": "Example version response from MetaMask Mobile.",
-          "params": [],
-          "result": {
-            "name": "MetaMaskClientVersion",
-            "description": "The current client version.",
-            "value": "MetaMask/8.1.2/Mobile"
-          }
-        }
-      ],
-      "result": {
-        "name": "CurrentVersion",
-        "description": "The current client version.",
-        "schema": {
-          "title": "CurrentClientVersion",
-          "type": "string"
-        }
-      }
-    }
   ],
   "components": {
     "schemas": {
