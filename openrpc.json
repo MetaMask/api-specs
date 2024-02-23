@@ -3,7 +3,7 @@
   "info": {
     "title": "JSON-RPC API",
     "version": "1.0.0",
-    "description": "This section provides an interactive reference for the JSON-RPC API of MetaMask's [Wallet API](/wallet/concepts/wallet-api). The API builds on a set of standard Ethereum methods with MetaMask-specific enhancements, and is designed for seamless integration into dapps.\n\nView the JSON-RPC API methods by selecting a method in the left sidebar. You can test the methods directly in the page using the API playground, with pre-configured examples or custom parameters. You can also save URLs with custom parameters using your browser's bookmarks.\n\nEach method may have one or more of the following labels:\n\n- **MetaMask** - The functionalities of these methods are specific to MetaMask, and may or may not be supported by other wallets.\n- **Restricted** - These methods are restricted and require requesting permission using [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions)\n- **Mobile** - These methods are only available on MetaMask Mobile.\n- **Experimental** - These methods are experimental and may be changed in the future.\n- **Deprecated** - These methods are deprecated and may be removed in the future.\n- **Snaps** - These methods are related to interacting with [Snaps](/snaps).\n- **Ethereum API** - These are standard Ethereum JSON-RPC API methods. See the [Ethereum wiki](https://eth.wiki/json-rpc/API#json-rpc-methods) for more information about these methods."
+    "description": "This section provides an interactive reference for the JSON-RPC API of MetaMask's [Wallet API](/wallet/concepts/wallet-api). The API builds on a set of standard Ethereum methods with MetaMask-specific enhancements, and is designed for seamless integration into dapps.\n\nView the JSON-RPC API methods by selecting a method in the left sidebar. You can test the methods directly in the page using the API playground, with pre-configured examples or custom parameters. You can also save URLs with custom parameters using your browser's bookmarks.\n\nEach method may have one or more of the following labels:\n\n- **MetaMask** - The functionalities of these methods are specific to MetaMask, and may or may not be supported by other wallets.\n- **Restricted** - These methods are restricted and require requesting permission using [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions)\n- **Mobile** - These methods are only available on MetaMask Mobile.\n- **Snaps** - These methods are related to interacting with [Snaps](/snaps).\n- **Experimental** - These methods are experimental and may be changed in the future.\n- **Deprecated** - These methods are deprecated and may be removed in the future.\n- **Ethereum API** - These are standard Ethereum JSON-RPC API methods. See the [Ethereum wiki](https://eth.wiki/json-rpc/API#json-rpc-methods) for more information about these methods."
   },
   "methods": [
         {
@@ -923,6 +923,132 @@
       ]
     },
     {
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        }
+      ],
+      "name": "eth_requestAccounts",
+      "description": "Requests that the user provide an Ethereum address to be identified by. This method is specified by [EIP-1102](https://eips.ethereum.org/EIPS/eip-1102). Internally, this method calls `wallet_requestPermissions` for permission to call `eth_accounts`.",
+      "summary": "Requests that the user provide an Ethereum address.",
+      "params": [],
+      "result": {
+        "name": "AddressList",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/UserRejected"
+        }
+      ]
+    },
+    {
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Restricted"
+        }
+      ],
+      "name": "eth_accounts",
+      "description": "Returns a list of addresses for the accounts owned by the user.",
+      "summary": "Gets a list of addresses for the user's accounts.",
+      "params": [],
+      "result": {
+        "name": "AddressList",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      }
+    },
+    {
+      "name": "eth_sendTransaction",
+      "description": "Creates a new wallet confirmation to make an Ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
+      "summary": "Initiates a new transaction.",
+      "params": [
+        {
+          "name": "Transaction",
+          "required": true,
+          "description": "The transaction object to sign and send.",
+          "schema": {
+            "type": "object",
+            "title": "Transaction",
+            "description": "The parameters to customize a transaction. If a `to` address is not provided. It will be assumed that the transaction is a contract creation transaction, and the `data` field of the transaction will be used as the contract initialization code. `gasPrice` cannot be used together with `maxPriorityFeePerGas` and `maxFeePerGas`.",
+            "required": [
+              "from"
+            ],
+            "if": {
+              "properties": {
+                "to": {
+                  "not": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "data"
+              ]
+            },
+            "properties": {
+              "to": {
+                "title": "to address",
+                "$ref": "#/components/schemas/address"
+              },
+              "from": {
+                "title": "from address",
+                "$ref": "#/components/schemas/address"
+              },
+              "gas": {
+                "title": "gas limit",
+                "$ref": "#/components/schemas/uint"
+              },
+              "value": {
+                "title": "value",
+                "$ref": "#/components/schemas/uint"
+              },
+              "data": {
+                "title": "data",
+                "$ref": "#/components/schemas/bytes"
+              },
+              "gasPrice": {
+                "title": "gas price",
+                "description": "The gas price the sender is willing to pay to miners in wei. Used in pre-1559 transactions.",
+                "$ref": "#/components/schemas/uint"
+              },
+              "maxPriorityFeePerGas": {
+                "title": "max priority fee per gas",
+                "description": "Maximum fee per gas the sender is willing to pay to miners in wei. Used in 1559 transactions.",
+                "$ref": "#/components/schemas/uint"
+              },
+              "maxFeePerGas": {
+                "title": "max fee per gas",
+                "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei. Used in 1559 transactions.",
+                "$ref": "#/components/schemas/uint"
+              }
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "TransactionHash",
+        "description": "The transaction hash of the sent transaction.",
+        "schema": {
+          "$ref": "#/components/schemas/bytes32"
+        }
+      }
+    },
+    {
       "name": "personal_sign",
       "summary": "Presents a plain text signature challenge to the user.",
       "description": "Presents a plain text signature challenge to the user and returns the signed response. Equivalent to `eth_sign` on some other wallets, and prepends a safe prefix to the signed message to prevent the challenge tricking users into signing a financial transaction. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` first.",
@@ -1070,108 +1196,7 @@
       ]
     },
     {
-      "name": "eth_decrypt",
-      "tags": [
-        {
-          "$ref": "#/components/tags/MetaMask"
-        },
-        {
-          "$ref": "#/components/tags/Deprecated"
-        }
-      ],
-      "summary": "Decrypts an encrypted message.",
-      "description": "This method is deprecated and may be removed in the future. \n\n Requests that MetaMask decrypt the specified encrypted message. The message must have been encrypted using the public encryption key of the specified Ethereum address. Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
-      "params": [
-        {
-          "name": "EncryptedMessage",
-          "required": true,
-          "description": "The encrypted message to decrypt.",
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "Address",
-          "required": true,
-          "description": "The address of the Ethereum account that can decrypt the message.",
-          "schema": {
-            "$ref": "#/components/schemas/address"
-          }
-        }
-      ],
-      "result": {
-        "name": "PermissionsList",
-        "schema": {
-          "$ref": "#/components/schemas/PermissionsList"
-        }
-      }
-    },
-    {
-      "tags": [
-        {
-          "$ref": "#/components/tags/MetaMask"
-        },
-        {
-          "$ref": "#/components/tags/Deprecated"
-        }
-      ],
-      "name": "eth_getEncryptionPublicKey",
-      "summary": "Gets a public key used for encryption.",
-      "description": "This method is deprecated and may be removed in the future. \n\n Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
-      "params": [
-        {
-          "name": "Address",
-          "required": true,
-          "description": "The address of the Ethereum account that can decrypt the message.",
-          "schema": {
-            "$ref": "#/components/schemas/address"
-          }
-        }
-      ],
-      "result": {
-        "name": "EncryptionKey",
-        "schema": {
-          "type": "string"
-        }
-      }
-    },
-    {
-      "name": "web3_clientVersion",
-      "description": "Returns the current MetaMask client version. This differs slightly per client. For example, the browser extension returns a string like `MetaMask/v10.33.1`, while the mobile app returns a string like `MetaMask/8.1.2/Mobile`.",
-      "summary": "Current client version.",
-      "params": [],
-      "examples": [
-        {
-          "name": "MetaMaskClientVersionExample",
-          "description": "Example version response from MetaMask.",
-          "params": [],
-          "result": {
-            "name": "MetaMaskClientVersion",
-            "description": "The current client version.",
-            "value": "MetaMask/v10.33.1"
-          }
-        },
-        {
-          "name": "MetaMaskMobileClientVersionExample",
-          "description": "Example version response from MetaMask Mobile.",
-          "params": [],
-          "result": {
-            "name": "MetaMaskClientVersion",
-            "description": "The current client version.",
-            "value": "MetaMask/8.1.2/Mobile"
-          }
-        }
-      ],
-      "result": {
-        "name": "CurrentVersion",
-        "description": "The current client version.",
-        "schema": {
-          "title": "CurrentClientVersion",
-          "type": "string"
-        }
-      }
-    },
-    {
+
       "name": "eth_subscribe",
       "summary": "Subscribes to specific Ethereum events, returning a subscription ID used to receive notifications.",
       "description": "Subscribes to specific events on the Ethereum network, such as new blocks, new pending transactions, or changes in the state of an account. When an event occurs, a notification is sent to the client with the corresponding data. To stop receiving notifications, the client can unsubscribe using `eth_unsubscribe`.",
@@ -1275,31 +1300,42 @@
         }
       ]
     },
-    
     {
+      "name": "eth_decrypt",
       "tags": [
         {
           "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Deprecated"
         }
       ],
-      "name": "eth_requestAccounts",
-      "description": "Requests that the user provide an Ethereum address to be identified by. This method is specified by [EIP-1102](https://eips.ethereum.org/EIPS/eip-1102). Internally, this method calls `wallet_requestPermissions` for permission to call `eth_accounts`.",
-      "summary": "Requests that the user provide an Ethereum address.",
-      "params": [],
-      "result": {
-        "name": "AddressList",
-        "schema": {
-          "type": "array",
-          "items": {
+      "summary": "Decrypts an encrypted message.",
+      "description": "This method is deprecated and may be removed in the future. \n\n Requests that MetaMask decrypt the specified encrypted message. The message must have been encrypted using the public encryption key of the specified Ethereum address. Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
+      "params": [
+        {
+          "name": "EncryptedMessage",
+          "required": true,
+          "description": "The encrypted message to decrypt.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the Ethereum account that can decrypt the message.",
+          "schema": {
             "$ref": "#/components/schemas/address"
           }
         }
-      },
-      "errors": [
-        {
-          "$ref": "#/components/errors/UserRejected"
+      ],
+      "result": {
+        "name": "PermissionsList",
+        "schema": {
+          "$ref": "#/components/schemas/PermissionsList"
         }
-      ]
+      }
     },
     {
       "tags": [
@@ -1307,102 +1343,66 @@
           "$ref": "#/components/tags/MetaMask"
         },
         {
-          "$ref": "#/components/tags/Restricted"
+          "$ref": "#/components/tags/Deprecated"
         }
       ],
-      "name": "eth_accounts",
-      "description": "Returns a list of addresses for the accounts owned by the user.",
-      "summary": "Gets a list of addresses for the user's accounts.",
-      "params": [],
-      "result": {
-        "name": "AddressList",
-        "schema": {
-          "type": "array",
-          "items": {
+      "name": "eth_getEncryptionPublicKey",
+      "summary": "Gets a public key used for encryption.",
+      "description": "This method is deprecated and may be removed in the future. \n\n Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
+      "params": [
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the Ethereum account that can decrypt the message.",
+          "schema": {
             "$ref": "#/components/schemas/address"
           }
+        }
+      ],
+      "result": {
+        "name": "EncryptionKey",
+        "schema": {
+          "type": "string"
         }
       }
     },
     {
-      "name": "eth_sendTransaction",
-      "description": "Creates a new wallet confirmation to make an Ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
-      "summary": "Initiates a new transaction.",
-      "params": [
+      "name": "web3_clientVersion",
+      "description": "Returns the current MetaMask client version. This differs slightly per client. For example, the browser extension returns a string like `MetaMask/v10.33.1`, while the mobile app returns a string like `MetaMask/8.1.2/Mobile`.",
+      "summary": "Current client version.",
+      "params": [],
+      "examples": [
         {
-          "name": "Transaction",
-          "required": true,
-          "description": "The transaction object to sign and send.",
-          "schema": {
-            "type": "object",
-            "title": "Transaction",
-            "description": "The parameters to customize a transaction. If a `to` address is not provided. It will be assumed that the transaction is a contract creation transaction, and the `data` field of the transaction will be used as the contract initialization code. `gasPrice` cannot be used together with `maxPriorityFeePerGas` and `maxFeePerGas`.",
-            "required": [
-              "from"
-            ],
-            "if": {
-              "properties": {
-                "to": {
-                  "not": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            "then": {
-              "required": [
-                "data"
-              ]
-            },
-            "properties": {
-              "to": {
-                "title": "to address",
-                "$ref": "#/components/schemas/address"
-              },
-              "from": {
-                "title": "from address",
-                "$ref": "#/components/schemas/address"
-              },
-              "gas": {
-                "title": "gas limit",
-                "$ref": "#/components/schemas/uint"
-              },
-              "value": {
-                "title": "value",
-                "$ref": "#/components/schemas/uint"
-              },
-              "data": {
-                "title": "data",
-                "$ref": "#/components/schemas/bytes"
-              },
-              "gasPrice": {
-                "title": "gas price",
-                "description": "The gas price the sender is willing to pay to miners in wei. Used in pre-1559 transactions.",
-                "$ref": "#/components/schemas/uint"
-              },
-              "maxPriorityFeePerGas": {
-                "title": "max priority fee per gas",
-                "description": "Maximum fee per gas the sender is willing to pay to miners in wei. Used in 1559 transactions.",
-                "$ref": "#/components/schemas/uint"
-              },
-              "maxFeePerGas": {
-                "title": "max fee per gas",
-                "description": "The maximum total fee per gas the sender is willing to pay (includes the network / base fee and miner / priority fee) in wei. Used in 1559 transactions.",
-                "$ref": "#/components/schemas/uint"
-              }
-            }
+          "name": "MetaMaskClientVersionExample",
+          "description": "Example version response from MetaMask.",
+          "params": [],
+          "result": {
+            "name": "MetaMaskClientVersion",
+            "description": "The current client version.",
+            "value": "MetaMask/v10.33.1"
+          }
+        },
+        {
+          "name": "MetaMaskMobileClientVersionExample",
+          "description": "Example version response from MetaMask Mobile.",
+          "params": [],
+          "result": {
+            "name": "MetaMaskClientVersion",
+            "description": "The current client version.",
+            "value": "MetaMask/8.1.2/Mobile"
           }
         }
       ],
       "result": {
-        "name": "TransactionHash",
-        "description": "The transaction hash of the sent transaction.",
+        "name": "CurrentVersion",
+        "description": "The current client version.",
         "schema": {
-          "$ref": "#/components/schemas/bytes32"
+          "title": "CurrentClientVersion",
+          "type": "string"
         }
       }
     }
-  ], 
+  ],
   "components": {
     "schemas": {
       "TypedData": {
