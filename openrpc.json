@@ -972,6 +972,11 @@
     },
     {
       "name": "personal_sign",
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        }
+      ],
       "summary": "Presents a plain text signature challenge to the user.",
       "description": "Presents a plain text signature challenge to the user and returns the signed response. Equivalent to `eth_sign` on some other wallets, and prepends a safe prefix to the signed message to prevent the challenge tricking users into signing a financial transaction. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` first.",
       "deprecated": false,
