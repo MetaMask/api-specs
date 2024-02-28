@@ -1123,213 +1123,12 @@
       ]
     },
     {
-      "name": "eth_decrypt",
-      "tags": [
-        {
-          "$ref": "#/components/tags/MetaMask"
-        },
-        {
-          "$ref": "#/components/tags/Deprecated"
-        }
-      ],
-      "summary": "Decrypts an encrypted message.",
-      "description": "This method is deprecated and may be removed in the future. \n\n Requests that MetaMask decrypt the specified encrypted message. The message must have been encrypted using the public encryption key of the specified Ethereum address. Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
-      "params": [
-        {
-          "name": "EncryptedMessage",
-          "required": true,
-          "description": "The encrypted message to decrypt.",
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "Address",
-          "required": true,
-          "description": "The address of the Ethereum account that can decrypt the message.",
-          "schema": {
-            "$ref": "#/components/schemas/address"
-          }
-        }
-      ],
-      "result": {
-        "name": "PermissionsList",
-        "schema": {
-          "$ref": "#/components/schemas/PermissionsList"
-        }
-      }
-    },
-    {
-      "tags": [
-        {
-          "$ref": "#/components/tags/MetaMask"
-        },
-        {
-          "$ref": "#/components/tags/Deprecated"
-        }
-      ],
-      "name": "eth_getEncryptionPublicKey",
-      "summary": "Gets a public key used for encryption.",
-      "description": "This method is deprecated and may be removed in the future. \n\n Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
-      "params": [
-        {
-          "name": "Address",
-          "required": true,
-          "description": "The address of the Ethereum account that can decrypt the message.",
-          "schema": {
-            "$ref": "#/components/schemas/address"
-          }
-        }
-      ],
-      "result": {
-        "name": "EncryptionKey",
-        "schema": {
-          "type": "string"
-        }
-      }
-    },
-    {
-      "name": "web3_clientVersion",
-      "description": "Returns the current MetaMask client version. This differs slightly per client. For example, the browser extension returns a string like `MetaMask/v10.33.1`, while the mobile app returns a string like `MetaMask/8.1.2/Mobile`.",
-      "summary": "Current client version.",
-      "params": [],
-      "examples": [
-        {
-          "name": "MetaMaskClientVersionExample",
-          "description": "Example version response from MetaMask.",
-          "params": [],
-          "result": {
-            "name": "MetaMaskClientVersion",
-            "description": "The current client version.",
-            "value": "MetaMask/v10.33.1"
-          }
-        },
-        {
-          "name": "MetaMaskMobileClientVersionExample",
-          "description": "Example version response from MetaMask Mobile.",
-          "params": [],
-          "result": {
-            "name": "MetaMaskClientVersion",
-            "description": "The current client version.",
-            "value": "MetaMask/8.1.2/Mobile"
-          }
-        }
-      ],
-      "result": {
-        "name": "CurrentVersion",
-        "description": "The current client version.",
-        "schema": {
-          "title": "CurrentClientVersion",
-          "type": "string"
-        }
-      }
-    },
-    {
-      "name": "eth_subscribe",
-      "summary": "Subscribes to specific Ethereum events, returning a subscription ID used to receive notifications.",
-      "description": "Subscribes to specific events on the Ethereum network, such as new blocks, new pending transactions, or changes in the state of an account. When an event occurs, a notification is sent to the client with the corresponding data. To stop receiving notifications, the client can unsubscribe using `eth_unsubscribe`.",
-      "params": [
-        {
-          "name": "subscriptionType",
-          "required": true,
-          "schema": {
-            "title": "subscriptionType",
-            "type": "string",
-            "enum": [
-              "newHeads",
-              "logs",
-              "newPendingTransactions",
-              "syncing"
-            ],
-            "description": "The type of subscription to create. Must be one of the following: \n1. `newHeads` - New block headers. \n2. `logs` - Logs matching a filter object. \n3. `newPendingTransactions` - New pending transactions. \n4. `syncing` - Changes in syncing status."
-          }
-        },
-        {
-          "name": "filterOptions",
-          "required": false,
-          "schema": {
-            "title": "filterOptions",
-            "type": "object",
-            "description": "(Optional) An object containing filter options specific to the subscription type. Only applicable for the `logs` subscription type.",
-            "required": ["topics"],
-            "properties": {
-              "address": {
-                "type": "string",
-                "description": "(Optional) A single address or an array of addresses to filter the logs by."
-              },
-              "topics": {
-                "type": "array",
-                "description": "An array of topics to filter the logs by.",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "result": {
-        "name": "subscriptionId",
-        "schema": {
-          "type": "string"
-        },
-        "description": "A unique subscription ID that can be used to unsubscribe or identify incoming notifications."
-      },
-      "examples": [
-        {
-          "name": "eth_subscribe example",
-          "params": [
-            {
-              "name": "subscriptionType",
-              "value": "newHeads"
-            }
-          ],
-          "result": {
-            "name": "eth_subscribeExampleResult",
-            "value": "0x1b84f2cdf29a204b79e450c1939b30c1"
-          }
-        }
-      ]
-    },
-    {
-      "name": "eth_unsubscribe",
-      "summary": "Unsubscribes from a specific Ethereum event, using the subscription ID provided by `eth_subscribe`.",
-      "description": "Unsubscribes from specific events on the Ethereum network, to which the client has been previously subscribed using `eth_subscribe`. The client must provide the subscription ID obtained from `eth_subscribe` to stop receiving notifications for the corresponding event.",
-      "params": [
-        {
-          "name": "subscriptionId",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "description": "The unique subscription ID obtained from `eth_subscribe`, used to identify the subscription to be unsubscribed."
-          }
-        }
-      ],
-      "result": {
-        "name": "unsubscribed",
-        "schema": {
-          "type": "boolean"
-        },
-        "description": "A boolean value indicating whether the unsubscription was successful."
-      },
-      "examples": [
-        {
-          "name": "eth_unsubscribe example",
-          "params": [
-            {
-              "name": "subscriptionId",
-              "value": "0x1b84f2cdf29a204b79e450c1939b30c1"
-            }
-          ],
-          "result": {
-            "name": "eth_unsubscribeExampleResult",
-            "value": true
-          }
-        }
-      ]
-    },
-    {
       "name": "eth_sendTransaction",
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        }
+      ],
       "description": "Creates a new wallet confirmation to make an Ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
       "summary": "Initiates a new transaction.",
       "params": [
@@ -1405,6 +1204,227 @@
           "$ref": "#/components/schemas/bytes32"
         }
       }
+    },
+    {
+      "name": "eth_decrypt",
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Deprecated"
+        }
+      ],
+      "summary": "Decrypts an encrypted message.",
+      "description": "This method is deprecated and may be removed in the future. \n\n Requests that MetaMask decrypt the specified encrypted message. The message must have been encrypted using the public encryption key of the specified Ethereum address. Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
+      "params": [
+        {
+          "name": "EncryptedMessage",
+          "required": true,
+          "description": "The encrypted message to decrypt.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the Ethereum account that can decrypt the message.",
+          "schema": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      ],
+      "result": {
+        "name": "PermissionsList",
+        "schema": {
+          "$ref": "#/components/schemas/PermissionsList"
+        }
+      }
+    },
+    {
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Deprecated"
+        }
+      ],
+      "name": "eth_getEncryptionPublicKey",
+      "summary": "Gets a public key used for encryption.",
+      "description": "This method is deprecated and may be removed in the future. \n\n Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
+      "params": [
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the Ethereum account that can decrypt the message.",
+          "schema": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      ],
+      "result": {
+        "name": "EncryptionKey",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "web3_clientVersion",
+      "tags": [
+        {
+          "$ref": "#/components/tags/Ethereum"
+        }
+      ],
+      "description": "Returns the current MetaMask client version. This differs slightly per client. For example, the browser extension returns a string like `MetaMask/v10.33.1`, while the mobile app returns a string like `MetaMask/8.1.2/Mobile`.",
+      "summary": "Current client version.",
+      "params": [],
+      "examples": [
+        {
+          "name": "MetaMaskClientVersionExample",
+          "description": "Example version response from MetaMask.",
+          "params": [],
+          "result": {
+            "name": "MetaMaskClientVersion",
+            "description": "The current client version.",
+            "value": "MetaMask/v10.33.1"
+          }
+        },
+        {
+          "name": "MetaMaskMobileClientVersionExample",
+          "description": "Example version response from MetaMask Mobile.",
+          "params": [],
+          "result": {
+            "name": "MetaMaskClientVersion",
+            "description": "The current client version.",
+            "value": "MetaMask/8.1.2/Mobile"
+          }
+        }
+      ],
+      "result": {
+        "name": "CurrentVersion",
+        "description": "The current client version.",
+        "schema": {
+          "title": "CurrentClientVersion",
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "eth_subscribe",
+      "tags": [
+        {
+          "$ref": "#/components/tags/Ethereum"
+        }
+      ],
+      "summary": "Subscribes to specific Ethereum events, returning a subscription ID used to receive notifications.",
+      "description": "Subscribes to specific events on the Ethereum network, such as new blocks, new pending transactions, or changes in the state of an account. When an event occurs, a notification is sent to the client with the corresponding data. To stop receiving notifications, the client can unsubscribe using `eth_unsubscribe`.",
+      "params": [
+        {
+          "name": "subscriptionType",
+          "required": true,
+          "schema": {
+            "title": "subscriptionType",
+            "type": "string",
+            "enum": [
+              "newHeads",
+              "logs",
+              "newPendingTransactions",
+              "syncing"
+            ],
+            "description": "The type of subscription to create. Must be one of the following: \n1. `newHeads` - New block headers. \n2. `logs` - Logs matching a filter object. \n3. `newPendingTransactions` - New pending transactions. \n4. `syncing` - Changes in syncing status."
+          }
+        },
+        {
+          "name": "filterOptions",
+          "required": false,
+          "schema": {
+            "title": "filterOptions",
+            "type": "object",
+            "description": "(Optional) An object containing filter options specific to the subscription type. Only applicable for the `logs` subscription type.",
+            "required": ["topics"],
+            "properties": {
+              "address": {
+                "type": "string",
+                "description": "(Optional) A single address or an array of addresses to filter the logs by."
+              },
+              "topics": {
+                "type": "array",
+                "description": "An array of topics to filter the logs by.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "subscriptionId",
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique subscription ID that can be used to unsubscribe or identify incoming notifications."
+      },
+      "examples": [
+        {
+          "name": "eth_subscribe example",
+          "params": [
+            {
+              "name": "subscriptionType",
+              "value": "newHeads"
+            }
+          ],
+          "result": {
+            "name": "eth_subscribeExampleResult",
+            "value": "0x1b84f2cdf29a204b79e450c1939b30c1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "eth_unsubscribe",
+      "tags": [
+        {
+          "$ref": "#/components/tags/Ethereum"
+        }
+      ],
+      "summary": "Unsubscribes from a specific Ethereum event, using the subscription ID provided by `eth_subscribe`.",
+      "description": "Unsubscribes from specific events on the Ethereum network, to which the client has been previously subscribed using `eth_subscribe`. The client must provide the subscription ID obtained from `eth_subscribe` to stop receiving notifications for the corresponding event.",
+      "params": [
+        {
+          "name": "subscriptionId",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "description": "The unique subscription ID obtained from `eth_subscribe`, used to identify the subscription to be unsubscribed."
+          }
+        }
+      ],
+      "result": {
+        "name": "unsubscribed",
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "A boolean value indicating whether the unsubscription was successful."
+      },
+      "examples": [
+        {
+          "name": "eth_unsubscribe example",
+          "params": [
+            {
+              "name": "subscriptionId",
+              "value": "0x1b84f2cdf29a204b79e450c1939b30c1"
+            }
+          ],
+          "result": {
+            "name": "eth_unsubscribeExampleResult",
+            "value": true
+          }
+        }
+      ]
     }
   ],
   "components": {
@@ -1660,6 +1680,10 @@
       "Deprecated": {
         "name": "Deprecated",
         "description": "Deprecated methods."
+      },
+      "Ethereum": {
+        "name": "Ethereum API",
+        "description": "Ethereum execution API methods."
       }
     },
     "errors": {
