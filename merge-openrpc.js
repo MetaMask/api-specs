@@ -1,7 +1,9 @@
-const MetaMaskOpenRPC = require("./openrpc.json");
 const fs = require("fs");
 const fetch = require("node-fetch");
 const mergeOpenRPC = require("./merge-utils");
+const yaml = require("js-yaml");
+
+const MetaMaskOpenRPC = yaml.load(fs.readFileSync(__dirname + "/openrpc.yaml", "utf8"));
 
 const getFilteredExecutionAPIs = () => {
   return fetch("https://raw.githubusercontent.com/ethereum/execution-apis/assembled-spec/refs-openrpc.json")
