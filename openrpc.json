@@ -3,114 +3,306 @@
   "info": {
     "title": "JSON-RPC API",
     "version": "1.0.0",
-    "description": "This section provides an interactive reference for the JSON-RPC API of MetaMask's [Wallet API](/wallet/concepts/wallet-api). The API builds on a set of standard Ethereum methods with MetaMask-specific enhancements, and is designed for seamless integration into dapps.\n\nView the JSON-RPC API methods by selecting them in the left sidebar. You can test the methods directly in the page, using the pre-configured examples or custom parameters. You can also use save URLs with custom parameters using your browser's bookmarks.\n\nEach method may have one or more of the following labels:\n\n- **MetaMask** - These methods behave in ways specific to MetaMask, and may or may not be supported by other wallets.\n- **Snaps** - These methods are related to interacting with [Snaps](/snaps).\n- **Restricted** - These methods are restricted, which require requesting permission using [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions).\n- **Mobile** - These methods are only available on MetaMask Mobile.\n- **Experimental** - These methods are experimental, and may be changed in the future.\n- **Deprecated** - These methods are deprecated, and may be removed in the future.\n- **Ethereum API** - These are standard Ethereum JSON-RPC API methods. See the [Ethereum wiki](https://eth.wiki/json-rpc/API#json-rpc-methods) for more information about these methods."
+    "description": "This section provides an interactive reference for the JSON-RPC API of MetaMask's [Wallet API](/wallet/concepts/wallet-api). The API builds on a set of standard Ethereum methods with MetaMask-specific enhancements, and is designed for seamless integration into dapps.\n\nView the JSON-RPC API methods by selecting a method in the left sidebar. You can test the methods directly in the page using the API playground, with pre-configured examples or custom parameters. You can also save URLs with custom parameters using your browser's bookmarks.\n\nEach method may have one or more of the following labels:\n\n- **MetaMask** - The functionalities of these methods are specific to MetaMask, and may or may not be supported by other wallets.\n- **Restricted** - These methods are restricted and require requesting permission using [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions)\n- **Mobile** - These methods are only available on MetaMask Mobile.\n- **Snaps** - These methods are related to interacting with [Snaps](/snaps).\n- **Experimental** - These methods are experimental and may be changed in the future.\n- **Deprecated** - These methods are deprecated and may be removed in the future.\n- **Ethereum API** - These are standard Ethereum JSON-RPC API methods. See the [Ethereum wiki](https://eth.wiki/json-rpc/API#json-rpc-methods) for more information about these methods."
   },
   "methods": [
-    {
-      "name": "eth_subscribe",
-      "summary": "Subscribes to specific Ethereum events, returning a subscription ID used to receive notifications.",
-      "description": "Subscribes to specific events on the Ethereum network, such as new blocks, new pending transactions, or changes in the state of an account. When an event occurs, a notification is sent to the client with the corresponding data. To stop receiving notifications, the client can unsubscribe using `eth_unsubscribe`.",
-      "params": [
         {
-          "name": "subscriptionType",
-          "required": true,
-          "schema": {
-            "title": "subscriptionType",
-            "type": "string",
-            "enum": [
-              "newHeads",
-              "logs",
-              "newPendingTransactions",
-              "syncing"
-            ],
-            "description": "The type of subscription to create. Must be one of the following: \n1. `newHeads` - New block headers. \n2. `logs` - Logs matching a filter object. \n3. `newPendingTransactions` - New pending transactions. \n4. `syncing` - Changes in syncing status."
-          }
+          "name": "wallet_addEthereumChain",
+          "tags": [
+            {
+              "$ref": "#/components/tags/MetaMask"
+            }
+          ],
+          "summary": "Adds an Ethereum chain to the wallet.",
+          "description": "Creates a confirmation asking the user to add the specified chain to the wallet application. The caller must specify a chain ID and some chain metadata. The wallet application may refuse or accept the request. `null` is returned if the chain is added, and an error otherwise. Introduced by [EIP-3085](https://eips.ethereum.org/EIPS/eip-3085).",
+          "params": [
+            {
+              "name": "AddEthereumChainParameter",
+              "schema": {
+                "$ref": "#/components/schemas/AddEthereumChainParameter"
+              }
+            }
+          ],
+          "errors": [
+            {
+              "code": -32602,
+              "message": "Expected null or array with at least one valid string HTTPS URL 'blockExplorerUrl'. Received: ${blockExplorerUrls}"
+            },
+            {
+              "code": -32602,
+              "message": "Expected 0x-prefixed, unpadded, non-zero hexadecimal string 'chainId'. Received:\n${chainId}"
+            },
+            {
+              "code": -32602,
+              "message": "Invalid chain ID \"${_chainId}\": numerical value greater than max safe value. Received:\n${chainId}"
+            },
+            {
+              "code": -32602,
+              "message": "May not specify default MetaMask chain."
+            },
+            {
+              "code": -32602,
+              "message": "Expected 2-6 character string 'nativeCurrency.symbol'. Received:\n${ticker}"
+            },
+            {
+              "code": -32602,
+              "message": "nativeCurrency.symbol does not match currency symbol for a network the user already has added with the same chainId. Received:\n${ticker}"
+            }
+          ],
+          "result": {
+            "name": "AddEthereumChainResult",
+            "schema": {
+              "type": "null"
+            }
+          },
+          "examples": [
+            {
+              "name": "wallet_addEthereumChain example",
+              "params": [
+                {
+                  "name": "AddEthereumChainParameter",
+                  "value": {
+                    "chainId": "0x64",
+                    "chainName": "Gnosis",
+                    "rpcUrls": [
+                      "https://rpc.ankr.com/gnosis"
+                    ],
+                    "iconUrls": [
+                      "https://xdaichain.com/fake/example/url/xdai.svg"
+                    ],
+                    "nativeCurrency": {
+                      "name": "xDAI",
+                      "symbol": "xDAI",
+                      "decimals": 18
+                    },
+                    "blockExplorerUrls": [
+                      "https://blockscout.com/poa/xdai/"
+                    ]
+                  }
+                }
+              ],
+              "result": {
+                "name": "wallet_addEthereumChainExampleResult",
+                "value": "null"
+              }
+            }
+          ]
         },
         {
-          "name": "filterOptions",
-          "required": false,
-          "schema": {
-            "title": "filterOptions",
-            "type": "object",
-            "description": "(Optional) An object containing filter options specific to the subscription type. Only applicable for the `logs` subscription type.",
-            "required": ["topics"],
-            "properties": {
-              "address": {
-                "type": "string",
-                "description": "(Optional) A single address or an array of addresses to filter the logs by."
-              },
-              "topics": {
-                "type": "array",
-                "description": "An array of topics to filter the logs by.",
-                "items": {
-                  "type": "string"
+          "name": "wallet_switchEthereumChain",
+          "tags": [
+            {
+              "$ref": "#/components/tags/MetaMask"
+            }
+          ],
+          "summary": "Switches the wallet's active Ethereum chain.",
+          "description": "Requests that the wallet switches its active Ethereum chain. Introduced by [EIP-3326](https://ethereum-magicians.org/t/eip-3326-wallet-switchethereumchain).",
+          "params": [
+            {
+              "name": "SwitchEthereumChainParameter",
+              "schema": {
+                "title": "SwitchEthereumChainParameter",
+                "type": "object",
+                "required": [
+                  "chainId"
+                ],
+                "properties": {
+                  "chainId": {
+                    "description": "The chain ID as a `0x`-prefixed hexadecimal string...",
+                    "type": "string"
+                  }
                 }
               }
             }
-          }
-        }
-      ],
-      "result": {
-        "name": "subscriptionId",
-        "schema": {
-          "type": "string"
+          ],
+          "result": {
+            "name": "SwitchEthereumChainResult",
+            "schema": {
+              "type": "null"
+            }
+          },
+          "errors": [
+            {
+              "code": 4902,
+              "message": "Unrecognized chain ID. Try adding the chain using wallet_addEthereumChain first."
+            }
+          ],
+          "examples": [
+            {
+              "name": "wallet_switchEthereumChain example",
+              "params": [
+                {
+                  "name": "SwitchEthereumChainParameter",
+                  "value": {
+                    "chainId": "0x64"
+                  }
+                }
+              ],
+              "result": {
+                "name": "wallet_switchEthereumChainExampleResult",
+                "value": "null"
+              }
+            }
+          ]
         },
-        "description": "A unique subscription ID that can be used to unsubscribe or identify incoming notifications."
-      },
-      "examples": [
         {
-          "name": "eth_subscribe example",
+          "tags": [
+            {
+              "$ref": "#/components/tags/MetaMask"
+            }
+          ],
+          "name": "wallet_getPermissions",
+          "summary": "Gets the user's permissions.",
+          "description": "Gets the user's permissions. Introduced by [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255).",
+          "params": [],
+          "result": {
+            "name": "PermissionsList",
+            "schema": {
+              "$ref": "#/components/schemas/PermissionsList"
+            }
+          }
+        },
+        {
+          "name": "wallet_requestPermissions",
+          "tags": [
+            {
+              "$ref": "#/components/tags/MetaMask"
+            }
+          ],
+          "summary": "Requests additional permissions.",
+          "description": "Requests additional permissions from the user. Introduced by [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255).",
           "params": [
             {
-              "name": "subscriptionType",
-              "value": "newHeads"
+              "name": "requestPermissionsObject",
+              "required": true,
+              "schema": {
+                "$ref": "#/components/schemas/PermissionObject"
+              }
             }
           ],
           "result": {
-            "name": "eth_subscribeExampleResult",
-            "value": "0x1b84f2cdf29a204b79e450c1939b30c1"
-          }
-        }
-      ]
-    },
-    {
-      "name": "eth_unsubscribe",
-      "summary": "Unsubscribes from a specific Ethereum event, using the subscription ID provided by `eth_subscribe`.",
-      "description": "Unsubscribes from specific events on the Ethereum network, to which the client has been previously subscribed using `eth_subscribe`. The client must provide the subscription ID obtained from `eth_subscribe` to stop receiving notifications for the corresponding event.",
-      "params": [
-        {
-          "name": "subscriptionId",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "description": "The unique subscription ID obtained from `eth_subscribe`, used to identify the subscription to be unsubscribed."
-          }
-        }
-      ],
-      "result": {
-        "name": "unsubscribed",
-        "schema": {
-          "type": "boolean"
+            "name": "PermissionsList",
+            "schema": {
+              "$ref": "#/components/schemas/PermissionsList"
+            }
+          },
+          "examples": [
+            {
+              "name": "wallet_requestPermissions example of requesting the eth_accounts permission",
+              "params": [
+                {
+                  "name": "requestPermissionObject",
+                  "value": {
+                    "eth_accounts": {}
+                  }
+                }
+              ],
+              "result": {
+                "name": "permissionList",
+                "value": {
+                  "eth_accounts": {}
+                }
+              }
+            },
+            {
+              "name": "wallet_requestPermissions example of requesting the wallet_snap permission",
+              "params": [
+                {
+                  "name": "requestPermissionObject",
+                  "value": {
+                    "wallet_snap": {
+                      "caveats": [
+                        {
+                          "type": "snapIds",
+                          "value": {
+                            "npm:@metamask/example-snap": {
+                              "version": "1.0.0"
+                            },
+                            "npm:fooSnap": {
+                              "version": "1.2.1"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "result": {
+                "name": "permissionList",
+                "value": {
+                  "wallet_snap": {
+                    "caveats": [
+                      {
+                        "type": "snapIds",
+                        "value": {
+                          "npm:@metamask/example-snap": {
+                            "version": "1.0.0"
+                          },
+                          "npm:fooSnap": {
+                            "version": "1.2.1"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "errors": [
+            {
+              "$ref": "#/components/errors/UserRejected"
+            }
+          ]
         },
-        "description": "A boolean value indicating whether the unsubscription was successful."
-      },
-      "examples": [
         {
-          "name": "eth_unsubscribe example",
+          "name": "wallet_revokePermissions",
+          "tags": [
+            {
+              "$ref": "#/components/tags/MetaMask"
+            },
+            {
+              "$ref": "#/components/tags/Experimental"
+            }
+          ],
+          "summary": "Revokes the current dapp permissions.",
+          "description": "Revokes previously granted permissions for the current dapp identified by origin. This method is specified by [MIP-2](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md) and is only available for the browser extension.",
           "params": [
             {
-              "name": "subscriptionId",
-              "value": "0x1b84f2cdf29a204b79e450c1939b30c1"
+              "name": "revokePermissionObject",
+              "required": true,
+              "schema": {
+                "$ref": "#/components/schemas/PermissionObject"
+              }
             }
           ],
           "result": {
-            "name": "eth_unsubscribeExampleResult",
-            "value": true
-          }
-        }
-      ]
-    },
-    {
+            "name": "RevokePermissionsResult",
+            "schema": {
+              "type": "null"
+            }
+          },
+          "errors": [],
+          "examples": [
+            {
+              "name": "wallet_revokePermissions example of revoking the eth_accounts permission",
+              "params": [
+                {
+                  "name": "revokePermissionObject",
+                  "value": {
+                    "eth_accounts": {}
+                  }
+                }
+              ],
+              "result": {
+                "name": "RevokePermissionsResult",
+                "value": null
+              }
+            }
+          ]
+        },
+     {
       "name": "wallet_addEthereumChain",
       "tags": [
         {
@@ -251,161 +443,156 @@
       ]
     },
     {
-      "name": "wallet_requestPermissions",
+      "name": "personal_sign",
       "tags": [
         {
           "$ref": "#/components/tags/MetaMask"
         }
       ],
-      "summary": "Requests additional permissions.",
-      "description": "Requests additional permissions from the user. Introduced by [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255).",
+      "summary": "Presents a plain text signature challenge to the user.",
+      "description": "Presents a plain text signature challenge to the user and returns the signed response. Equivalent to `eth_sign` on some other wallets, and prepends a safe prefix to the signed message to prevent the challenge tricking users into signing a financial transaction. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` first.",
+      "deprecated": false,
       "params": [
         {
-          "name": "requestPermissionsObject",
+          "name": "Challenge",
           "required": true,
+          "description": "A hex-encoded UTF-8 string to present to the user. See how to encode a string like this in the [`browser-string-hexer`](https://github.com/danfinlay/browser-string-hexer) module.",
           "schema": {
-            "$ref": "#/components/schemas/PermissionObject"
+            "type": "string",
+            "pattern": "^0x[a-fA-F\\d]+$"
+          }
+        },
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the requested signing account.",
+          "schema": {
+            "$ref": "#/components/schemas/address"
           }
         }
       ],
       "result": {
-        "name": "PermissionsList",
+        "name": "Signature",
+        "description": "A hex-encoded 129-byte array starting with `0x`.",
         "schema": {
-          "$ref": "#/components/schemas/PermissionsList"
+          "$ref": "#/components/schemas/bytes"
+        }
+      }
+    },
+    {
+      "name": "eth_signTypedData_v4",
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        }
+      ],
+      "summary": "Presents a structured data message for the user to sign.",
+      "description": "Presents a data message for the user to sign in a structured and readable format and returns the signed response. Introduced by [EIP-712](https://eips.ethereum.org/EIPS/eip-712).",
+      "params": [
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the requested signing account.",
+          "schema": {
+            "$ref": "#/components/schemas/address"
+          }
+        },
+        {
+          "name": "TypedData",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/TypedData"
+          }
+        }
+      ],
+      "result": {
+        "name": "Signature",
+        "schema": {
+          "$ref": "#/components/schemas/bytes"
         }
       },
       "examples": [
         {
-          "name": "wallet_requestPermissions example of requesting the eth_accounts permission",
+          "name": "eth_SignTypedData_v4 example",
           "params": [
             {
-              "name": "requestPermissionObject",
-              "value": {
-                "eth_accounts": {}
-              }
-            }
-          ],
-          "result": {
-            "name": "permissionList",
-            "value": {
-              "eth_accounts": {}
-            }
-          }
-        },
-        {
-          "name": "wallet_requestPermissions example of requesting the wallet_snap permission",
-          "params": [
+              "name": "Address",
+              "value": "0x0000000000000000000000000000000000000000"
+            },
             {
-              "name": "requestPermissionObject",
+              "name": "TypedData",
               "value": {
-                "wallet_snap": {
-                  "caveats": [
+                "types": {
+                  "EIP712Domain": [
                     {
-                      "type": "snapIds",
-                      "value": {
-                        "npm:@metamask/example-snap": {
-                          "version": "1.0.0"
-                        },
-                        "npm:fooSnap": {
-                          "version": "1.2.1"
-                        }
-                      }
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "name": "version",
+                      "type": "string"
+                    },
+                    {
+                      "name": "chainId",
+                      "type": "uint256"
+                    },
+                    {
+                      "name": "verifyingContract",
+                      "type": "address"
+                    }
+                  ],
+                  "Person": [
+                    {
+                      "name": "name",
+                      "type": "string"
+                    },
+                    {
+                      "name": "wallet",
+                      "type": "address"
+                    }
+                  ],
+                  "Mail": [
+                    {
+                      "name": "from",
+                      "type": "Person"
+                    },
+                    {
+                      "name": "to",
+                      "type": "Person"
+                    },
+                    {
+                      "name": "contents",
+                      "type": "string"
                     }
                   ]
+                },
+                "primaryType": "Mail",
+                "domain": {
+                  "name": "Ether Mail",
+                  "version": "1",
+                  "chainId": 1,
+                  "verifyingContract": "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC"
+                },
+                "message": {
+                  "from": {
+                    "name": "Cow",
+                    "wallet": "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826"
+                  },
+                  "to": {
+                    "name": "Bob",
+                    "wallet": "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB"
+                  },
+                  "contents": "Hello, Bob!"
                 }
               }
             }
           ],
           "result": {
-            "name": "permissionList",
-            "value": {
-              "wallet_snap": {
-                "caveats": [
-                  {
-                    "type": "snapIds",
-                    "value": {
-                      "npm:@metamask/example-snap": {
-                        "version": "1.0.0"
-                      },
-                      "npm:fooSnap": {
-                        "version": "1.2.1"
-                      }
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        }
-      ],
-      "errors": [
-        {
-          "$ref": "#/components/errors/UserRejected"
-        }
-      ]
-    },
-    {
-      "name": "wallet_revokePermissions",
-      "tags": [
-        {
-          "$ref": "#/components/tags/MetaMask"
-        },
-        {
-          "$ref": "#/components/tags/Experimental"
-        }
-      ],
-      "summary": "Revokes the current dapp permissions.",
-      "description": "Revokes previously granted permissions for the current dapp identified by origin. This method is specified by [MIP-2](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md) and is only available for the browser extension.",
-      "params": [
-        {
-          "name": "revokePermissionObject",
-          "required": true,
-          "schema": {
-            "$ref": "#/components/schemas/PermissionObject"
-          }
-        }
-      ],
-      "result": {
-        "name": "RevokePermissionsResult",
-        "schema": {
-          "type": "null"
-        }
-      },
-      "errors": [],
-      "examples": [
-        {
-          "name": "wallet_revokePermissions example of revoking the eth_accounts permission",
-          "params": [
-            {
-              "name": "revokePermissionObject",
-              "value": {
-                "eth_accounts": {}
-              }
-            }
-          ],
-          "result": {
-            "name": "RevokePermissionsResult",
-            "value": null
+            "name": "Signature",
+            "value": "0x4355c47d63924e8a72e509b65029052eb6c299d53a04e167c5775fd466751c9d07299936d304c153f6443dfa05f40ff007d72911b6f72307f996231605b915621c"
           }
         }
       ]
-    },
-    {
-      "tags": [
-        {
-          "$ref": "#/components/tags/MetaMask"
-        }
-      ],
-      "name": "wallet_getPermissions",
-      "summary": "Gets the user's permissions.",
-      "description": "Gets the user's permissions. Introduced by [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255).",
-      "params": [],
-      "result": {
-        "name": "PermissionsList",
-        "schema": {
-          "$ref": "#/components/schemas/PermissionsList"
-        }
-      }
     },
     {
       "tags": [
@@ -888,72 +1075,6 @@
       ]
     },
     {
-      "name": "eth_decrypt",
-      "tags": [
-        {
-          "$ref": "#/components/tags/MetaMask"
-        },
-        {
-          "$ref": "#/components/tags/Deprecated"
-        }
-      ],
-      "summary": "Decrypts an encrypted message.",
-      "description": "This method is deprecated and may be removed in the future. \n\n Requests that MetaMask decrypt the specified encrypted message. The message must have been encrypted using the public encryption key of the specified Ethereum address. Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
-      "params": [
-        {
-          "name": "EncryptedMessage",
-          "required": true,
-          "description": "The encrypted message to decrypt.",
-          "schema": {
-            "type": "string"
-          }
-        },
-        {
-          "name": "Address",
-          "required": true,
-          "description": "The address of the Ethereum account that can decrypt the message.",
-          "schema": {
-            "$ref": "#/components/schemas/address"
-          }
-        }
-      ],
-      "result": {
-        "name": "PermissionsList",
-        "schema": {
-          "$ref": "#/components/schemas/PermissionsList"
-        }
-      }
-    },
-    {
-      "tags": [
-        {
-          "$ref": "#/components/tags/MetaMask"
-        },
-        {
-          "$ref": "#/components/tags/Deprecated"
-        }
-      ],
-      "name": "eth_getEncryptionPublicKey",
-      "summary": "Gets a public key used for encryption.",
-      "description": "This method is deprecated and may be removed in the future. \n\n Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
-      "params": [
-        {
-          "name": "Address",
-          "required": true,
-          "description": "The address of the Ethereum account that can decrypt the message.",
-          "schema": {
-            "$ref": "#/components/schemas/address"
-          }
-        }
-      ],
-      "result": {
-        "name": "EncryptionKey",
-        "schema": {
-          "type": "string"
-        }
-      }
-    },
-    {
       "tags": [
         {
           "$ref": "#/components/tags/MetaMask"
@@ -979,6 +1100,7 @@
       ]
     },
     {
+      "name": "eth_accounts",
       "tags": [
         {
           "$ref": "#/components/tags/MetaMask"
@@ -987,7 +1109,6 @@
           "$ref": "#/components/tags/Restricted"
         }
       ],
-      "name": "eth_accounts",
       "description": "Returns a list of addresses for the accounts owned by the user.",
       "summary": "Gets a list of addresses for the user's accounts.",
       "params": [],
@@ -1002,154 +1123,12 @@
       }
     },
     {
-      "name": "eth_signTypedData_v4",
+      "name": "eth_sendTransaction",
       "tags": [
         {
           "$ref": "#/components/tags/MetaMask"
         }
       ],
-      "summary": "Presents a structured data message for the user to sign.",
-      "description": "Presents a data message for the user to sign in a structured and readable format and returns the signed response. Introduced by [EIP-712](https://eips.ethereum.org/EIPS/eip-712).",
-      "params": [
-        {
-          "name": "Address",
-          "required": true,
-          "description": "The address of the requested signing account.",
-          "schema": {
-            "$ref": "#/components/schemas/address"
-          }
-        },
-        {
-          "name": "TypedData",
-          "required": true,
-          "schema": {
-            "$ref": "#/components/schemas/TypedData"
-          }
-        }
-      ],
-      "result": {
-        "name": "Signature",
-        "schema": {
-          "$ref": "#/components/schemas/bytes"
-        }
-      },
-      "examples": [
-        {
-          "name": "eth_SignTypedData_v4 example",
-          "params": [
-            {
-              "name": "Address",
-              "value": "0x0000000000000000000000000000000000000000"
-            },
-            {
-              "name": "TypedData",
-              "value": {
-                "types": {
-                  "EIP712Domain": [
-                    {
-                      "name": "name",
-                      "type": "string"
-                    },
-                    {
-                      "name": "version",
-                      "type": "string"
-                    },
-                    {
-                      "name": "chainId",
-                      "type": "uint256"
-                    },
-                    {
-                      "name": "verifyingContract",
-                      "type": "address"
-                    }
-                  ],
-                  "Person": [
-                    {
-                      "name": "name",
-                      "type": "string"
-                    },
-                    {
-                      "name": "wallet",
-                      "type": "address"
-                    }
-                  ],
-                  "Mail": [
-                    {
-                      "name": "from",
-                      "type": "Person"
-                    },
-                    {
-                      "name": "to",
-                      "type": "Person"
-                    },
-                    {
-                      "name": "contents",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "primaryType": "Mail",
-                "domain": {
-                  "name": "Ether Mail",
-                  "version": "1",
-                  "chainId": 1,
-                  "verifyingContract": "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC"
-                },
-                "message": {
-                  "from": {
-                    "name": "Cow",
-                    "wallet": "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826"
-                  },
-                  "to": {
-                    "name": "Bob",
-                    "wallet": "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB"
-                  },
-                  "contents": "Hello, Bob!"
-                }
-              }
-            }
-          ],
-          "result": {
-            "name": "Signature",
-            "value": "0x4355c47d63924e8a72e509b65029052eb6c299d53a04e167c5775fd466751c9d07299936d304c153f6443dfa05f40ff007d72911b6f72307f996231605b915621c"
-          }
-        }
-      ]
-    },
-    {
-      "name": "personal_sign",
-      "summary": "Presents a plain text signature challenge to the user.",
-      "description": "Presents a plain text signature challenge to the user and returns the signed response. Equivalent to `eth_sign` on some other wallets, and prepends a safe prefix to the signed message to prevent the challenge tricking users into signing a financial transaction. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` first.",
-      "deprecated": false,
-      "params": [
-        {
-          "name": "Challenge",
-          "required": true,
-          "description": "A hex-encoded UTF-8 string to present to the user. See how to encode a string like this in the [`browser-string-hexer`](https://github.com/danfinlay/browser-string-hexer) module.",
-          "schema": {
-            "type": "string",
-            "pattern": "^0x[a-fA-F\\d]+$"
-          }
-        },
-        {
-          "name": "Address",
-          "required": true,
-          "description": "The address of the requested signing account.",
-          "schema": {
-            "$ref": "#/components/schemas/address"
-          }
-        }
-      ],
-      "result": {
-        "name": "Signature",
-        "description": "A hex-encoded 129-byte array starting with `0x`.",
-        "schema": {
-          "$ref": "#/components/schemas/bytes"
-        }
-      }
-    },
-    {
-      "name": "eth_sendTransaction",
       "description": "Creates a new wallet confirmation to make an Ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
       "summary": "Initiates a new transaction.",
       "params": [
@@ -1227,7 +1206,78 @@
       }
     },
     {
+      "name": "eth_decrypt",
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Deprecated"
+        }
+      ],
+      "summary": "Decrypts an encrypted message.",
+      "description": "This method is deprecated and may be removed in the future. \n\n Requests that MetaMask decrypt the specified encrypted message. The message must have been encrypted using the public encryption key of the specified Ethereum address. Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
+      "params": [
+        {
+          "name": "EncryptedMessage",
+          "required": true,
+          "description": "The encrypted message to decrypt.",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the Ethereum account that can decrypt the message.",
+          "schema": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      ],
+      "result": {
+        "name": "PermissionsList",
+        "schema": {
+          "$ref": "#/components/schemas/PermissionsList"
+        }
+      }
+    },
+    {
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        },
+        {
+          "$ref": "#/components/tags/Deprecated"
+        }
+      ],
+      "name": "eth_getEncryptionPublicKey",
+      "summary": "Gets a public key used for encryption.",
+      "description": "This method is deprecated and may be removed in the future. \n\n Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
+      "params": [
+        {
+          "name": "Address",
+          "required": true,
+          "description": "The address of the Ethereum account that can decrypt the message.",
+          "schema": {
+            "$ref": "#/components/schemas/address"
+          }
+        }
+      ],
+      "result": {
+        "name": "EncryptionKey",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    {
       "name": "web3_clientVersion",
+      "tags": [
+        {
+          "$ref": "#/components/tags/Ethereum"
+        }
+      ],
       "description": "Returns the current MetaMask client version. This differs slightly per client. For example, the browser extension returns a string like `MetaMask/v10.33.1`, while the mobile app returns a string like `MetaMask/8.1.2/Mobile`.",
       "summary": "Current client version.",
       "params": [],
@@ -1261,6 +1311,120 @@
           "type": "string"
         }
       }
+    },
+    {
+      "name": "eth_subscribe",
+      "tags": [
+        {
+          "$ref": "#/components/tags/Ethereum"
+        }
+      ],
+      "summary": "Subscribes to specific Ethereum events, returning a subscription ID used to receive notifications.",
+      "description": "Subscribes to specific events on the Ethereum network, such as new blocks, new pending transactions, or changes in the state of an account. When an event occurs, a notification is sent to the client with the corresponding data. To stop receiving notifications, the client can unsubscribe using `eth_unsubscribe`.",
+      "params": [
+        {
+          "name": "subscriptionType",
+          "required": true,
+          "schema": {
+            "title": "subscriptionType",
+            "type": "string",
+            "enum": [
+              "newHeads",
+              "logs",
+              "newPendingTransactions",
+              "syncing"
+            ],
+            "description": "The type of subscription to create. Must be one of the following: \n1. `newHeads` - New block headers. \n2. `logs` - Logs matching a filter object. \n3. `newPendingTransactions` - New pending transactions. \n4. `syncing` - Changes in syncing status."
+          }
+        },
+        {
+          "name": "filterOptions",
+          "required": false,
+          "schema": {
+            "title": "filterOptions",
+            "type": "object",
+            "description": "(Optional) An object containing filter options specific to the subscription type. Only applicable for the `logs` subscription type.",
+            "required": ["topics"],
+            "properties": {
+              "address": {
+                "type": "string",
+                "description": "(Optional) A single address or an array of addresses to filter the logs by."
+              },
+              "topics": {
+                "type": "array",
+                "description": "An array of topics to filter the logs by.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "subscriptionId",
+        "schema": {
+          "type": "string"
+        },
+        "description": "A unique subscription ID that can be used to unsubscribe or identify incoming notifications."
+      },
+      "examples": [
+        {
+          "name": "eth_subscribe example",
+          "params": [
+            {
+              "name": "subscriptionType",
+              "value": "newHeads"
+            }
+          ],
+          "result": {
+            "name": "eth_subscribeExampleResult",
+            "value": "0x1b84f2cdf29a204b79e450c1939b30c1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "eth_unsubscribe",
+      "tags": [
+        {
+          "$ref": "#/components/tags/Ethereum"
+        }
+      ],
+      "summary": "Unsubscribes from a specific Ethereum event, using the subscription ID provided by `eth_subscribe`.",
+      "description": "Unsubscribes from specific events on the Ethereum network, to which the client has been previously subscribed using `eth_subscribe`. The client must provide the subscription ID obtained from `eth_subscribe` to stop receiving notifications for the corresponding event.",
+      "params": [
+        {
+          "name": "subscriptionId",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "description": "The unique subscription ID obtained from `eth_subscribe`, used to identify the subscription to be unsubscribed."
+          }
+        }
+      ],
+      "result": {
+        "name": "unsubscribed",
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "A boolean value indicating whether the unsubscription was successful."
+      },
+      "examples": [
+        {
+          "name": "eth_unsubscribe example",
+          "params": [
+            {
+              "name": "subscriptionId",
+              "value": "0x1b84f2cdf29a204b79e450c1939b30c1"
+            }
+          ],
+          "result": {
+            "name": "eth_unsubscribeExampleResult",
+            "value": true
+          }
+        }
+      ]
     }
   ],
   "components": {
@@ -1516,6 +1680,10 @@
       "Deprecated": {
         "name": "Deprecated",
         "description": "Deprecated methods."
+      },
+      "Ethereum": {
+        "name": "Ethereum API",
+        "description": "Ethereum execution API methods."
       }
     },
     "errors": {
