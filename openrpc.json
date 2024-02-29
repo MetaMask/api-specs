@@ -443,24 +443,6 @@
       ]
     },
     {
-      "tags": [
-        {
-          "$ref": "#/components/tags/MetaMask"
-        }
-      ],
-      "name": "wallet_registerOnboarding",
-      "summary": "Redirects the user back to the site after onboarding.",
-      "description": "Registers the requesting site with MetaMask as the initiator of onboarding, enabling MetaMask to redirect the user back to the site after onboarding. Returns a promise that resolves to `true`, or rejects if there's an error. Instead of calling this method directly, you should use the [`@metamask/onboarding`](https://github.com/MetaMask/metamask-onboarding) library.",
-      "params": [],
-      "result": {
-        "name": "RegisterOnboardingResult",
-        "description": "`true` if the request was successful, `false` otherwise.",
-        "schema": {
-          "type": "boolean"
-        }
-      }
-    },
-     {
       "name": "personal_sign",
       "tags": [
         {
@@ -611,6 +593,24 @@
           }
         }
       ]
+    },
+    {
+      "tags": [
+        {
+          "$ref": "#/components/tags/MetaMask"
+        }
+      ],
+      "name": "wallet_registerOnboarding",
+      "summary": "Redirects the user back to the site after onboarding.",
+      "description": "Registers the requesting site with MetaMask as the initiator of onboarding, enabling MetaMask to redirect the user back to the site after onboarding. Returns a promise that resolves to `true`, or rejects if there's an error. Instead of calling this method directly, you should use the [`@metamask/onboarding`](https://github.com/MetaMask/metamask-onboarding) library.",
+      "params": [],
+      "result": {
+        "name": "RegisterOnboardingResult",
+        "description": "`true` if the request was successful, `false` otherwise.",
+        "schema": {
+          "type": "boolean"
+        }
+      }
     },
     {
       "name": "wallet_watchAsset",
