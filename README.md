@@ -12,7 +12,7 @@ MetaMasks effectiveness as an enterprise-grade application platform depends on i
 
 ## Contributing
 
-Edit the `openrpc.json` file.
+Edit the `openrpc.yaml` file.
 
 You can then run `yarn run build` to generate the output file again.
 
