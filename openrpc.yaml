@@ -239,113 +239,7 @@ methods:
               eth_accounts: {}
         result:
           name: RevokePermissionsResult
-          value: null
-  - name: wallet_addEthereumChain
-    tags:
-      - $ref: '#/components/tags/MetaMask'
-    summary: Adds an Ethereum chain to the wallet.
-    description: >-
-      Creates a confirmation asking the user to add the specified chain to the
-      wallet application. The caller must specify a chain ID and some chain
-      metadata. The wallet application may refuse or accept the request. `null`
-      is returned if the chain is added, and an error otherwise. Introduced by
-      [EIP-3085](https://eips.ethereum.org/EIPS/eip-3085).
-    params:
-      - name: AddEthereumChainParameter
-        schema:
-          $ref: '#/components/schemas/AddEthereumChainParameter'
-    errors:
-      - code: -32602
-        message: >-
-          Expected null or array with at least one valid string HTTPS URL
-          'blockExplorerUrl'. Received: ${blockExplorerUrls}
-      - code: -32602
-        message: >-
-          Expected 0x-prefixed, unpadded, non-zero hexadecimal string 'chainId'.
-          Received:
-
-          ${chainId}
-      - code: -32602
-        message: >-
-          Invalid chain ID "${_chainId}": numerical value greater than max safe
-          value. Received:
-
-          ${chainId}
-      - code: -32602
-        message: May not specify default MetaMask chain.
-      - code: -32602
-        message: |-
-          Expected 2-6 character string 'nativeCurrency.symbol'. Received:
-          ${ticker}
-      - code: -32602
-        message: >-
-          nativeCurrency.symbol does not match currency symbol for a network the
-          user already has added with the same chainId. Received:
-
-          ${ticker}
-    result:
-      name: AddEthereumChainResult
-      schema:
-        type: 'null'
-    examples:
-      - name: wallet_addEthereumChain example
-        params:
-          - name: AddEthereumChainParameter
-            value:
-              chainId: '0x64'
-              chainName: Gnosis
-              rpcUrls:
-                - 'https://rpc.ankr.com/gnosis'
-              iconUrls:
-                - 'https://xdaichain.com/fake/example/url/xdai.svg'
-                - 'https://xdaichain.com/fake/example/url/xdai.png'
-              nativeCurrency:
-                name: xDAI
-                symbol: xDAI
-                decimals: 18
-              blockExplorerUrls:
-                - 'https://blockscout.com/poa/xdai/'
-        result:
-          name: wallet_addEthereumChainExampleResult
-          value: 'null'
-  - name: wallet_switchEthereumChain
-    tags:
-      - $ref: '#/components/tags/MetaMask'
-    summary: Switches the wallet's active Ethereum chain.
-    description: >-
-      Requests that the wallet switches its active Ethereum chain. Introduced by
-      [EIP-3326](https://ethereum-magicians.org/t/eip-3326-wallet-switchethereumchain).
-    params:
-      - name: SwitchEthereumChainParameter
-        schema:
-          title: SwitchEthereumChainParameter
-          type: object
-          required:
-            - chainId
-          properties:
-            chainId:
-              description: >-
-                The chain ID as a `0x`-prefixed hexadecimal string, per the
-                `eth_chainId` method.
-              type: string
-    result:
-      name: SwitchEthereumChainResult
-      schema:
-        type: 'null'
-    errors:
-      - code: 4902
-        message: >-
-          Unrecognized chain ID. Try adding the chain using
-          wallet_addEthereumChain first.
-    examples:
-      - name: wallet_switchEthereumChain example
-        params:
-          - name: SwitchEthereumChainParameter
-            value:
-              chainId: '0x64'
-        result:
-          name: wallet_switchEthereumChainExampleResult
-          value: 'null'
+          value: null 
   - name: personal_sign
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -1188,10 +1082,10 @@ components:
     Caveats:
       title: Caveats
       description: >-
-        Every capability document MAY add restrictions on the way the capability
-        may be used by adding to the caveat property. Capabilities inherit the
-        restrictions from all caveat properties of their parents, and MAY add
-        new caveats in addition to those of their parents.
+         A capability document modifies the caveat property to specify usage 
+         restrictions. Capabilities inherit restrictions from the caveat 
+         properties of their parent documents and can add new caveats in addition 
+         to those inherited from their parents.
       type: array
       items:
         title: Caveat
