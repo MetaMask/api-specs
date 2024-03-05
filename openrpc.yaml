@@ -1082,10 +1082,10 @@ components:
     Caveats:
       title: Caveats
       description: >-
-         A capability document modifies the caveat property to specify usage 
-         restrictions. Capabilities inherit restrictions from the caveat 
-         properties of their parent documents and can add new caveats in addition 
-         to those inherited from their parents.
+        A capability document modifies the caveat property to specify usage 
+        restrictions. Capabilities inherit restrictions from the caveat 
+        properties of their parent documents and can add new caveats in addition 
+        to those inherited from their parents.
       type: array
       items:
         title: Caveat
