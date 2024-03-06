@@ -1042,7 +1042,9 @@ components:
         iconUrls:
           description: >-
             (Optional) One or more URLs pointing to reasonably sized images that
-            can be used to visually identify the chain.
+            can be used to visually identify the chain. NOTE: MetaMask will not 
+            currently display these images. Values should still be included so 
+            that they are displayed once MetaMask displays custom iconUrls.
           type: array
           items:
             format: uri
