@@ -97,6 +97,7 @@ methods:
                 - 'https://rpc.ankr.com/gnosis'
               iconUrls:
                 - 'https://xdaichain.com/fake/example/url/xdai.svg'
+                - 'https://xdaichain.com/fake/example/url/xdai.png'
               nativeCurrency:
                 name: xDAI
                 symbol: xDAI
@@ -122,7 +123,9 @@ methods:
             - chainId
           properties:
             chainId:
-              description: The chain ID as a `0x`-prefixed hexadecimal string...
+              description: >-
+                The chain ID as a `0x`-prefixed hexadecimal string, per the
+                `eth_chainId` method.
               type: string
     result:
       name: SwitchEthereumChainResult
@@ -239,10 +242,11 @@ methods:
               eth_accounts: {}
         result:
           name: RevokePermissionsResult
-          value: null 
+          value: null
   - name: personal_sign
     tags:
       - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Restricted'
     summary: Presents a plain text signature challenge to the user.
     description: >-
       Presents a plain text signature challenge to the user and returns the
@@ -276,6 +280,7 @@ methods:
   - name: eth_signTypedData_v4
     tags:
       - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Restricted'
     summary: Presents a structured data message for the user to sign.
     description: >-
       Presents a data message for the user to sign in a structured and readable
@@ -342,9 +347,9 @@ methods:
           name: Signature
           value: >-
             0x4355c47d63924e8a72e509b65029052eb6c299d53a04e167c5775fd466751c9d07299936d304c153f6443dfa05f40ff007d72911b6f72307f996231605b915621c
-  - tags:
+  - name: wallet_registerOnboarding
+    tags:
       - $ref: '#/components/tags/MetaMask'
-    name: wallet_registerOnboarding
     summary: Redirects the user back to the site after onboarding.
     description: >-
       Registers the requesting site with MetaMask as the initiator of
@@ -363,6 +368,7 @@ methods:
   - name: wallet_watchAsset
     tags:
       - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Experimental'
     summary: Tracks a token in MetaMask.
     description: >-
       Requests that the user track the specified token in MetaMask. Returns a
@@ -690,9 +696,9 @@ methods:
         result:
           name: wallet_invokeSnapResult
           value: {}
-  - tags:
+  - name: eth_requestAccounts
+    tags:
       - $ref: '#/components/tags/MetaMask'
-    name: eth_requestAccounts
     description: >-
       Requests that the user provide an Ethereum address to be identified by.
       This method is specified by
@@ -725,6 +731,7 @@ methods:
   - name: eth_sendTransaction
     tags:
       - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Restricted'
     description: >-
       Creates a new wallet confirmation to make an Ethereum transaction from the
       user's account. This method requires that the user has granted permission
@@ -797,6 +804,7 @@ methods:
   - name: eth_decrypt
     tags:
       - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Restricted'
       - $ref: '#/components/tags/Deprecated'
     summary: Decrypts an encrypted message.
     description: |-
@@ -818,10 +826,11 @@ methods:
       name: PermissionsList
       schema:
         $ref: '#/components/schemas/PermissionsList'
-  - tags:
+  - name: eth_getEncryptionPublicKey
+    tags:
       - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Restricted'
       - $ref: '#/components/tags/Deprecated'
-    name: eth_getEncryptionPublicKey
     summary: Gets a public key used for encryption.
     description: |-
       This method is deprecated and may be removed in the future.
@@ -1085,9 +1094,9 @@ components:
     Caveats:
       title: Caveats
       description: >-
-        A capability document modifies the caveat property to specify usage 
-        restrictions. Capabilities inherit restrictions from the caveat 
-        properties of their parent documents and can add new caveats in addition 
+        A capability document modifies the caveat property to specify usage
+        restrictions. Capabilities inherit restrictions from the caveat
+        properties of their parent documents and can add new caveats in addition
         to those inherited from their parents.
       type: array
       items:
