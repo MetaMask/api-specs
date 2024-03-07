@@ -1043,8 +1043,9 @@ components:
           description: >-
             (Optional) One or more URLs pointing to reasonably sized images that
             can be used to visually identify the chain. NOTE: MetaMask will not 
-            currently display these images. Values should still be included so 
-            that they are displayed once MetaMask displays custom iconUrls.
+            currently display these images. Values can still be included so 
+            that they are utilized if MetaMask incorporates them into the display
+            of custom networks in the future.
           type: array
           items:
             format: uri
