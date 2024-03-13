@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0]
+### Uncategorized
+- Update method tags ([#195](https://github.com/MetaMask/api-specs/pull/195))
+- Adjust iconUrls param description ([#196](https://github.com/MetaMask/api-specs/pull/196))
+- Enabling MetaMask security code scanner ([#188](https://github.com/MetaMask/api-specs/pull/188))
+- Remove duplicates ([#194](https://github.com/MetaMask/api-specs/pull/194))
+- Update nodemon.json to openrpc.yaml ([#192](https://github.com/MetaMask/api-specs/pull/192))
+- Update README.md to use openrpc.yaml ([#191](https://github.com/MetaMask/api-specs/pull/191))
+
 ## [0.7.0]
 ### Uncategorized
 - Added yaml conversion to build and converted current json doc to yaml ([#189](https://github.com/MetaMask/api-specs/pull/189))
@@ -146,7 +155,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/MetaMask/api-specs/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/MetaMask/api-specs/compare/v0.6.2...v0.7.0
 [0.6.2]: https://github.com/MetaMask/api-specs/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/MetaMask/api-specs/compare/v0.6.0...v0.6.1
