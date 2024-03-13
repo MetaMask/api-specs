@@ -1051,8 +1051,8 @@ components:
         iconUrls:
           description: >-
             (Optional) One or more URLs pointing to reasonably sized images that
-            can be used to visually identify the chain. NOTE: MetaMask will not 
-            currently display these images. Values can still be included so 
+            can be used to visually identify the chain. NOTE: MetaMask will not
+            currently display these images. Values can still be included so
             that they are utilized if MetaMask incorporates them into the display
             of custom networks in the future.
           type: array
@@ -1083,7 +1083,7 @@ components:
       properties:
         decimals:
           description: A non-negative integer.
-          min: 0
+          minimum: 0
           type: integer
         name:
           description: A human-readable name.
