@@ -68,7 +68,8 @@
                                     "https://rpc.ankr.com/gnosis"
                                 ],
                                 "iconUrls": [
-                                    "https://xdaichain.com/fake/example/url/xdai.svg"
+                                    "https://xdaichain.com/fake/example/url/xdai.svg",
+                                    "https://xdaichain.com/fake/example/url/xdai.png"
                                 ],
                                 "nativeCurrency": {
                                     "name": "xDAI",
@@ -108,7 +109,7 @@
                         ],
                         "properties": {
                             "chainId": {
-                                "description": "The chain ID as a `0x`-prefixed hexadecimal string...",
+                                "description": "The chain ID as a `0x`-prefixed hexadecimal string, per the `eth_chainId` method.",
                                 "type": "string"
                             }
                         }
@@ -303,150 +304,13 @@
             ]
         },
         {
-            "name": "wallet_addEthereumChain",
-            "tags": [
-                {
-                    "$ref": "#/components/tags/MetaMask"
-                }
-            ],
-            "summary": "Adds an Ethereum chain to the wallet.",
-            "description": "Creates a confirmation asking the user to add the specified chain to the wallet application. The caller must specify a chain ID and some chain metadata. The wallet application may refuse or accept the request. `null` is returned if the chain is added, and an error otherwise. Introduced by [EIP-3085](https://eips.ethereum.org/EIPS/eip-3085).",
-            "params": [
-                {
-                    "name": "AddEthereumChainParameter",
-                    "schema": {
-                        "$ref": "#/components/schemas/AddEthereumChainParameter"
-                    }
-                }
-            ],
-            "errors": [
-                {
-                    "code": -32602,
-                    "message": "Expected null or array with at least one valid string HTTPS URL 'blockExplorerUrl'. Received: ${blockExplorerUrls}"
-                },
-                {
-                    "code": -32602,
-                    "message": "Expected 0x-prefixed, unpadded, non-zero hexadecimal string 'chainId'. Received:\n${chainId}"
-                },
-                {
-                    "code": -32602,
-                    "message": "Invalid chain ID \"${_chainId}\": numerical value greater than max safe value. Received:\n${chainId}"
-                },
-                {
-                    "code": -32602,
-                    "message": "May not specify default MetaMask chain."
-                },
-                {
-                    "code": -32602,
-                    "message": "Expected 2-6 character string 'nativeCurrency.symbol'. Received:\n${ticker}"
-                },
-                {
-                    "code": -32602,
-                    "message": "nativeCurrency.symbol does not match currency symbol for a network the user already has added with the same chainId. Received:\n${ticker}"
-                }
-            ],
-            "result": {
-                "name": "AddEthereumChainResult",
-                "schema": {
-                    "type": "null"
-                }
-            },
-            "examples": [
-                {
-                    "name": "wallet_addEthereumChain example",
-                    "params": [
-                        {
-                            "name": "AddEthereumChainParameter",
-                            "value": {
-                                "chainId": "0x64",
-                                "chainName": "Gnosis",
-                                "rpcUrls": [
-                                    "https://rpc.ankr.com/gnosis"
-                                ],
-                                "iconUrls": [
-                                    "https://xdaichain.com/fake/example/url/xdai.svg",
-                                    "https://xdaichain.com/fake/example/url/xdai.png"
-                                ],
-                                "nativeCurrency": {
-                                    "name": "xDAI",
-                                    "symbol": "xDAI",
-                                    "decimals": 18
-                                },
-                                "blockExplorerUrls": [
-                                    "https://blockscout.com/poa/xdai/"
-                                ]
-                            }
-                        }
-                    ],
-                    "result": {
-                        "name": "wallet_addEthereumChainExampleResult",
-                        "value": "null"
-                    }
-                }
-            ]
-        },
-        {
-            "name": "wallet_switchEthereumChain",
-            "tags": [
-                {
-                    "$ref": "#/components/tags/MetaMask"
-                }
-            ],
-            "summary": "Switches the wallet's active Ethereum chain.",
-            "description": "Requests that the wallet switches its active Ethereum chain. Introduced by [EIP-3326](https://ethereum-magicians.org/t/eip-3326-wallet-switchethereumchain).",
-            "params": [
-                {
-                    "name": "SwitchEthereumChainParameter",
-                    "schema": {
-                        "title": "SwitchEthereumChainParameter",
-                        "type": "object",
-                        "required": [
-                            "chainId"
-                        ],
-                        "properties": {
-                            "chainId": {
-                                "description": "The chain ID as a `0x`-prefixed hexadecimal string, per the `eth_chainId` method.",
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            ],
-            "result": {
-                "name": "SwitchEthereumChainResult",
-                "schema": {
-                    "type": "null"
-                }
-            },
-            "errors": [
-                {
-                    "code": 4902,
-                    "message": "Unrecognized chain ID. Try adding the chain using wallet_addEthereumChain first."
-                }
-            ],
-            "examples": [
-                {
-                    "name": "wallet_switchEthereumChain example",
-                    "params": [
-                        {
-                            "name": "SwitchEthereumChainParameter",
-                            "value": {
-                                "chainId": "0x64"
-                            }
-                        }
-                    ],
-                    "result": {
-                        "name": "wallet_switchEthereumChainExampleResult",
-                        "value": "null"
-                    }
-                }
-            ]
-        },
-        {
             "name": "personal_sign",
             "tags": [
                 {
                     "$ref": "#/components/tags/MetaMask"
+                },
+                {
+                    "$ref": "#/components/tags/Restricted"
                 }
             ],
             "summary": "Presents a plain text signature challenge to the user.",
@@ -484,6 +348,9 @@
             "tags": [
                 {
                     "$ref": "#/components/tags/MetaMask"
+                },
+                {
+                    "$ref": "#/components/tags/Restricted"
                 }
             ],
             "summary": "Presents a structured data message for the user to sign.",
@@ -595,12 +462,12 @@
             ]
         },
         {
+            "name": "wallet_registerOnboarding",
             "tags": [
                 {
                     "$ref": "#/components/tags/MetaMask"
                 }
             ],
-            "name": "wallet_registerOnboarding",
             "summary": "Redirects the user back to the site after onboarding.",
             "description": "Registers the requesting site with MetaMask as the initiator of onboarding, enabling MetaMask to redirect the user back to the site after onboarding. Returns a promise that resolves to `true`, or rejects if there's an error. Instead of calling this method directly, you should use the [`@metamask/onboarding`](https://github.com/MetaMask/metamask-onboarding) library.",
             "params": [],
@@ -617,6 +484,9 @@
             "tags": [
                 {
                     "$ref": "#/components/tags/MetaMask"
+                },
+                {
+                    "$ref": "#/components/tags/Experimental"
                 }
             ],
             "summary": "Tracks a token in MetaMask.",
@@ -1079,12 +949,12 @@
             ]
         },
         {
+            "name": "eth_requestAccounts",
             "tags": [
                 {
                     "$ref": "#/components/tags/MetaMask"
                 }
             ],
-            "name": "eth_requestAccounts",
             "description": "Requests that the user provide an Ethereum address to be identified by. This method is specified by [EIP-1102](https://eips.ethereum.org/EIPS/eip-1102). Internally, this method calls `wallet_requestPermissions` for permission to call `eth_accounts`.",
             "summary": "Requests that the user provide an Ethereum address.",
             "params": [],
@@ -1131,6 +1001,9 @@
             "tags": [
                 {
                     "$ref": "#/components/tags/MetaMask"
+                },
+                {
+                    "$ref": "#/components/tags/Restricted"
                 }
             ],
             "description": "Creates a new wallet confirmation to make an Ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
@@ -1216,6 +1089,9 @@
                     "$ref": "#/components/tags/MetaMask"
                 },
                 {
+                    "$ref": "#/components/tags/Restricted"
+                },
+                {
                     "$ref": "#/components/tags/Deprecated"
                 }
             ],
@@ -1247,15 +1123,18 @@
             }
         },
         {
+            "name": "eth_getEncryptionPublicKey",
             "tags": [
                 {
                     "$ref": "#/components/tags/MetaMask"
                 },
                 {
+                    "$ref": "#/components/tags/Restricted"
+                },
+                {
                     "$ref": "#/components/tags/Deprecated"
                 }
             ],
-            "name": "eth_getEncryptionPublicKey",
             "summary": "Gets a public key used for encryption.",
             "description": "This method is deprecated and may be removed in the future.\n\n Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
             "params": [
@@ -2561,7 +2440,7 @@
                         "type": "string"
                     },
                     "iconUrls": {
-                        "description": "(Optional) One or more URLs pointing to reasonably sized images that can be used to visually identify the chain.",
+                        "description": "(Optional) One or more URLs pointing to reasonably sized images that can be used to visually identify the chain. NOTE: MetaMask will not  currently display these images. Values can still be included so  that they are utilized if MetaMask incorporates them into the display of custom networks in the future.",
                         "type": "array",
                         "items": {
                             "format": "uri",
@@ -2608,7 +2487,7 @@
             },
             "Caveats": {
                 "title": "Caveats",
-                "description": "Every capability document MAY add restrictions on the way the capability may be used by adding to the caveat property. Capabilities inherit the restrictions from all caveat properties of their parents, and MAY add new caveats in addition to those of their parents.",
+                "description": "A capability document modifies the caveat property to specify usage restrictions. Capabilities inherit restrictions from the caveat properties of their parent documents and can add new caveats in addition to those inherited from their parents.",
                 "type": "array",
                 "items": {
                     "title": "Caveat",
