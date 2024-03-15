@@ -974,6 +974,81 @@ methods:
         result:
           name: eth_unsubscribeExampleResult
           value: true
+  - name: wallet_swapAsset
+    tags:
+      - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Experimental'
+    summary: Allows dApps to request MetaMask to perform a token swap operation.
+    description: >-
+      This method enables dApps to initiate a token swap directly within MetaMask, improving the user experience by streamlining the process of swapping tokens. The method accepts parameters for the source and destination tokens and initiates a token swap operation.
+    params:
+      - name: SwapAssetParameter
+        required: true
+        schema:
+          title: SwapAssetParameter
+          type: object
+          required:
+            - from
+            - to
+            - userAddress
+          properties:
+            from:
+              type: array
+              items:
+                type: object
+                required:
+                  - tokenAddress
+                  - value
+                properties:
+                  tokenAddress:
+                    type: string
+                    description: The address of the source token.
+                  value:
+                    type: string
+                    description: The amount of the source token to be swapped, in wei, as a hexadecimal string.
+            to:
+              type: object
+              required:
+                - tokenAddress
+              properties:
+                tokenAddress:
+                  type: string
+                  description: The address of the destination token.
+            userAddress:
+              type: string
+              description: The Ethereum address of the user performing the swap.
+            referralCode:
+              type: string
+              description: (Optional) A referral code to drive adoption of the JSON RPC method across the builders community.
+              nullable: true
+            sendTo:
+              type: string
+              description: (Optional) Allows integration with Swap's `send to` feature.
+              nullable: true
+    result:
+      name: SwapAssetResult
+      description: A boolean indicating if the swap was initiated successfully.
+      schema:
+        type: boolean
+    errors:
+      - code: -32602
+        message: 'Invalid parameters: must specify from, to, and userAddress.'
+      - code: -32000
+        message: 'Swap is not active or not possible on this chain.'
+    examples:
+      - name: wallet_swapAsset example
+        params:
+          - name: SwapAssetParameter
+            value:
+              from:
+                - tokenAddress: '0x1234567890abcdefABCDEF1234567890ABCDEF'
+                  value: '0xDE0B6B3A7640000'
+              to:
+                tokenAddress: '0xabcdef1234567890ABCDEF1234567890abcdef'
+              userAddress: '0x0000000000000000000000000000000000000000'
+        result:
+          name: wallet_swapAssetExampleResult
+          value: true
 components:
   schemas:
     TypedData:
