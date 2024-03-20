@@ -22,8 +22,8 @@ info:
     MetaMask, and may or may not be supported by other wallets.
 
     - **Restricted** - These methods are restricted and require requesting
-    permission using either
-    [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions) or [`wallet_requestSnaps`](/wallet/reference/wallet_requestSnaps)
+    permission using either [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions) 
+    or [`wallet_requestSnaps`](/wallet/reference/wallet_requestSnaps)
 
     - **Mobile** - These methods are only available on MetaMask Mobile.
 
@@ -252,7 +252,10 @@ methods:
       Presents a plain text signature challenge to the user and returns the
       signed response. Equivalent to `eth_sign` on some other wallets, and
       prepends a safe prefix to the signed message to prevent the challenge
-      tricking users into signing a financial transaction. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.
+      tricking users into signing a financial transaction. 
+      This method requires that the user has granted permission to interact 
+      with their account first, so make sure to call `eth_requestAccounts` 
+      or `wallet_requestPermissions` first.
     deprecated: false
     params:
       - name: Challenge
@@ -283,7 +286,8 @@ methods:
     description: >-
       Presents a data message for the user to sign in a structured and readable
       format and returns the signed response. Introduced by
-      [EIP-712](https://eips.ethereum.org/EIPS/eip-712). This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.
+      [EIP-712](https://eips.ethereum.org/EIPS/eip-712). 
+      This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.
     params:
       - name: Address
         required: true
@@ -719,7 +723,8 @@ methods:
       - $ref: '#/components/tags/Restricted'
     description: >-
       Returns a list of addresses for the accounts owned by the user.        
-      This method requires calling `wallet_requestPermissions` for permission. Alternatively, you can use [`eth_requestAccounts`](/wallet/reference/eth_requestAccounts). 
+      This method requires calling `wallet_requestPermissions` for permission. 
+      Alternatively, you can use [`eth_requestAccounts`](/wallet/reference/eth_requestAccounts). 
     summary: Gets a list of addresses for the user's accounts.
     params: []
     result:
