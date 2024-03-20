@@ -157,6 +157,14 @@ methods:
       name: PermissionsList
       schema:
         $ref: '#/components/schemas/PermissionsList'
+    examples:
+      - name: wallet_getPermissions example
+        params:
+          - name: GetPermissionsParameter
+            value: []
+        result:
+          name: wallet_getPermissionsExampleResult
+          value: []
   - name: wallet_requestPermissions
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -277,6 +285,18 @@ methods:
       description: A hex-encoded 129-byte array starting with `0x`.
       schema:
         $ref: '#/components/schemas/bytes'
+    examples:
+      - name: personal_sign example
+        params:
+          - name: PersonalSignParameter
+            value: [
+            "0x68656c6c6f",
+            "^0x[0-9,a-f,A-F]{40}$"
+            ]
+        result:
+          name: personal_signExampleResult
+          value:  >-
+          0x4355c47d63924e8a72e509b65029052eb6c299d53a04e167c5775fd466751c9d07299936d304c153f6443dfa05f40ff007d72911b6f72307f996231605b915621c
   - name: eth_signTypedData_v4
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -365,6 +385,14 @@ methods:
       description: '`true` if the request was successful, `false` otherwise.'
       schema:
         type: boolean
+    examples:
+      - name: wallet_registerOnboarding example
+        params:
+          - name: RegisterOnboardingParameter
+            value: []
+        result:
+          name: wallet_registerOnboardingExampleResult
+          value: true
   - name: wallet_watchAsset
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -551,7 +579,7 @@ methods:
       attempts to install them if they're not already installed. If the
       installation of any Snap fails, returns the error that caused the failure.
     params:
-      - name: RequestSnapsParameter
+      name: RequestSnapsParameter
         description: >-
           An object mapping the IDs of requested Snaps to optional SemVer
           version ranges.
@@ -582,7 +610,7 @@ methods:
     examples:
       - name: wallet_requestSnaps example
         params:
-          - name: RequestSnapsParameter
+          name: RequestSnapsParameter
             value:
               'npm:@metamask/example-snap': {}
               'npm:fooSnap':
@@ -715,6 +743,14 @@ methods:
           $ref: '#/components/schemas/address'
     errors:
       - $ref: '#/components/errors/UserRejected'
+    examples:
+      - name: eth_requestAccounts example
+        params:
+          - name: RequestAccountsParameter
+            value: []
+        result:
+          name: eth_requestAccounts
+          value: "0xa77392123a1085f75e62eec7dea7e0e1e5142d5f"
   - name: eth_accounts
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -728,6 +764,14 @@ methods:
         type: array
         items:
           $ref: '#/components/schemas/address'
+    examples:
+      - name: eth_accounts example
+        params:
+          - name: AccountsParameter
+            value: []
+        result:
+          name: eth_accounts
+          value: []
   - name: eth_sendTransaction
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -801,6 +845,14 @@ methods:
       description: The transaction hash of the sent transaction.
       schema:
         $ref: '#/components/schemas/bytes32'
+    examples:
+      - name: eth_sendTransaction example
+        params:
+          - name: SenTransactionParameter
+            value: []
+        result:
+          name: eth_sendTransaction
+          value: "0xa77392123a1085f75e62eec7dea7e0e1e5142d5f"
   - name: eth_decrypt
     tags:
       - $ref: '#/components/tags/MetaMask'
