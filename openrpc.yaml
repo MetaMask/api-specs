@@ -23,7 +23,7 @@ info:
 
     - **Restricted** - These methods are restricted and require requesting
     permission using either [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions) 
-    or [`wallet_requestSnaps`](/wallet/reference/wallet_requestSnaps)
+    or [`wallet_requestSnaps`](/wallet/reference/wallet_requestSnaps).
 
     - **Mobile** - These methods are only available on MetaMask Mobile.
 
@@ -254,7 +254,7 @@ methods:
       prepends a safe prefix to the signed message to prevent the challenge
       tricking users into signing a financial transaction. 
       This method requires that the user has granted permission to interact 
-      with their account first, make sure to call `eth_requestAccounts` (recommended) 
+      with their account first, so make sure to call `eth_requestAccounts` (recommended) 
       or `wallet_requestPermissions` first.
     deprecated: false
     params:
@@ -288,7 +288,7 @@ methods:
       format and returns the signed response. Introduced by
       [EIP-712](https://eips.ethereum.org/EIPS/eip-712). 
       This method requires that the user has granted permission to interact with their account first,
-      make sure to call `eth_requestAccounts` (recommended) or `wallet_requestPermissions` first.
+      so make sure to call `eth_requestAccounts` (recommended) or `wallet_requestPermissions` first.
     params:
       - name: Address
         required: true
@@ -741,7 +741,7 @@ methods:
     description: >-
       Creates a new wallet confirmation to make an Ethereum transaction from the
       user's account. This method requires that the user has granted permission
-      to interact with their account first, make sure to call `eth_requestAccounts` (recommended) 
+      to interact with their account first, so make sure to call `eth_requestAccounts` (recommended) 
       or `wallet_requestPermissions` first.
     summary: Initiates a new transaction.
     params:
