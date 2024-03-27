@@ -94,7 +94,7 @@ methods:
               chainId: '0x64'
               chainName: Gnosis
               rpcUrls:
-                - 'https://rpc.ankr.com/gnosis'
+                - 'https://rpc.gnosischain.com'
               iconUrls:
                 - 'https://xdaichain.com/fake/example/url/xdai.svg'
                 - 'https://xdaichain.com/fake/example/url/xdai.png'
@@ -895,7 +895,7 @@ methods:
       name: PermissionsList
       schema:
         $ref: '#/components/schemas/PermissionsList'
-     examples:
+    examples:
       - name: 
         params:
           - name: decrypt
