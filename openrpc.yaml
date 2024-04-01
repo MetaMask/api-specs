@@ -844,7 +844,7 @@ examples:
     description: The transaction hash of the sent transaction.
     schema:
       $ref: '#/components/schemas/bytes32'
-  examples:
+   examples:
     - name: sendTransaction
       params:
         - name: transactionDetails
