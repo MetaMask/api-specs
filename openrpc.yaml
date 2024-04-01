@@ -779,87 +779,87 @@ examples:
           value: [
             "0xa77392123a1085f75e62eec7dea7e0e1e5142d5f"
             ]
-  name: eth_sendTransaction
-  tags:
-    - $ref: '#/components/tags/MetaMask'
-    - $ref: '#/components/tags/Restricted'
-  description: >
-    Creates a new wallet confirmation to make an Ethereum transaction from the
-    user's account. This method requires that the user has granted permission
-    to interact with their account first, so make sure to call `eth_requestAccounts` (recommended) 
-    or `wallet_requestPermissions` first.
-  summary: Initiates a new transaction.
-  params:
-    - name: Transaction
-      required: true
-      description: The transaction object to sign and send.
+  - name: eth_sendTransaction
+    tags:
+      - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Restricted'
+    description: >
+      Creates a new wallet confirmation to make an Ethereum transaction from the
+      user's account. This method requires that the user has granted permission
+      to interact with their account first, so make sure to call `eth_requestAccounts` (recommended) 
+      or `wallet_requestPermissions` first.
+    summary: Initiates a new transaction.
+    params:
+      - name: Transaction
+        required: true
+        description: The transaction object to sign and send.
+        schema:
+          type: object
+          title: Transaction
+          description: >
+            The parameters to customize a transaction. If a `to` address is not
+            provided, it will be assumed that the transaction is a contract
+            creation transaction, and the `data` field of the transaction will
+            be used as the contract initialization code. `gasPrice` cannot be
+            used together with `maxPriorityFeePerGas` and `maxFeePerGas`.
+          required:
+            - from
+          properties:
+            to:
+              title: to address
+              $ref: '#/components/schemas/address'
+            from:
+              title: from address
+              $ref: '#/components/schemas/address'
+            gas:
+              title: gas limit
+              $ref: '#/components/schemas/uint'
+            value:
+              title: value
+              $ref: '#/components/schemas/uint'
+            data:
+              title: data
+              $ref: '#/components/schemas/bytes'
+            gasPrice:
+              title: gas price
+              description: >
+                The gas price the sender is willing to pay to miners in wei.
+                Used in pre-1559 transactions.
+              $ref: '#/components/schemas/uint'
+            maxPriorityFeePerGas:
+              title: max priority fee per gas
+              description: >
+                Maximum fee per gas the sender is willing to pay to miners in
+                wei. Used in 1559 transactions.
+              $ref: '#/components/schemas/uint'
+            maxFeePerGas:
+              title: max fee per gas
+              description: >
+                The maximum total fee per gas the sender is willing to pay
+                (includes the network / base fee and miner / priority fee) in
+                wei. Used in 1559 transactions.
+              $ref: '#/components/schemas/uint'
+    result:
+      name: TransactionHash
+      description: The transaction hash of the sent transaction.
       schema:
-        type: object
-        title: Transaction
-        description: >
-          The parameters to customize a transaction. If a `to` address is not
-          provided, it will be assumed that the transaction is a contract
-          creation transaction, and the `data` field of the transaction will
-          be used as the contract initialization code. `gasPrice` cannot be
-          used together with `maxPriorityFeePerGas` and `maxFeePerGas`.
-        required:
-          - from
-        properties:
-          to:
-            title: to address
-            $ref: '#/components/schemas/address'
-          from:
-            title: from address
-            $ref: '#/components/schemas/address'
-          gas:
-            title: gas limit
-            $ref: '#/components/schemas/uint'
-          value:
-            title: value
-            $ref: '#/components/schemas/uint'
-          data:
-            title: data
-            $ref: '#/components/schemas/bytes'
-          gasPrice:
-            title: gas price
-            description: >
-              The gas price the sender is willing to pay to miners in wei.
-              Used in pre-1559 transactions.
-            $ref: '#/components/schemas/uint'
-          maxPriorityFeePerGas:
-            title: max priority fee per gas
-            description: >
-              Maximum fee per gas the sender is willing to pay to miners in
-              wei. Used in 1559 transactions.
-            $ref: '#/components/schemas/uint'
-          maxFeePerGas:
-            title: max fee per gas
-            description: >
-              The maximum total fee per gas the sender is willing to pay
-              (includes the network / base fee and miner / priority fee) in
-              wei. Used in 1559 transactions.
-            $ref: '#/components/schemas/uint'
-  result:
-    name: TransactionHash
-    description: The transaction hash of the sent transaction.
-    schema:
-      $ref: '#/components/schemas/bytes32'
-   examples:
-    - name: sendTransaction
-      params:
-        - name: transactionDetails
-          value:
-            to: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
-            from: '0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF'
-            gas: '0x76c0'
-            value: '0x8ac7230489e80000'
-            data: '0x'
-            gasPrice: '0x4a817c800'
-            maxPriorityFeePerGas: '0x3B9ACA00'
-            maxFeePerGas: '0x4E3B29200'
-      result:
-        name: eth_sendTransactionExampleResult
-        value: '0x4e306b5a5a37532e1734503f7d2427a86f2c992fbe471f5be403b9f734e667c8'
+        $ref: '#/components/schemas/bytes32'
+    examples:
+      - name: sendTransaction
+        params:
+          - name: transactionDetails
+            value:
+              to: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+              from: '0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF'
+              gas: '0x76c0'
+              value: '0x8ac7230489e80000'
+              data: '0x'
+              gasPrice: '0x4a817c800'
+              maxPriorityFeePerGas: '0x3B9ACA00'
+              maxFeePerGas: '0x4E3B29200'
+        result:
+          name: eth_sendTransactionExampleResult
+          value: '0x4e306b5a5a37532e1734503f7d2427a86f2c992fbe471f5be403b9f734e667c8'
   - name: eth_decrypt
     tags:
       - $ref: '#/components/tags/MetaMask'
