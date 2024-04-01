@@ -757,7 +757,7 @@ methods:
     tags:
       - $ref: '#/components/tags/MetaMask'
       - $ref: '#/components/tags/Restricted'
-    description: >-
+    description: >
       Returns a list of addresses for the accounts owned by the user.        
       This method requires calling `wallet_requestPermissions` for permission. 
       We recommend using `eth_requestAccounts`, which internally calls `wallet_requestPermission`.
@@ -767,18 +767,16 @@ methods:
       name: AddressList
       schema:
         type: array
-        items:
-          $ref: '#/components/schemas/address'
+          items:
+            $ref: '#/components/schemas/address'
     examples:
       - name: eth_accounts example
         params:
           - name: accountsParameter
             value: []
         result:
-          name: eth_accountsExampleResult
-          value: [
-            "0xa77392123a1085f75e62eec7dea7e0e1e5142d5f"
-            ]
+            name: eth_accountsExampleResult
+            value: "0xa77392123a1085f75e62eec7dea7e0e1e5142d5f"
   - name: eth_sendTransaction
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -796,7 +794,7 @@ methods:
         schema:
           type: object
           title: Transaction
-          description: >-
+          description: >
             The parameters to customize a transaction. If a `to` address is not
             provided, it will be assumed that the transaction is a contract
             creation transaction, and the `data` field of the transaction will
@@ -844,7 +842,7 @@ methods:
       description: The transaction hash of the sent transaction.
       schema:
         $ref: '#/components/schemas/bytes32'
-     examples:
+    examples:
       - name: sendTransaction
         params:
           - name: transactionDetails
