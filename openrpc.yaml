@@ -293,8 +293,8 @@ methods:
             value: 
               name: challenge
               value: '0x506c65617365207369676e2074686973206d65737361676520746f20636f6e6669726d20796f7572206964656e746974792e'
-              name: address
-              value: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+              name1: address
+              value1: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
         result:
           name: personal_signExampleResult
           value: >-
