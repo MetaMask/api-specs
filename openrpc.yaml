@@ -796,7 +796,7 @@ methods:
         schema:
           type: object
           title: Transaction
-          description: >
+          description: >-
             The parameters to customize a transaction. If a `to` address is not
             provided, it will be assumed that the transaction is a contract
             creation transaction, and the `data` field of the transaction will
@@ -866,10 +866,11 @@ methods:
       - $ref: '#/components/tags/Restricted'
       - $ref: '#/components/tags/Deprecated'
     summary: Decrypts an encrypted message.
-    description: |-
+    description: >-
       This method is deprecated and may be removed in the future.
-
-       Requests that MetaMask decrypt the specified encrypted message. The message must have been encrypted using the public encryption key of the specified Ethereum address. Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.
+      Requests that MetaMask decrypt the specified encrypted message. 
+      The message must have been encrypted using the public encryption key of the specified Ethereum address.
+      Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.
     params:
       - name: EncryptedMessage
         required: true
@@ -902,10 +903,11 @@ methods:
       - $ref: '#/components/tags/Restricted'
       - $ref: '#/components/tags/Deprecated'
     summary: Gets a public key used for encryption.
-    description: |-
+    description: >-
       This method is deprecated and may be removed in the future.
-
-       Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.
+      Requests that the user share their public encryption key.
+      Returns a public encryption key, or rejects if the user denies the request.
+      The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.
     params:
       - name: Address
         required: true
@@ -1074,7 +1076,7 @@ components:
               description: >-
                 An array specifying one or more of the following domain
                 separator values: 1) `name` - The user-readable name of signing
-                domain, i.e., the name of the dapp or the protocol. 2) `version`
+                domain, for example the name of the dapp or the protocol. 2) `version`
                 - The current major version of the signing domain. 3) `chainId`
                 - The chain ID of the network. 4) `verifyingContract` - The
                 address of the contract that will verify the signature. 5)
