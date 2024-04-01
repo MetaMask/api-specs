@@ -768,7 +768,7 @@ methods:
       schema:
         type: array
           items:
-            $ref: '#/components/schemas/address'
+          $ref: '#/components/schemas/address'
     examples:
       - name: eth_accounts example
         params:
