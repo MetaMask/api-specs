@@ -935,14 +935,14 @@ methods:
       schema:
         type: string
     examples:
-    - name: eth_getEncryptionPublicKey
-      params:
-        - name: getEncryptionPublicKey
-          value: 
-            - '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
-      result:
-        name: eth_getEncryptionPublicKeyExampleResult
-        value: '0x04bfcab3b7ca7e8b3f3b62b2f7f77e9e4b68080bbf8f0f4a1c8f890864d2c7c1d3c45d8b2e3f5f1c27dfeea4c2f5733e90bfc7484e2a690aa9b8ac4559d2e6a8d7'
+      - name: eth_getEncryptionPublicKey
+        params:
+          - name: getEncryptionPublicKey
+            value: 
+              - '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+        result:
+          name: eth_getEncryptionPublicKeyExampleResult
+          value: '0x04bfcab3b7ca7e8b3f3b62b2f7f77e9e4b68080bbf8f0f4a1c8f890864d2c7c1d3c45d8b2e3f5f1c27dfeea4c2f5733e90bfc7484e2a690aa9b8ac4559d2e6a8d7'
   - name: web3_clientVersion
     tags:
       - $ref: '#/components/tags/Ethereum'
