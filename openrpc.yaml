@@ -94,13 +94,13 @@ methods:
               chainId: '0x64'
               chainName: Gnosis
               rpcUrls:
-                - 'https://rpc.ankr.com/gnosis'
+                - 'https://rpc.gnosischain.com'
               iconUrls:
                 - 'https://xdaichain.com/fake/example/url/xdai.svg'
                 - 'https://xdaichain.com/fake/example/url/xdai.png'
               nativeCurrency:
-                name: xDAI
-                symbol: xDAI
+                name: XDAI
+                symbol: XDAI
                 decimals: 18
               blockExplorerUrls:
                 - 'https://blockscout.com/poa/xdai/'
@@ -157,6 +157,22 @@ methods:
       name: PermissionsList
       schema:
         $ref: '#/components/schemas/PermissionsList'
+    examples:
+      - name: wallet_getPermissions example
+        params:
+          - name: GetPermissionsParameter
+            value: []
+        result:
+          name: wallet_getPermissionsExampleResult
+          value:
+            - caveats:
+                - type: restrictReturnedAccounts
+                  value:
+                    - "0xa77392123a1085f75e62eec7dea7e0e1e5142d5f"
+              date: 1710965762327
+              id: aLL29R1BadOf9D4MA2Yq2
+              invoker: "https://docs.metamask.io"
+              parentCapability: eth_accounts
   - name: wallet_requestPermissions
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -278,6 +294,16 @@ methods:
       description: A hex-encoded 129-byte array starting with `0x`.
       schema:
         $ref: '#/components/schemas/bytes'
+    examples:
+      - name: personal_sign example
+        params:
+          - name: options
+            value: 
+              challenge: '0x506c65617365207369676e2074686973206d65737361676520746f20636f6e6669726d20796f7572206964656e746974792e'
+              address: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+        result:
+          name: personal_signExampleResult
+          value: '0x43d7215ebe96c09a5adac69fc76dea5647286b501954ea273e417cf65e6c80e1db4891826375a7de02467a3e01caf125f64c851a8e9ee9467fd6f7e83523b2115bed8e79d527a85e28a36807d79b85fc551b5c15c1ead2e43456c31f565219203db2aed86cb3601b33ec3b410836d4be7718c6148dc9ac82ecc0a04c5edecd8914'
   - name: eth_signTypedData_v4
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -368,6 +394,14 @@ methods:
       description: '`true` if the request was successful, `false` otherwise.'
       schema:
         type: boolean
+    examples:
+      - name: wallet_registerOnboarding example
+        params:
+          - name: registerOnboardingParameter
+            value: []
+        result:
+          name: wallet_registerOnboardingExampleResult
+          value: true  
   - name: wallet_watchAsset
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -718,6 +752,14 @@ methods:
           $ref: '#/components/schemas/address'
     errors:
       - $ref: '#/components/errors/UserRejected'
+    examples:
+      - name: eth_requestAccounts example
+        params:
+          - name: requestAccountsParameter
+            value: []
+        result:
+          name: eth_requestAccountsExampleResult
+          value: '0xa77392123a1085f75e62eec7dea7e0e1e5142d5f'
   - name: eth_accounts
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -734,6 +776,14 @@ methods:
         type: array
         items:
           $ref: '#/components/schemas/address'
+    examples:
+      - name: eth_accounts example
+        params:
+          - name: accountsParameter
+            value: []
+        result:
+          name: eth_accountsExampleResult
+          value: '0xa77392123a1085f75e62eec7dea7e0e1e5142d5f'
   - name: eth_sendTransaction
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -807,6 +857,24 @@ methods:
       description: The transaction hash of the sent transaction.
       schema:
         $ref: '#/components/schemas/bytes32'
+    errors:
+      - code: 4100
+        message: >-
+          The requested account and/or method has not been authorized by the user.
+    examples:
+      - name: sendTransaction
+        params:
+          - name: transactionDetails
+            value:
+              to: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+              from: '0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF'
+              gas: '0x76c0'
+              value: '0x8ac7230489e80000'
+              data: '0x'
+              gasPrice: '0x4a817c800'
+        result:
+          name: eth_sendTransactionExampleResult
+          value: '0x4e306b5a5a37532e1734503f7d2427a86f2c992fbe471f5be403b9f734e667c8'  
   - name: eth_decrypt
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -832,6 +900,20 @@ methods:
       name: PermissionsList
       schema:
         $ref: '#/components/schemas/PermissionsList'
+    errors:
+      - code: 4100
+        message: >-
+          The requested account and/or method has not been authorized by the user.
+    examples:
+      - name: decryptExample
+        params:
+          - name: decryptParameter
+            value: 
+              - '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+              - '0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF'
+        result:
+          name: eth_decryptExampleResult
+          value: 'Hello, Ethereum!'
   - name: eth_getEncryptionPublicKey
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -852,6 +934,15 @@ methods:
       name: EncryptionKey
       schema:
         type: string
+    examples:
+      - name: eth_getEncryptionPublicKey
+        params:
+          - name: getEncryptionPublicKey
+            value: 
+              - '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+        result:
+          name: eth_getEncryptionPublicKeyExampleResult
+          value: '0x04bfcab3b7ca7e8b3f3b62b2f7f77e9e4b68080bbf8f0f4a1c8f890864d2c7c1d3c45d8b2e3f5f1c27dfeea4c2f5733e90bfc7484e2a690aa9b8ac4559d2e6a8d7'
   - name: web3_clientVersion
     tags:
       - $ref: '#/components/tags/Ethereum'
@@ -1000,8 +1091,8 @@ components:
               type: array
               description: >-
                 An array specifying one or more of the following domain
-                separator values: 1) `name` - The user-readable name of signing
-                domain, i.e., the name of the dapp or the protocol. 2) `version`
+                separator values: 1) `name` - The user-readable name of the signing
+                domain, that is, the name of the dapp or the protocol. 2) `version`
                 - The current major version of the signing domain. 3) `chainId`
                 - The chain ID of the network. 4) `verifyingContract` - The
                 address of the contract that will verify the signature. 5)
