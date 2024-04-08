@@ -1091,7 +1091,7 @@ components:
               type: array
               description: >-
                 An array specifying one or more of the following domain
-                separator values: 1) `name` - The user-readable name of signing
+                separator values: 1) `name` - The user-readable name of the signing
                 domain, that is, the name of the dapp or the protocol. 2) `version`
                 - The current major version of the signing domain. 3) `chainId`
                 - The chain ID of the network. 4) `verifyingContract` - The
