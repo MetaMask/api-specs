@@ -848,6 +848,10 @@
       "name": "eth_sendTransaction",
       "description": "Creates a new wallet confirmation to make an Ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
       "summary": "Initiates a new transaction.",
+      "tags": [
+        { "$ref": "#/components/tags/HasConfirmation" },
+        { "$ref": "#/components/tags/NetworkDependent" }
+      ],
       "params": [
         {
           "name": "Transaction",
@@ -1175,6 +1179,14 @@
       "Deprecated": {
         "name": "Deprecated",
         "description": "Deprecated methods."
+      },
+      "HasConfirmation": {
+        "name": "HasConfirmation",
+        "description": "This method, when called, will prompt the user with a confirmation before completing the request."
+      },
+      "NetworkDependent": {
+        "name": "NetworkDependent",
+        "description": "This method, when called, depends on the network selection. That is, the result will depend on which network the wallet / dapp has selected."
       }
     },
     "errors": {
