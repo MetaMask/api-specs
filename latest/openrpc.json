@@ -3,7 +3,7 @@
     "info": {
         "title": "JSON-RPC API",
         "version": "1.0.0",
-        "description": "This section provides an interactive reference for the JSON-RPC API of MetaMask's [Wallet API](/wallet/concepts/wallet-api). The API builds on a set of standard Ethereum methods with MetaMask-specific enhancements, and is designed for seamless integration into dapps.\n\nView the JSON-RPC API methods by selecting a method in the left sidebar. You can test the methods directly in the page using the API playground, with pre-configured examples or custom parameters. You can also save URLs with custom parameters using your browser's bookmarks.\n\nEach method may have one or more of the following labels:\n\n- **MetaMask** - The functionalities of these methods are specific to MetaMask, and may or may not be supported by other wallets.\n- **Restricted** - These methods are restricted and require requesting permission using [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions)\n- **Mobile** - These methods are only available on MetaMask Mobile.\n- **Snaps** - These methods are related to interacting with [Snaps](/snaps).\n- **Experimental** - These methods are experimental and may be changed in the future.\n- **Deprecated** - These methods are deprecated and may be removed in the future.\n- **Ethereum API** - These are standard Ethereum JSON-RPC API methods. See the [Ethereum wiki](https://eth.wiki/json-rpc/API#json-rpc-methods) for more information about these methods."
+        "description": "This section provides an interactive reference for the JSON-RPC API of MetaMask's [Wallet API](/wallet/concepts/wallet-api). The API builds on a set of standard Ethereum methods with MetaMask-specific enhancements, and is designed for seamless integration into dapps.\n\nView the JSON-RPC API methods by selecting a method in the left sidebar. You can test the methods directly in the page using the API playground, with pre-configured examples or custom parameters. You can also save URLs with custom parameters using your browser's bookmarks.\n\nEach method may have one or more of the following labels:\n\n- **MetaMask** - The functionalities of these methods are specific to MetaMask, and may or may not be supported by other wallets.\n- **Restricted** - These methods are restricted and require requesting permission using either [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions)  or [`wallet_requestSnaps`](/wallet/reference/wallet_requestSnaps).\n- **Mobile** - These methods are only available on MetaMask Mobile.\n- **Snaps** - These methods are related to interacting with [Snaps](/snaps).\n- **Experimental** - These methods are experimental and may be changed in the future.\n- **Deprecated** - These methods are deprecated and may be removed in the future.\n- **Ethereum API** - These are standard Ethereum JSON-RPC API methods. See the [Ethereum wiki](https://eth.wiki/json-rpc/API#json-rpc-methods) for more information about these methods."
     },
     "methods": [
         {
@@ -65,15 +65,15 @@
                                 "chainId": "0x64",
                                 "chainName": "Gnosis",
                                 "rpcUrls": [
-                                    "https://rpc.ankr.com/gnosis"
+                                    "https://rpc.gnosischain.com"
                                 ],
                                 "iconUrls": [
                                     "https://xdaichain.com/fake/example/url/xdai.svg",
                                     "https://xdaichain.com/fake/example/url/xdai.png"
                                 ],
                                 "nativeCurrency": {
-                                    "name": "xDAI",
-                                    "symbol": "xDAI",
+                                    "name": "XDAI",
+                                    "symbol": "XDAI",
                                     "decimals": 18
                                 },
                                 "blockExplorerUrls": [
@@ -161,7 +161,37 @@
                 "schema": {
                     "$ref": "#/components/schemas/PermissionsList"
                 }
-            }
+            },
+            "examples": [
+                {
+                    "name": "wallet_getPermissions example",
+                    "params": [
+                        {
+                            "name": "GetPermissionsParameter",
+                            "value": []
+                        }
+                    ],
+                    "result": {
+                        "name": "wallet_getPermissionsExampleResult",
+                        "value": [
+                            {
+                                "caveats": [
+                                    {
+                                        "type": "restrictReturnedAccounts",
+                                        "value": [
+                                            "0xa77392123a1085f75e62eec7dea7e0e1e5142d5f"
+                                        ]
+                                    }
+                                ],
+                                "date": 1710965762327,
+                                "id": "aLL29R1BadOf9D4MA2Yq2",
+                                "invoker": "https://docs.metamask.io",
+                                "parentCapability": "eth_accounts"
+                            }
+                        ]
+                    }
+                }
+            ]
         },
         {
             "name": "wallet_requestPermissions",
@@ -314,7 +344,7 @@
                 }
             ],
             "summary": "Presents a plain text signature challenge to the user.",
-            "description": "Presents a plain text signature challenge to the user and returns the signed response. Equivalent to `eth_sign` on some other wallets, and prepends a safe prefix to the signed message to prevent the challenge tricking users into signing a financial transaction. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` first.",
+            "description": "Presents a plain text signature challenge to the user and returns the signed response. Equivalent to `eth_sign` on some other wallets, and prepends a safe prefix to the signed message to prevent the challenge tricking users into signing a financial transaction.  This method requires that the user has granted permission to interact  with their account first, so make sure to call `eth_requestAccounts` (recommended)  or `wallet_requestPermissions` first.",
             "deprecated": false,
             "params": [
                 {
@@ -341,7 +371,25 @@
                 "schema": {
                     "$ref": "#/components/schemas/bytes"
                 }
-            }
+            },
+            "examples": [
+                {
+                    "name": "personal_sign example",
+                    "params": [
+                        {
+                            "name": "options",
+                            "value": {
+                                "challenge": "0x506c65617365207369676e2074686973206d65737361676520746f20636f6e6669726d20796f7572206964656e746974792e",
+                                "address": "0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7"
+                            }
+                        }
+                    ],
+                    "result": {
+                        "name": "personal_signExampleResult",
+                        "value": "0x43d7215ebe96c09a5adac69fc76dea5647286b501954ea273e417cf65e6c80e1db4891826375a7de02467a3e01caf125f64c851a8e9ee9467fd6f7e83523b2115bed8e79d527a85e28a36807d79b85fc551b5c15c1ead2e43456c31f565219203db2aed86cb3601b33ec3b410836d4be7718c6148dc9ac82ecc0a04c5edecd8914"
+                    }
+                }
+            ]
         },
         {
             "name": "eth_signTypedData_v4",
@@ -354,7 +402,7 @@
                 }
             ],
             "summary": "Presents a structured data message for the user to sign.",
-            "description": "Presents a data message for the user to sign in a structured and readable format and returns the signed response. Introduced by [EIP-712](https://eips.ethereum.org/EIPS/eip-712).",
+            "description": "Presents a data message for the user to sign in a structured and readable format and returns the signed response. Introduced by [EIP-712](https://eips.ethereum.org/EIPS/eip-712).  This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` (recommended) or `wallet_requestPermissions` first.",
             "params": [
                 {
                     "name": "Address",
@@ -477,7 +525,22 @@
                 "schema": {
                     "type": "boolean"
                 }
-            }
+            },
+            "examples": [
+                {
+                    "name": "wallet_registerOnboarding example",
+                    "params": [
+                        {
+                            "name": "registerOnboardingParameter",
+                            "value": []
+                        }
+                    ],
+                    "result": {
+                        "name": "wallet_registerOnboardingExampleResult",
+                        "value": true
+                    }
+                }
+            ]
         },
         {
             "name": "wallet_watchAsset",
@@ -971,6 +1034,21 @@
                 {
                     "$ref": "#/components/errors/UserRejected"
                 }
+            ],
+            "examples": [
+                {
+                    "name": "eth_requestAccounts example",
+                    "params": [
+                        {
+                            "name": "requestAccountsParameter",
+                            "value": []
+                        }
+                    ],
+                    "result": {
+                        "name": "eth_requestAccountsExampleResult",
+                        "value": "0xa77392123a1085f75e62eec7dea7e0e1e5142d5f"
+                    }
+                }
             ]
         },
         {
@@ -983,7 +1061,7 @@
                     "$ref": "#/components/tags/Restricted"
                 }
             ],
-            "description": "Returns a list of addresses for the accounts owned by the user.",
+            "description": "Returns a list of addresses for the accounts owned by the user.         This method requires calling `wallet_requestPermissions` for permission.  We recommend using `eth_requestAccounts`, which internally calls `wallet_requestPermission`.",
             "summary": "Gets a list of addresses for the user's accounts.",
             "params": [],
             "result": {
@@ -994,7 +1072,22 @@
                         "$ref": "#/components/schemas/address"
                     }
                 }
-            }
+            },
+            "examples": [
+                {
+                    "name": "eth_accounts example",
+                    "params": [
+                        {
+                            "name": "accountsParameter",
+                            "value": []
+                        }
+                    ],
+                    "result": {
+                        "name": "eth_accountsExampleResult",
+                        "value": "0xa77392123a1085f75e62eec7dea7e0e1e5142d5f"
+                    }
+                }
+            ]
         },
         {
             "name": "eth_sendTransaction",
@@ -1006,7 +1099,7 @@
                     "$ref": "#/components/tags/Restricted"
                 }
             ],
-            "description": "Creates a new wallet confirmation to make an Ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` or `wallet_requestPermissions` first.",
+            "description": "Creates a new wallet confirmation to make an Ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` (recommended)  or `wallet_requestPermissions` first.",
             "summary": "Initiates a new transaction.",
             "params": [
                 {
@@ -1080,7 +1173,35 @@
                 "schema": {
                     "$ref": "#/components/schemas/bytes32"
                 }
-            }
+            },
+            "errors": [
+                {
+                    "code": 4100,
+                    "message": "The requested account and/or method has not been authorized by the user."
+                }
+            ],
+            "examples": [
+                {
+                    "name": "sendTransaction",
+                    "params": [
+                        {
+                            "name": "transactionDetails",
+                            "value": {
+                                "to": "0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7",
+                                "from": "0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF",
+                                "gas": "0x76c0",
+                                "value": "0x8ac7230489e80000",
+                                "data": "0x",
+                                "gasPrice": "0x4a817c800"
+                            }
+                        }
+                    ],
+                    "result": {
+                        "name": "eth_sendTransactionExampleResult",
+                        "value": "0x4e306b5a5a37532e1734503f7d2427a86f2c992fbe471f5be403b9f734e667c8"
+                    }
+                }
+            ]
         },
         {
             "name": "eth_decrypt",
@@ -1120,7 +1241,31 @@
                 "schema": {
                     "$ref": "#/components/schemas/PermissionsList"
                 }
-            }
+            },
+            "errors": [
+                {
+                    "code": 4100,
+                    "message": "The requested account and/or method has not been authorized by the user."
+                }
+            ],
+            "examples": [
+                {
+                    "name": "decryptExample",
+                    "params": [
+                        {
+                            "name": "decryptParameter",
+                            "value": [
+                                "0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7",
+                                "0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF"
+                            ]
+                        }
+                    ],
+                    "result": {
+                        "name": "eth_decryptExampleResult",
+                        "value": "Hello, Ethereum!"
+                    }
+                }
+            ]
         },
         {
             "name": "eth_getEncryptionPublicKey",
@@ -1152,7 +1297,24 @@
                 "schema": {
                     "type": "string"
                 }
-            }
+            },
+            "examples": [
+                {
+                    "name": "eth_getEncryptionPublicKey",
+                    "params": [
+                        {
+                            "name": "getEncryptionPublicKey",
+                            "value": [
+                                "0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7"
+                            ]
+                        }
+                    ],
+                    "result": {
+                        "name": "eth_getEncryptionPublicKeyExampleResult",
+                        "value": "0x04bfcab3b7ca7e8b3f3b62b2f7f77e9e4b68080bbf8f0f4a1c8f890864d2c7c1d3c45d8b2e3f5f1c27dfeea4c2f5733e90bfc7484e2a690aa9b8ac4559d2e6a8d7"
+                    }
+                }
+            ]
         },
         {
             "name": "web3_clientVersion",
@@ -2379,7 +2541,7 @@
                         "properties": {
                             "EIP712Domain": {
                                 "type": "array",
-                                "description": "An array specifying one or more of the following domain separator values: 1) `name` - The user-readable name of signing domain, i.e., the name of the dapp or the protocol. 2) `version` - The current major version of the signing domain. 3) `chainId` - The chain ID of the network. 4) `verifyingContract` - The address of the contract that will verify the signature. 5) `salt` - A disambiguating salt for the protocol."
+                                "description": "An array specifying one or more of the following domain separator values: 1) `name` - The user-readable name of the signing domain, that is, the name of the dapp or the protocol. 2) `version` - The current major version of the signing domain. 3) `chainId` - The chain ID of the network. 4) `verifyingContract` - The address of the contract that will verify the signature. 5) `salt` - A disambiguating salt for the protocol."
                             }
                         },
                         "additionalProperties": {
@@ -2440,7 +2602,7 @@
                         "type": "string"
                     },
                     "iconUrls": {
-                        "description": "(Optional) One or more URLs pointing to reasonably sized images that can be used to visually identify the chain. NOTE: MetaMask will not  currently display these images. Values can still be included so  that they are utilized if MetaMask incorporates them into the display of custom networks in the future.",
+                        "description": "(Optional) One or more URLs pointing to reasonably sized images that can be used to visually identify the chain. NOTE: MetaMask will not currently display these images. Values can still be included so that they are utilized if MetaMask incorporates them into the display of custom networks in the future.",
                         "type": "array",
                         "items": {
                             "format": "uri",
@@ -2472,7 +2634,7 @@
                 "properties": {
                     "decimals": {
                         "description": "A non-negative integer.",
-                        "min": 0,
+                        "minimum": 0,
                         "type": "integer"
                     },
                     "name": {
@@ -2628,6 +2790,11 @@
                 "title": "48 hex encoded bytes",
                 "type": "string",
                 "pattern": "^0x[0-9a-f]{96}$"
+            },
+            "bytes96": {
+                "title": "96 hex encoded bytes",
+                "type": "string",
+                "pattern": "^0x[0-9a-f]{192}$"
             },
             "bytes256": {
                 "title": "256 hex encoded bytes",
@@ -3129,7 +3296,7 @@
                                 "$ref": "#/components/schemas/address"
                             },
                             {
-                                "name": null,
+                                "title": "Null",
                                 "type": "null"
                             }
                         ]
@@ -4322,6 +4489,98 @@
                     }
                 }
             },
+            "ExecutionPayloadV4": {
+                "title": "Execution payload object V4",
+                "type": "object",
+                "required": [
+                    "parentHash",
+                    "feeRecipient",
+                    "stateRoot",
+                    "receiptsRoot",
+                    "logsBloom",
+                    "prevRandao",
+                    "blockNumber",
+                    "gasLimit",
+                    "gasUsed",
+                    "timestamp",
+                    "extraData",
+                    "baseFeePerGas",
+                    "blockHash",
+                    "transactions",
+                    "withdrawals",
+                    "blobGasUsed",
+                    "excessBlobGas",
+                    "depositReceipts",
+                    "exits"
+                ],
+                "properties": {
+                    "parentHash": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/parentHash"
+                    },
+                    "feeRecipient": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/feeRecipient"
+                    },
+                    "stateRoot": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/stateRoot"
+                    },
+                    "receiptsRoot": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/receiptsRoot"
+                    },
+                    "logsBloom": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/logsBloom"
+                    },
+                    "prevRandao": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/prevRandao"
+                    },
+                    "blockNumber": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/blockNumber"
+                    },
+                    "gasLimit": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/gasLimit"
+                    },
+                    "gasUsed": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/gasUsed"
+                    },
+                    "timestamp": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/timestamp"
+                    },
+                    "extraData": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/extraData"
+                    },
+                    "baseFeePerGas": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/baseFeePerGas"
+                    },
+                    "blockHash": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/blockHash"
+                    },
+                    "transactions": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/transactions"
+                    },
+                    "withdrawals": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/withdrawals"
+                    },
+                    "blobGasUsed": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/blobGasUsed"
+                    },
+                    "excessBlobGas": {
+                        "$ref": "#/components/schemas/ExecutionPayloadV3/properties/excessBlobGas"
+                    },
+                    "depositReceipts": {
+                        "title": "Deposit receipts",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DepositReceiptV1"
+                        }
+                    },
+                    "exits": {
+                        "title": "Exits",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ExitV1"
+                        }
+                    }
+                }
+            },
             "ExecutionPayloadBodyV1": {
                 "title": "Execution payload body object V1",
                 "type": "object",
@@ -4373,6 +4632,62 @@
                         "items": {
                             "$ref": "#/components/schemas/bytes"
                         }
+                    }
+                }
+            },
+            "DepositReceiptV1": {
+                "title": "Deposit receipt object V1",
+                "type": "object",
+                "required": [
+                    "pubkey",
+                    "withdrawalCredentials",
+                    "amount",
+                    "signature",
+                    "index"
+                ],
+                "properties": {
+                    "pubkey": {
+                        "title": "Public key",
+                        "$ref": "#/components/schemas/bytes48"
+                    },
+                    "withdrawalCredentials": {
+                        "title": "Withdrawal credentials",
+                        "$ref": "#/components/schemas/bytes32"
+                    },
+                    "amount": {
+                        "title": "Deposit amount",
+                        "$ref": "#/components/schemas/uint64"
+                    },
+                    "signature": {
+                        "title": "Deposit signature",
+                        "$ref": "#/components/schemas/bytes96"
+                    },
+                    "index": {
+                        "title": "Deposit index",
+                        "$ref": "#/components/schemas/uint64"
+                    }
+                }
+            },
+            "ExitV1": {
+                "title": "Exit object V1",
+                "type": "object",
+                "required": [
+                    "sourceAddress",
+                    "validatorPublicKey",
+                    "amount"
+                ],
+                "properties": {
+                    "sourceAddress": {
+                        "title": "Source address",
+                        "$ref": "#/components/schemas/address"
+                    },
+                    "validatorPublicKey": {
+                        "title": "Validator public key",
+                        "$ref": "#/components/schemas/bytes48"
+                    },
+                    "amount": {
+                        "title": "Withdraw amount",
+                        "$ref": "#/components/schemas/uint64"
                     }
                 }
             },
