@@ -157,22 +157,6 @@ methods:
       name: PermissionsList
       schema:
         $ref: '#/components/schemas/PermissionsList'
-    examples:
-      - name: wallet_getPermissions example
-        params:
-          - name: GetPermissionsParameter
-            value: []
-        result:
-          name: wallet_getPermissionsExampleResult
-          value:
-            - caveats:
-                - type: restrictReturnedAccounts
-                  value:
-                    - "0xa77392123a1085f75e62eec7dea7e0e1e5142d5f"
-              date: 1710965762327
-              id: aLL29R1BadOf9D4MA2Yq2
-              invoker: "https://docs.metamask.io"
-              parentCapability: eth_accounts
   - name: wallet_requestPermissions
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -394,14 +378,6 @@ methods:
       description: '`true` if the request was successful, `false` otherwise.'
       schema:
         type: boolean
-    examples:
-      - name: wallet_registerOnboarding example
-        params:
-          - name: registerOnboardingParameter
-            value: []
-        result:
-          name: wallet_registerOnboardingExampleResult
-          value: true  
   - name: wallet_watchAsset
     tags:
       - $ref: '#/components/tags/MetaMask'
