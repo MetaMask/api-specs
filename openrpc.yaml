@@ -218,7 +218,7 @@ methods:
       - $ref: '#/components/tags/Experimental'
     summary: Revokes the current dapp permissions.
     description: >-
-      Revokes previously granted permissions for the current dapp identified by
+      Revokes previously granted permissions for the current dapp identified by its
       origin. This method is specified by
       [MIP-2](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md)
       and is only available for the browser extension.
