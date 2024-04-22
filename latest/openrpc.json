@@ -3,7 +3,7 @@
     "info": {
         "title": "JSON-RPC API",
         "version": "1.0.0",
-        "description": "This section provides an interactive reference for the JSON-RPC API of MetaMask's [Wallet API](/wallet/concepts/wallet-api). The API builds on a set of standard Ethereum methods with MetaMask-specific enhancements, and is designed for seamless integration into dapps.\n\nView the JSON-RPC API methods by selecting a method in the left sidebar. You can test the methods directly in the page using the API playground, with pre-configured examples or custom parameters. You can also save URLs with custom parameters using your browser's bookmarks.\n\nEach method may have one or more of the following labels:\n\n- **MetaMask** - The functionalities of these methods are specific to MetaMask, and may or may not be supported by other wallets.\n- **Restricted** - These methods are restricted and require requesting permission using either [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions)  or [`wallet_requestSnaps`](/wallet/reference/wallet_requestSnaps).\n- **Mobile** - These methods are only available on MetaMask Mobile.\n- **Snaps** - These methods are related to interacting with [Snaps](/snaps).\n- **Experimental** - These methods are experimental and may be changed in the future.\n- **Deprecated** - These methods are deprecated and may be removed in the future.\n- **Ethereum API** - These are standard Ethereum JSON-RPC API methods. See the [Ethereum wiki](https://eth.wiki/json-rpc/API#json-rpc-methods) for more information about these methods."
+        "description": "This section provides an interactive reference for the JSON-RPC API of MetaMask's [Wallet API](/wallet/concepts/wallet-api). The API builds on a set of standard Ethereum methods with MetaMask-specific enhancements, and is designed for seamless integration into dapps.\n\nView the JSON-RPC API methods by selecting a method in the left sidebar. You can test the methods directly in the page using the API playground, with pre-configured examples or custom parameters. You can also save URLs with custom parameters using your browser's bookmarks.\n\nEach method may have one or more of the following labels:\n\n- **MetaMask** - The functionalities of these methods are specific to MetaMask, and may or may not be supported by other wallets.\n- **Restricted** - These methods are restricted and require requesting permission using either [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions) or [`wallet_requestSnaps`](/wallet/reference/wallet_requestSnaps).\n- **Mobile** - These methods are only available on MetaMask Mobile.\n- **Snaps** - These methods are related to interacting with [Snaps](/snaps).\n- **Experimental** - These methods are experimental and may be changed in the future.\n- **Deprecated** - These methods are deprecated and may be removed in the future.\n- **Ethereum API** - These are standard Ethereum JSON-RPC API methods. See the [Ethereum wiki](https://eth.wiki/json-rpc/API#json-rpc-methods) for more information about these methods."
     },
     "methods": [
         {
@@ -314,7 +314,7 @@
                 }
             ],
             "summary": "Presents a plain text signature challenge to the user.",
-            "description": "Presents a plain text signature challenge to the user and returns the signed response. Equivalent to `eth_sign` on some other wallets, and prepends a safe prefix to the signed message to prevent the challenge tricking users into signing a financial transaction.  This method requires that the user has granted permission to interact  with their account first, so make sure to call `eth_requestAccounts` (recommended)  or `wallet_requestPermissions` first.",
+            "description": "Presents a plain text signature challenge to the user and returns the signed response. Equivalent to `eth_sign` on some other wallets, and prepends a safe prefix to the signed message to prevent the challenge tricking users into signing a financial transaction. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` (recommended) or `wallet_requestPermissions` first.",
             "deprecated": false,
             "params": [
                 {
@@ -372,7 +372,7 @@
                 }
             ],
             "summary": "Presents a structured data message for the user to sign.",
-            "description": "Presents a data message for the user to sign in a structured and readable format and returns the signed response. Introduced by [EIP-712](https://eips.ethereum.org/EIPS/eip-712).  This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` (recommended) or `wallet_requestPermissions` first.",
+            "description": "Presents a data message for the user to sign in a structured and readable format and returns the signed response. Introduced by [EIP-712](https://eips.ethereum.org/EIPS/eip-712). This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` (recommended) or `wallet_requestPermissions` first.",
             "params": [
                 {
                     "name": "Address",
@@ -1016,7 +1016,7 @@
                     "$ref": "#/components/tags/Restricted"
                 }
             ],
-            "description": "Returns a list of addresses for the accounts owned by the user.         This method requires calling `wallet_requestPermissions` for permission.  We recommend using `eth_requestAccounts`, which internally calls `wallet_requestPermission`.",
+            "description": "Returns a list of addresses for the accounts owned by the user. This method requires calling `wallet_requestPermissions` for permission. We recommend using `eth_requestAccounts`, which internally calls `wallet_requestPermission`.",
             "summary": "Gets a list of addresses for the user's accounts.",
             "params": [],
             "result": {
@@ -1031,12 +1031,7 @@
             "examples": [
                 {
                     "name": "eth_accounts example",
-                    "params": [
-                        {
-                            "name": "accountsParameter",
-                            "value": []
-                        }
-                    ],
+                    "params": [],
                     "result": {
                         "name": "eth_accountsExampleResult",
                         "value": "0xa77392123a1085f75e62eec7dea7e0e1e5142d5f"
@@ -1054,7 +1049,7 @@
                     "$ref": "#/components/tags/Restricted"
                 }
             ],
-            "description": "Creates a new wallet confirmation to make an Ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` (recommended)  or `wallet_requestPermissions` first.",
+            "description": "Creates a new wallet confirmation to make an Ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` (recommended) or `wallet_requestPermissions` first.",
             "summary": "Initiates a new transaction.",
             "params": [
                 {
@@ -1172,7 +1167,7 @@
                 }
             ],
             "summary": "Decrypts an encrypted message.",
-            "description": "This method is deprecated and may be removed in the future.\n\n Requests that MetaMask decrypt the specified encrypted message. \n The message must have been encrypted using the public encryption key of the specified Ethereum address. \n Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
+            "description": "This method is deprecated and may be removed in the future.\n\n Requests that MetaMask decrypt the specified encrypted message.\n The message must have been encrypted using the public encryption key of the specified Ethereum address.\n Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
             "params": [
                 {
                     "name": "EncryptedMessage",
@@ -1236,7 +1231,7 @@
                 }
             ],
             "summary": "Gets a public key used for encryption.",
-            "description": "This method is deprecated and may be removed in the future.\n\n Requests that the user share their public encryption key. \n Returns a public encryption key, or rejects if the user denies the request. \n The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
+            "description": "This method is deprecated and may be removed in the future.\n\n Requests that the user share their public encryption key.\n Returns a public encryption key, or rejects if the user denies the request.\n The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
             "params": [
                 {
                     "name": "Address",
