@@ -161,37 +161,7 @@
                 "schema": {
                     "$ref": "#/components/schemas/PermissionsList"
                 }
-            },
-            "examples": [
-                {
-                    "name": "wallet_getPermissions example",
-                    "params": [
-                        {
-                            "name": "GetPermissionsParameter",
-                            "value": []
-                        }
-                    ],
-                    "result": {
-                        "name": "wallet_getPermissionsExampleResult",
-                        "value": [
-                            {
-                                "caveats": [
-                                    {
-                                        "type": "restrictReturnedAccounts",
-                                        "value": [
-                                            "0xa77392123a1085f75e62eec7dea7e0e1e5142d5f"
-                                        ]
-                                    }
-                                ],
-                                "date": 1710965762327,
-                                "id": "aLL29R1BadOf9D4MA2Yq2",
-                                "invoker": "https://docs.metamask.io",
-                                "parentCapability": "eth_accounts"
-                            }
-                        ]
-                    }
-                }
-            ]
+            }
         },
         {
             "name": "wallet_requestPermissions",
@@ -298,7 +268,7 @@
                 }
             ],
             "summary": "Revokes the current dapp permissions.",
-            "description": "Revokes previously granted permissions for the current dapp identified by origin. This method is specified by [MIP-2](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md) and is only available for the browser extension.",
+            "description": "Revokes previously granted permissions for the current dapp identified by its origin. This method is specified by [MIP-2](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md) and is only available for the browser extension.",
             "params": [
                 {
                     "name": "revokePermissionObject",
@@ -525,22 +495,7 @@
                 "schema": {
                     "type": "boolean"
                 }
-            },
-            "examples": [
-                {
-                    "name": "wallet_registerOnboarding example",
-                    "params": [
-                        {
-                            "name": "registerOnboardingParameter",
-                            "value": []
-                        }
-                    ],
-                    "result": {
-                        "name": "wallet_registerOnboardingExampleResult",
-                        "value": true
-                    }
-                }
-            ]
+            }
         },
         {
             "name": "wallet_watchAsset",
@@ -1109,7 +1064,7 @@
                     "schema": {
                         "type": "object",
                         "title": "Transaction",
-                        "description": "The parameters to customize a transaction. If a `to` address is not provided. It will be assumed that the transaction is a contract creation transaction, and the `data` field of the transaction will be used as the contract initialization code. `gasPrice` cannot be used together with `maxPriorityFeePerGas` and `maxFeePerGas`.",
+                        "description": "The parameters to customize a transaction. If a `to` address is not provided, it will be assumed that the transaction is a contract creation transaction, and the `data` field of the transaction will be used as the contract initialization code. `gasPrice` cannot be used together with `maxPriorityFeePerGas` and `maxFeePerGas`.",
                         "required": [
                             "from"
                         ],
@@ -1217,7 +1172,7 @@
                 }
             ],
             "summary": "Decrypts an encrypted message.",
-            "description": "This method is deprecated and may be removed in the future.\n\n Requests that MetaMask decrypt the specified encrypted message. The message must have been encrypted using the public encryption key of the specified Ethereum address. Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
+            "description": "This method is deprecated and may be removed in the future.\n\n Requests that MetaMask decrypt the specified encrypted message. \n The message must have been encrypted using the public encryption key of the specified Ethereum address. \n Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.",
             "params": [
                 {
                     "name": "EncryptedMessage",
@@ -1281,7 +1236,7 @@
                 }
             ],
             "summary": "Gets a public key used for encryption.",
-            "description": "This method is deprecated and may be removed in the future.\n\n Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
+            "description": "This method is deprecated and may be removed in the future.\n\n Requests that the user share their public encryption key. \n Returns a public encryption key, or rejects if the user denies the request. \n The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.",
             "params": [
                 {
                     "name": "Address",
@@ -4510,8 +4465,8 @@
                     "withdrawals",
                     "blobGasUsed",
                     "excessBlobGas",
-                    "depositReceipts",
-                    "exits"
+                    "depositRequests",
+                    "withdrawalRequests"
                 ],
                 "properties": {
                     "parentHash": {
@@ -4565,18 +4520,18 @@
                     "excessBlobGas": {
                         "$ref": "#/components/schemas/ExecutionPayloadV3/properties/excessBlobGas"
                     },
-                    "depositReceipts": {
-                        "title": "Deposit receipts",
+                    "depositRequests": {
+                        "title": "Deposit requests",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/DepositReceiptV1"
+                            "$ref": "#/components/schemas/DepositRequestV1"
                         }
                     },
-                    "exits": {
-                        "title": "Exits",
+                    "withdrawalRequests": {
+                        "title": "Withdrawals requests",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/ExitV1"
+                            "$ref": "#/components/schemas/WithdrawalRequestV1"
                         }
                     }
                 }
@@ -4635,8 +4590,8 @@
                     }
                 }
             },
-            "DepositReceiptV1": {
-                "title": "Deposit receipt object V1",
+            "DepositRequestV1": {
+                "title": "Deposit request object V1",
                 "type": "object",
                 "required": [
                     "pubkey",
@@ -4668,8 +4623,8 @@
                     }
                 }
             },
-            "ExitV1": {
-                "title": "Exit object V1",
+            "WithdrawalRequestV1": {
+                "title": "Withdrawal request object V1",
                 "type": "object",
                 "required": [
                     "sourceAddress",
