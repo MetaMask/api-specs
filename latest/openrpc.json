@@ -993,12 +993,7 @@
             "examples": [
                 {
                     "name": "eth_requestAccounts example",
-                    "params": [
-                        {
-                            "name": "requestAccountsParameter",
-                            "value": []
-                        }
-                    ],
+                    "params": [],
                     "result": {
                         "name": "eth_requestAccountsExampleResult",
                         "value": "0xa77392123a1085f75e62eec7dea7e0e1e5142d5f"
