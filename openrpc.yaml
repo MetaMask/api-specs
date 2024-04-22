@@ -22,12 +22,9 @@ info:
     MetaMask, and may or may not be supported by other wallets.
 
     - **Restricted** - These methods are restricted and require requesting
-    permission using either [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions)
-    or [`wallet_requestSnaps`](/wallet/reference/wallet_requestSnaps).
+    permission using [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions).
 
     - **Mobile** - These methods are only available on MetaMask Mobile.
-
-    - **Snaps** - These methods are related to interacting with [Snaps](/snaps).
 
     - **Experimental** - These methods are experimental and may be changed in
     the future.
@@ -185,31 +182,6 @@ methods:
           name: permissionList
           value:
             eth_accounts: {}
-      - name: >-
-          wallet_requestPermissions example of requesting the wallet_snap
-          permission
-        params:
-          - name: requestPermissionObject
-            value:
-              wallet_snap:
-                caveats:
-                  - type: snapIds
-                    value:
-                      'npm:@metamask/example-snap':
-                        version: 1.0.0
-                      'npm:fooSnap':
-                        version: 1.2.1
-        result:
-          name: permissionList
-          value:
-            wallet_snap:
-              caveats:
-                - type: snapIds
-                  value:
-                    'npm:@metamask/example-snap':
-                      version: 1.0.0
-                    'npm:fooSnap':
-                      version: 1.2.1
     errors:
       - $ref: '#/components/errors/UserRejected'
   - name: wallet_revokePermissions
@@ -531,184 +503,6 @@ methods:
       schema:
         type: string
         title: ScanQRCodeResult
-  - name: wallet_getSnaps
-    tags:
-      - $ref: '#/components/tags/MetaMask'
-      - $ref: '#/components/tags/Snaps'
-    summary: Gets the dapp's permitted Snaps.
-    description: Returns the IDs of the dapp's permitted Snaps and some relevant metadata.
-    params: []
-    result:
-      name: GetSnapsResult
-      description: An object mapping the IDs of permitted Snaps to their metadata.
-      schema:
-        $ref: '#/components/schemas/SnapsMap'
-    examples:
-      - name: wallet_getSnaps example
-        params: []
-        result:
-          name: wallet_getSnapsResult
-          value:
-            'npm:@metamask/example-snap':
-              version: 1.0.0
-              id: 'npm:@metamask/example-snap'
-              enabled: true
-              blocked: false
-  - name: wallet_requestSnaps
-    tags:
-      - $ref: '#/components/tags/MetaMask'
-      - $ref: '#/components/tags/Snaps'
-    summary: Requests permission to communicate with Snaps.
-    description: >-
-      Requests permission for a dapp to communicate with the specified Snaps and
-      attempts to install them if they're not already installed. If the
-      installation of any Snap fails, returns the error that caused the failure.
-    params:
-      - name: RequestSnapsParameter
-        description: >-
-          An object mapping the IDs of requested Snaps to optional SemVer
-          version ranges.
-        required: true
-        schema:
-          title: RequestSnapsParameter
-          type: object
-          properties:
-            id:
-              type: object
-              properties:
-                version:
-                  description: >-
-                    (Optional) A SemVer version range for the Snap. This uses
-                    the same semantics as npm package.json ranges. If specified,
-                    MetaMask attempts to install a version of the Snap that
-                    satisfies the range. If a compatible version of the Snap is
-                    already installed, the request succeeds. If an incompatible
-                    version is installed, MetaMask attempts to update the Snap
-                    to the latest version that satisfies the range. The request
-                    succeeds if the Snap is succesfully installed.
-                  type: string
-    result:
-      name: RequestSnapsResult
-      description: An object mapping the IDs of installed Snaps to their metadata.
-      schema:
-        $ref: '#/components/schemas/SnapsMap'
-    examples:
-      - name: wallet_requestSnaps example
-        params:
-          - name: RequestSnapsParameter
-            value:
-              'npm:@metamask/example-snap': {}
-              'npm:fooSnap':
-                version: ^1.0.2
-        result:
-          name: wallet_requestSnapsResult
-          value:
-            'npm:@metamask/example-snap':
-              version: 1.0.0
-              id: 'npm:@metamask/example-snap'
-              enabled: true
-              blocked: false
-            'npm:fooSnap':
-              version: 1.0.5
-              id: 'npm:fooSnap'
-              enabled: true
-              blocked: false
-  - name: wallet_snap
-    tags:
-      - $ref: '#/components/tags/MetaMask'
-      - $ref: '#/components/tags/Snaps'
-      - $ref: '#/components/tags/Restricted'
-    summary: Calls a Snap method.
-    description: >-
-      Calls the specified JSON-RPC API method of the specified Snap. The Snap
-      must be installed and the dapp must have permission to communicate with
-      the Snap, or the request is rejected. The dapp can install the Snap and
-      request permission to communicate with it using `wallet_requestSnaps`.
-
-       This method is synonymous to `wallet_invokeSnap`.
-    params:
-      - name: SnapParameter
-        required: true
-        schema:
-          title: SnapParameter
-          type: object
-          properties:
-            snapId:
-              description: The ID of the Snap to invoke.
-              type: string
-            request:
-              description: The JSON-RPC request object to send to the invoked Snap.
-              type: object
-              properties:
-                method:
-                  type: string
-                params:
-                  type: object
-    result:
-      name: SnapResult
-      description: Result of the Snap method call.
-      schema:
-        title: SnapResult
-        type: object
-    examples:
-      - name: wallet_snap example
-        params:
-          - name: SnapParameter
-            value:
-              snapId: 'npm:@metamask/example-snap'
-              request:
-                method: hello
-        result:
-          name: wallet_snapResult
-          value: {}
-  - name: wallet_invokeSnap
-    tags:
-      - $ref: '#/components/tags/MetaMask'
-      - $ref: '#/components/tags/Snaps'
-      - $ref: '#/components/tags/Restricted'
-    summary: Calls a Snap method.
-    description: >-
-      Calls the specified JSON-RPC API method of the specified Snap. The Snap
-      must be installed and the dapp must have permission to communicate with
-      the Snap, or the request is rejected. The dapp can install the Snap and
-      request permission to communicate with it using `wallet_requestSnaps`.
-
-       This method is synonymous to `wallet_snap`.
-    params:
-      - name: InvokeSnapParameter
-        required: true
-        schema:
-          title: InvokeSnapParameter
-          type: object
-          properties:
-            snapId:
-              description: The ID of the Snap to invoke.
-              type: string
-            request:
-              description: The JSON-RPC request object to send to the invoked Snap.
-              type: object
-              properties:
-                method:
-                  type: string
-                params:
-                  type: object
-    result:
-      name: InvokeSnapResult
-      description: Result of the Snap method call.
-      schema:
-        title: InvokeSnapResult
-        type: object
-    examples:
-      - name: wallet_invokeSnap example
-        params:
-          - name: InvokeSnapParameter
-            value:
-              snapId: 'npm:@metamask/example-snap'
-              request:
-                method: hello
-        result:
-          name: wallet_invokeSnapResult
-          value: {}
   - name: eth_requestAccounts
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -1228,30 +1022,6 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Permission'
-    SnapsMap:
-      title: SnapsMap
-      type: object
-      properties:
-        id:
-          type: object
-          properties:
-            id:
-              description: The ID of the Snap.
-              type: string
-            initialPermissions:
-              description: >-
-                The initial permissions of the Snap, which will be requested
-                when the Snap is installed.
-              type: object
-            version:
-              description: The version of the Snap.
-              type: string
-            enabled:
-              description: Indicates whether the Snap is enabled.
-              type: boolean
-            blocked:
-              description: Indicates whether the Snap is blocked.
-              type: boolean
   tags:
     MetaMask:
       name: MetaMask
@@ -1265,9 +1035,6 @@ components:
     Mobile:
       name: Mobile
       description: Mobile-specific methods.
-    Snaps:
-      name: Snaps
-      description: Methods related to interacting with Snaps.
     Experimental:
       name: Experimental
       description: Experimental methods.
