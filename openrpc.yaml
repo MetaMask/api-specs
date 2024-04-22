@@ -22,7 +22,7 @@ info:
     MetaMask, and may or may not be supported by other wallets.
 
     - **Restricted** - These methods are restricted and require requesting
-    permission using either [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions) 
+    permission using either [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions)
     or [`wallet_requestSnaps`](/wallet/reference/wallet_requestSnaps).
 
     - **Mobile** - These methods are only available on MetaMask Mobile.
@@ -252,9 +252,9 @@ methods:
       Presents a plain text signature challenge to the user and returns the
       signed response. Equivalent to `eth_sign` on some other wallets, and
       prepends a safe prefix to the signed message to prevent the challenge
-      tricking users into signing a financial transaction. 
-      This method requires that the user has granted permission to interact 
-      with their account first, so make sure to call `eth_requestAccounts` (recommended) 
+      tricking users into signing a financial transaction.
+      This method requires that the user has granted permission to interact
+      with their account first, so make sure to call `eth_requestAccounts` (recommended)
       or `wallet_requestPermissions` first.
     deprecated: false
     params:
@@ -282,7 +282,7 @@ methods:
       - name: personal_sign example
         params:
           - name: options
-            value: 
+            value:
               challenge: '0x506c65617365207369676e2074686973206d65737361676520746f20636f6e6669726d20796f7572206964656e746974792e'
               address: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
         result:
@@ -296,7 +296,7 @@ methods:
     description: >-
       Presents a data message for the user to sign in a structured and readable
       format and returns the signed response. Introduced by
-      [EIP-712](https://eips.ethereum.org/EIPS/eip-712). 
+      [EIP-712](https://eips.ethereum.org/EIPS/eip-712).
       This method requires that the user has granted permission to interact with their account first,
       so make sure to call `eth_requestAccounts` (recommended) or `wallet_requestPermissions` first.
     params:
@@ -741,8 +741,8 @@ methods:
       - $ref: '#/components/tags/MetaMask'
       - $ref: '#/components/tags/Restricted'
     description: >-
-      Returns a list of addresses for the accounts owned by the user.        
-      This method requires calling `wallet_requestPermissions` for permission. 
+      Returns a list of addresses for the accounts owned by the user.
+      This method requires calling `wallet_requestPermissions` for permission.
       We recommend using `eth_requestAccounts`, which internally calls `wallet_requestPermission`.
     summary: Gets a list of addresses for the user's accounts.
     params: []
@@ -754,9 +754,7 @@ methods:
           $ref: '#/components/schemas/address'
     examples:
       - name: eth_accounts example
-        params:
-          - name: accountsParameter
-            value: []
+        params: []
         result:
           name: eth_accountsExampleResult
           value: '0xa77392123a1085f75e62eec7dea7e0e1e5142d5f'
@@ -767,7 +765,7 @@ methods:
     description: >-
       Creates a new wallet confirmation to make an Ethereum transaction from the
       user's account. This method requires that the user has granted permission
-      to interact with their account first, so make sure to call `eth_requestAccounts` (recommended) 
+      to interact with their account first, so make sure to call `eth_requestAccounts` (recommended)
       or `wallet_requestPermissions` first.
     summary: Initiates a new transaction.
     params:
@@ -850,7 +848,7 @@ methods:
               gasPrice: '0x4a817c800'
         result:
           name: eth_sendTransactionExampleResult
-          value: '0x4e306b5a5a37532e1734503f7d2427a86f2c992fbe471f5be403b9f734e667c8'  
+          value: '0x4e306b5a5a37532e1734503f7d2427a86f2c992fbe471f5be403b9f734e667c8'
   - name: eth_decrypt
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -860,8 +858,8 @@ methods:
     description: |-
       This method is deprecated and may be removed in the future.
 
-       Requests that MetaMask decrypt the specified encrypted message. 
-       The message must have been encrypted using the public encryption key of the specified Ethereum address. 
+       Requests that MetaMask decrypt the specified encrypted message.
+       The message must have been encrypted using the public encryption key of the specified Ethereum address.
        Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.
     params:
       - name: EncryptedMessage
@@ -886,7 +884,7 @@ methods:
       - name: decryptExample
         params:
           - name: decryptParameter
-            value: 
+            value:
               - '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
               - '0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF'
         result:
@@ -901,8 +899,8 @@ methods:
     description: |-
       This method is deprecated and may be removed in the future.
 
-       Requests that the user share their public encryption key. 
-       Returns a public encryption key, or rejects if the user denies the request. 
+       Requests that the user share their public encryption key.
+       Returns a public encryption key, or rejects if the user denies the request.
        The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.
     params:
       - name: Address
@@ -918,7 +916,7 @@ methods:
       - name: eth_getEncryptionPublicKey
         params:
           - name: getEncryptionPublicKey
-            value: 
+            value:
               - '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
         result:
           name: eth_getEncryptionPublicKeyExampleResult
