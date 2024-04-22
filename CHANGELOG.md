@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.4]
+### Uncategorized
+- Fix eth_requestAccounts example ([#219](https://github.com/MetaMask/api-specs/pull/219))
+
 ## [0.8.3]
 ### Uncategorized
 - Fixed eth_accounts example params ([#216](https://github.com/MetaMask/api-specs/pull/216))
@@ -170,7 +174,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.8.3...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.8.4...HEAD
+[0.8.4]: https://github.com/MetaMask/api-specs/compare/v0.8.3...v0.8.4
 [0.8.3]: https://github.com/MetaMask/api-specs/compare/v0.8.2...v0.8.3
 [0.8.2]: https://github.com/MetaMask/api-specs/compare/v0.8.1...v0.8.2
 [0.8.1]: https://github.com/MetaMask/api-specs/compare/v0.8.0...v0.8.1
