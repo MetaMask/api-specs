@@ -218,7 +218,7 @@ methods:
       - $ref: '#/components/tags/Experimental'
     summary: Revokes the current dapp permissions.
     description: >-
-      Revokes previously granted permissions for the current dapp identified by
+      Revokes previously granted permissions for the current dapp identified by its
       origin. This method is specified by
       [MIP-2](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md)
       and is only available for the browser extension.
@@ -779,7 +779,7 @@ methods:
           title: Transaction
           description: >-
             The parameters to customize a transaction. If a `to` address is not
-            provided. It will be assumed that the transaction is a contract
+            provided, it will be assumed that the transaction is a contract
             creation transaction, and the `data` field of the transaction will
             be used as the contract initialization code. `gasPrice` cannot be
             used together with `maxPriorityFeePerGas` and `maxFeePerGas`.
@@ -860,7 +860,9 @@ methods:
     description: |-
       This method is deprecated and may be removed in the future.
 
-       Requests that MetaMask decrypt the specified encrypted message. The message must have been encrypted using the public encryption key of the specified Ethereum address. Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.
+       Requests that MetaMask decrypt the specified encrypted message. 
+       The message must have been encrypted using the public encryption key of the specified Ethereum address. 
+       Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.
     params:
       - name: EncryptedMessage
         required: true
@@ -899,7 +901,9 @@ methods:
     description: |-
       This method is deprecated and may be removed in the future.
 
-       Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.
+       Requests that the user share their public encryption key. 
+       Returns a public encryption key, or rejects if the user denies the request. 
+       The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.
     params:
       - name: Address
         required: true
