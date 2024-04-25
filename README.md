@@ -1,6 +1,7 @@
 # MetaMask API Specs
 
 API Playground: https://metamask.github.io/api-playground/api-documentation
+API Reference Docs: https://docs.metamask.io/wallet/reference/json-rpc-api/
 
 Latest build: https://metamask.github.io/api-specs/latest/openrpc.json
 
