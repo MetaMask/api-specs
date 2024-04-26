@@ -44,4 +44,11 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir:  dist/build
           destination_dir: latest
-
+      - name: Publish NPM
+        uses: MetaMask/action-npm-publish@v2
+        with:
+          # This `NPM_TOKEN` needs to be manually set per-repository.
+          # Look in the repository settings under "Environments", and set this token in the `npm-publish` environment.
+          npm-token: ${{ secrets.NPM_TOKEN }}
+        env:
+          SKIP_PREPACK: true
