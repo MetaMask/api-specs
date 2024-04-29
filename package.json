@@ -14,7 +14,8 @@
     "start": "yarn build",
     "build": "mkdir -p src/build && node merge-openrpc.js && tsc && rm -rf src/build",
     "build:watch": "nodemon",
-    "prepublishOnly": "yarn build",
+    "prepublishOnly": "npm run prepack",
+    "prepack": "./scripts/prepack.sh",
     "test": "yarn build && jest"
   },
   "repository": {
