@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.2]
+### Uncategorized
+- Fixed publish release to be on main branch instead ([#226](https://github.com/MetaMask/api-specs/pull/226))
+
 ## [0.9.1]
 ### Uncategorized
 - Add npm publish to gh actions workflow ([#224](https://github.com/MetaMask/api-specs/pull/224))
@@ -183,7 +187,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.9.1...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.9.2...HEAD
+[0.9.2]: https://github.com/MetaMask/api-specs/compare/v0.9.1...v0.9.2
 [0.9.1]: https://github.com/MetaMask/api-specs/compare/v0.9.0...v0.9.1
 [0.9.0]: https://github.com/MetaMask/api-specs/compare/v0.8.4...v0.9.0
 [0.8.4]: https://github.com/MetaMask/api-specs/compare/v0.8.3...v0.8.4
