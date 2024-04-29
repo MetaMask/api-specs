@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.1]
+### Uncategorized
+- Add npm publish to gh actions workflow ([#224](https://github.com/MetaMask/api-specs/pull/224))
+
 ## [0.9.0]
 ### Uncategorized
 - Fixed execution-apis spec version to specific commit + added API Reference docs to README ([#222](https://github.com/MetaMask/api-specs/pull/222))
@@ -179,7 +183,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.9.1...HEAD
+[0.9.1]: https://github.com/MetaMask/api-specs/compare/v0.9.0...v0.9.1
 [0.9.0]: https://github.com/MetaMask/api-specs/compare/v0.8.4...v0.9.0
 [0.8.4]: https://github.com/MetaMask/api-specs/compare/v0.8.3...v0.8.4
 [0.8.3]: https://github.com/MetaMask/api-specs/compare/v0.8.2...v0.8.3
