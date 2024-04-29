@@ -3,14 +3,7 @@ name: Publish Release
 on:
   push:
     branches: [main]
-  workflow_call:
-    secrets:
-      NPM_TOKEN:
-        required: true
-      SLACK_WEBHOOK_URL:
-        required: true
-      PUBLISH_DOCS_TOKEN:
-        required: true
+
 jobs:
   is-release:
     # Filtering by `push` events ensures that we only release from the `main` branch, which is a
