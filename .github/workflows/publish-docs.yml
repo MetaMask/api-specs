@@ -28,10 +28,13 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
-      - name: Install npm dependencies
-        run: yarn --immutable
-      - name: Run build script
-        run: yarn build:docs
+      - uses: actions/cache@v3
+        id: restore-build
+        with:
+          path: |
+            ./dist
+            ./node_modules/.yarn-state.yml
+          key: ${{ github.sha }}
       - name: Deploy to `${{ inputs.destination_dir }}` directory of `gh-pages` branch
         uses: peaceiris/actions-gh-pages@de7ea6f8efb354206b205ef54722213d99067935
         with:
