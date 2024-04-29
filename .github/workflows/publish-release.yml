@@ -84,7 +84,7 @@ jobs:
             ./node_modules/.yarn-state.yml
           key: ${{ github.sha }}
       - name: Publish
-        uses: MetaMask/action-npm-publish@v5
+        uses: MetaMask/action-npm-publish@v1
         with:
           # This `NPM_TOKEN` needs to be manually set per-repository.
           # Look in the repository settings under "Environments", and set this token in the `npm-publish` environment.
