@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.3]
+### Uncategorized
+- Fixed npm publish via downgrading action ([#229](https://github.com/MetaMask/api-specs/pull/229))
+- Fixed prepack script ([#228](https://github.com/MetaMask/api-specs/pull/228))
+
 ## [0.9.2]
 ### Uncategorized
 - Fixed publish release to be on main branch instead ([#226](https://github.com/MetaMask/api-specs/pull/226))
@@ -187,7 +192,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.9.2...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.9.3...HEAD
+[0.9.3]: https://github.com/MetaMask/api-specs/compare/v0.9.2...v0.9.3
 [0.9.2]: https://github.com/MetaMask/api-specs/compare/v0.9.1...v0.9.2
 [0.9.1]: https://github.com/MetaMask/api-specs/compare/v0.9.0...v0.9.1
 [0.9.0]: https://github.com/MetaMask/api-specs/compare/v0.8.4...v0.9.0
