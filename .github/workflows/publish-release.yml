@@ -21,8 +21,6 @@ jobs:
   publish-release:
     permissions:
       contents: write
-    # The second argument to startsWith() must match the release-branch-prefix
-    # input to this Action. Here, we use the default, "release/".
     needs: is-release
     if: needs.is-release.outputs.IS_RELEASE == 'true'
     runs-on: ubuntu-latest
