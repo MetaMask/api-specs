@@ -142,9 +142,9 @@ methods:
         result:
           name: wallet_switchEthereumChainExampleResult
           value: 'null'
-  - tags:
+  - name: wallet_getPermissions
+    tags:
       - $ref: '#/components/tags/MetaMask'
-    name: wallet_getPermissions
     summary: Gets the user's permissions.
     description: >-
       Gets the user's permissions. Introduced by
