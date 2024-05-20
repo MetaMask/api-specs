@@ -998,7 +998,6 @@ methods:
                 type: object
                 required:
                   - tokenAddress
-                  - value
                 properties:
                   tokenAddress:
                     type: string
@@ -1006,7 +1005,8 @@ methods:
                     $ref: '#/components/schemas/address'
                   value:
                     type: string
-                    description: The amount of the source token to be swapped, in wei, as a hexadecimal string.
+                    description: (Optional) The amount of the source token to be swapped, in wei, as a hexadecimal string, defaults to 0.
+                    nullable: true
             to:
               type: object
               required:
@@ -1020,10 +1020,6 @@ methods:
               type: string
               description: The Ethereum address of the user performing the swap.
               $ref: '#/components/schemas/address'
-            referralCode:
-              type: string
-              description: (Optional) A referral code to drive adoption of the JSON RPC method across the builders community.
-              nullable: true
             sendTo:
               type: string
               description: (Optional) Allows integration with Swap's `send to` feature.
@@ -1035,9 +1031,19 @@ methods:
         type: boolean
     errors:
       - code: -32602
-        message: 'Invalid parameters: must specify from, to, and userAddress.'
+        message: "This address does not exist"
+      - code: -32004
+        message: "Currently we do not support multiple tokens swap"
+      - code: -32602
+        message: ""from" is not defined"
+      - code: -32602
+        message: ""to" is not defined"
+      - code: -32602
+        message: "token_address property of from is not defined"
+      - code: -32602
+        message: "token_address property of to is not defined"
       - code: -32000
-        message: 'Swap is not active or not possible on this chain.'
+        message: "Swap is not available on this chain {{chainName}}"
     examples:
       - name: wallet_swapAsset example
         params:
