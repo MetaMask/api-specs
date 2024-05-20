@@ -1035,9 +1035,9 @@ methods:
       - code: -32004
         message: "Currently we do not support multiple tokens swap"
       - code: -32602
-        message: ""from" is not defined"
+        message: "from is not defined"
       - code: -32602
-        message: ""to" is not defined"
+        message: "to is not defined"
       - code: -32602
         message: "token_address property of from is not defined"
       - code: -32602
