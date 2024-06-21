@@ -1001,8 +1001,8 @@ methods:
                 properties:
                   address:
                     type: string
-                    description: The address of the source token.
-                    $ref: '#/components/schemas/address'
+                    description: The CAIP-10 formatted address of the source token.
+                    $ref: '#/components/schemas/Caip10Address'
                   value:
                     type: string
                     description: (Optional) The amount of the source token to be swapped, in wei, as a hexadecimal string, defaults to 0.
@@ -1014,12 +1014,12 @@ methods:
               properties:
                 address:
                   type: string
-                  description: The address of the destination token.
-                  $ref: '#/components/schemas/address'
+                  description: The CAIP-10 formatted address of the destination token.
+                  $ref: '#/components/schemas/Caip10Address'
             userAddress:
               type: string
-              description: The Ethereum address of the user performing the swap.
-              $ref: '#/components/schemas/address'
+              description: The CAIP-10 formatted address of the user performing the swap.
+              $ref: '#/components/schemas/Caip10Address'
     result:
       name: SwapAssetResult
       description: A boolean indicating if the swap was initiated successfully.
@@ -1040,6 +1040,8 @@ methods:
         message: "toToken address property of to is not defined"
       - code: -32000
         message: "Swap is not available on this chain {{chainName}}"
+      - code: -32602
+        message: "Cross-chain swaps are currently not supported. Both fromToken and toToken must be on the same blockchain."
     examples:
       - name: wallet_swapAsset example
         params:
@@ -1259,6 +1261,10 @@ components:
             blocked:
               description: Indicates whether the Snap is blocked.
               type: boolean
+    Caip10Address:
+      type: string
+      pattern: '^[-a-zA-Z0-9]{3,8}:[-_a-zA-Z0-9]{1,32}:[-.%a-zA-Z0-9]{1,128}$'
+      description: A CAIP-10 formatted address, which includes the CAIP-2 blockchain identifier, a colon (:), and the account address specific to that blockchain. This format is used for specifying token and user addresses in a blockchain-agnostic manner.
   tags:
     MetaMask:
       name: MetaMask
