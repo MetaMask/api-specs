@@ -1040,7 +1040,7 @@ methods:
         message: "toToken address property of to is not defined"
       - code: -32000
         message: "Swap is not available on this chain {{chainName}}"
-      - code: -32602
+      - code: -32004
         message: "Cross-chain swaps are currently not supported. Both fromToken and toToken must be on the same blockchain."
     examples:
       - name: wallet_swapAsset example
