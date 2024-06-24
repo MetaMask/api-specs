@@ -1042,6 +1042,12 @@ methods:
         message: "Swap is not available on this chain {{chainName}}"
       - code: -32004
         message: "Cross-chain swaps are currently not supported. Both fromToken and toToken must be on the same blockchain."
+      - code: -32602
+        message: "Invalid caip-10 user address"
+      - code: -32602
+        message: "Invalid caip-10 fromToken address"
+      - code: -32602
+        message: "Invalid caip-10 toToken address"
     examples:
       - name: wallet_swapAsset example
         params:
