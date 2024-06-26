@@ -1,0 +1,183 @@
+openrpc: 1.2.4
+info:
+  title: MetaMask MultiChain API
+  version: 1.0.0
+  description: >-
+    This provides the specs for the MultiChain API Layer for the MetaMask API
+methods:
+  - name: "provider_authorize"
+    paramStructure: "by-name"
+    params:
+      - name: "requiredScopes"
+        description: "Scopes that the wallet must support in order to be used with this provider."
+        schema:
+          type: "object"
+          patternProperties:
+            "[-a-z0-9]{3,8}(:[-_a-zA-Z0-9]{1,32})?":
+              $ref: "#/components/schemas/Scope"
+      - name: "optionalScopes"
+        description: "Scopes that the wallet may support in order to be used with this provider."
+        schema:
+          type: "object"
+          patternProperties:
+            "[-a-z0-9]{3,8}(:[-_a-zA-Z0-9]{1,32})?":
+              $ref: "#/components/schemas/Scope"
+      - name: "sessionProperties"
+        description: "Properties that the wallet may use to determine if the session is valid."
+        schema:
+          type: "object"
+          properties:
+            expiry:
+              type: "string"
+              format: "date-time"
+    result:
+      name: "provider_authorizeResult"
+      schema:
+        type: "object"
+        properties:
+          sessionId:
+            description: "A unique identifier for the session. Defined by [CAIP-171](https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-171.md)"
+            type: "string"
+          sessionScopes:
+            type: "object"
+            patternProperties:
+              "[-a-z0-9]{3,8}:[-_a-zA-Z0-9]{1,32}":
+                $ref: "#/components/schemas/Scope"
+          sessionProperties:
+            type: "object"
+            properties:
+              expiry:
+                type: "string"
+                format: "date-time"
+    examples:
+      - name: "provider_authorizeExample"
+        description: "Example of a provider authorization request."
+        params:
+          - name: "requiredScopes"
+            value:
+              eip155:
+                chains:
+                  - "eip155:1"
+                  - "eip155:137"
+                methods:
+                  - "eth_sendTransaction"
+                  - "eth_getBalance"
+                  - "personal_sign"
+                notifications:
+                  - "accountsChanged"
+                  - "chainChanged"
+              "eip155:10":
+                methods:
+                  - "eth_getBalance"
+                notifications:
+                  - "accountsChanged"
+                  - "chainChanged"
+          - name: "optionalScopes"
+            value:
+              "eip155:42161":
+                methods:
+                  - "eth_sendTransaction"
+                  - "eth_getBalance"
+                  - "personal_sign"
+                notifications:
+                  - "accountsChanged"
+                  - "chainChanged"
+          - name: "sessionProperties"
+            value:
+              expiry: "2022-12-24T17:07:31+00:00"
+        result:
+          name: "provider_authorizationResultExample"
+          value:
+            sessionId: "0xdeadbeef"
+            sessionScopes:
+              eip155:
+                chains:
+                  - "eip155:1"
+                  - "eip155:137"
+                methods:
+                  - "eth_sendTransaction"
+                  - "eth_getBalance"
+                  - "personal_sign"
+                notifications:
+                  - "accountsChanged"
+                  - "chainChanged"
+                accounts:
+                  - "eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb"
+                  - "eip155:137:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb"
+              "eip155:10":
+                methods:
+                  - "eth_getBalance"
+                notifications:
+                  - "accountsChanged"
+                  - "chainChanged"
+                accounts: []
+              "eip155:42161":
+                methods:
+                  - "personal_sign"
+                notifications:
+                  - "accountsChanged"
+                  - "chainChanged"
+                accounts:
+                  - "eip155:42161:0x0910e12C68d02B561a34569E1367c9AAb42bd810"
+              cosmos: {}
+              sessionProperties:
+                expiry: "2022-11-31T17:07:31+00:00"
+    errors:
+      - code: 5000
+        message: "User disapproved requested chains"
+      - code: 5001
+        message: "User disapproved requested methods"
+      - code: 5002
+        message: "User disapproved requested notifications"
+      - code: 5100
+        message: "Requested chains are not supported"
+      - code: 5101
+        message: "Requested methods are not supported"
+      - code: 5102
+        message: "Requested notifications are not supported"
+      - code: 5103
+        message: "Scope/chain mismatch"
+      - code: 5104
+        message: "ChainId defined in two different scopes"
+      - code: 5200
+        message: "Invalid Session Properties requested"
+      - code: 5201
+        message: "Session Properties can only be optional"
+components:
+  schemas:
+    Scope:
+      type: "object"
+      title: "Scope"
+      description: "Scope for a multi-chain connection"
+      additionalProperties: true
+      required:
+        - notifications
+        - methods
+      properties:
+        chains:
+          type: "array"
+          items:
+            type: "string"
+            pattern: "[-a-z0-9]{3,8}(:[-_a-zA-Z0-9]{1,32})?"
+        methods:
+          description: "Methods that the wallet must support in order to be used with this provider."
+          type: "array"
+          items:
+            type: "string"
+        notifications:
+          description: "notifications that the wallet must support in order to be used with this provider."
+          type: "array"
+          items:
+            type: "string"
+        rpcEndpoints:
+          description: "JSON-RPC endpoints for this namespace."
+          type: "array"
+          items:
+            type: "string"
+            format: "uri"
+        rpcDocuments:
+          type: "array"
+          description: "OpenRPC documents that define RPC methods in which to anchor the methods authorized in a CAIP-25 interaction."
+          items:
+            type: "string"
+            format: "uri"
