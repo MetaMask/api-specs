@@ -31,7 +31,7 @@ methods:
               type: "string"
               format: "date-time"
     result:
-      name: "provider_authorizationResult"
+      name: "provider_authorizeResult"
       schema:
         type: "object"
         properties:
@@ -50,7 +50,7 @@ methods:
                 type: "string"
                 format: "date-time"
     examples:
-      - name: "provider_authorizationExample"
+      - name: "provider_authorizeExample"
         description: "Example of a provider authorization request."
         params:
           - name: "requiredScopes"
@@ -150,6 +150,9 @@ components:
       title: "Scope"
       description: "Scope for a multi-chain connection"
       additionalProperties: true
+      required:
+        - notifications
+        - methods
       properties:
         chains:
           type: "array"
