@@ -1,9 +1,9 @@
 openrpc: 1.2.4
 info:
-  title: MetaMask MultiChain Transport
+  title: MetaMask MultiChain API
   version: 1.0.0
   description: >-
-    This provides the specs for the MultiChain API Transport Layer for the MetaMask API
+    This provides the specs for the MultiChain API Layer for the MetaMask API
 methods:
   - name: "provider_authorize"
     paramStructure: "by-name"
