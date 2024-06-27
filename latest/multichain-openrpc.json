@@ -7,6 +7,72 @@
     },
     "methods": [
         {
+            "name": "provider_request",
+            "paramStructure": "by-name",
+            "params": [
+                {
+                    "name": "scope",
+                    "description": "a valid `scopeObject` that has been previously authorized via `provider_authorize`",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/Scope"
+                    }
+                },
+                {
+                    "name": "request",
+                    "description": "an object containing a JSON-RPC request with `method` and `params`",
+                    "deprecated": false,
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "method": {
+                                "type": "string"
+                            },
+                            "params": true
+                        }
+                    }
+                },
+                {
+                    "name": "sessionId",
+                    "description": "[CAIP-171](https://chainagnostic.org/CAIPs/caip-171) `SessionId` referencing a known, open session",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "result": {
+                "name": "provider_requestResult",
+                "schema": true
+            },
+            "examples": [
+                {
+                    "name": "provider_requestExample",
+                    "params": [
+                        {
+                            "name": "scope",
+                            "value": "eip155:1"
+                        },
+                        {
+                            "name": "request",
+                            "value": {
+                                "method": "eth_getBalance",
+                                "params": []
+                            }
+                        },
+                        {
+                            "name": "sessionId",
+                            "value": "0xdeadbeef"
+                        }
+                    ],
+                    "result": {
+                        "name": "provider_requestResult",
+                        "value": "0x1"
+                    }
+                }
+            ]
+        },
+        {
             "name": "provider_authorize",
             "paramStructure": "by-name",
             "params": [
@@ -235,6 +301,10 @@
     ],
     "components": {
         "schemas": {
+            "ScopeString": {
+                "type": "string",
+                "pattern": "[-a-z0-9]{3,8}(:[-_a-zA-Z0-9]{1,32})?"
+            },
             "Scope": {
                 "type": "object",
                 "title": "Scope",
@@ -248,8 +318,7 @@
                     "chains": {
                         "type": "array",
                         "items": {
-                            "type": "string",
-                            "pattern": "[-a-z0-9]{3,8}(:[-_a-zA-Z0-9]{1,32})?"
+                            "$ref": "#/components/schemas/ScopeString"
                         }
                     },
                     "methods": {
@@ -260,7 +329,7 @@
                         }
                     },
                     "notifications": {
-                        "description": "notifications that the wallet must support in order to be used with this provider.",
+                        "description": "Notifications that the wallet must support in order to be used with this provider.",
                         "type": "array",
                         "items": {
                             "type": "string"
