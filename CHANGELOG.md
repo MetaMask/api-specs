@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.2]
+### Uncategorized
+- fix: change scope to scope string ([#240](https://github.com/MetaMask/api-specs/pull/240))
+
 ## [0.10.1]
 ### Uncategorized
 - fix: add caip-27 + fix strings in yaml for multichain ([#238](https://github.com/MetaMask/api-specs/pull/238))
@@ -200,7 +204,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.10.1...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.10.2...HEAD
+[0.10.2]: https://github.com/MetaMask/api-specs/compare/v0.10.1...v0.10.2
 [0.10.1]: https://github.com/MetaMask/api-specs/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/MetaMask/api-specs/compare/v0.9.3...v0.10.0
 [0.9.3]: https://github.com/MetaMask/api-specs/compare/v0.9.2...v0.9.3
