@@ -98,7 +98,7 @@ methods:
           - name: requiredScopes
             value:
               eip155:
-                chains:
+                scopes:
                   - eip155:1
                   - eip155:137
                 methods:
@@ -133,7 +133,7 @@ methods:
             sessionId: "0xdeadbeef"
             sessionScopes:
               eip155:
-                chains:
+                scopes:
                   - eip155:1
                   - eip155:137
                 methods:
@@ -199,7 +199,7 @@ components:
         - notifications
         - methods
       properties:
-        chains:
+        scopes:
           type: array
           items:
             $ref: "#/components/schemas/ScopeString"
