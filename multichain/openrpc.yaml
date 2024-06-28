@@ -9,10 +9,10 @@ methods:
     paramStructure: by-name
     params:
       - name: scope
-        description: a valid `scopeObject` that has been previously authorized via `provider_authorize`
+        description: a valid `scope` string that has been previously authorized via `provider_authorize`
         required: true
         schema:
-          $ref: "#/components/schemas/Scope"
+          $ref: "#/components/schemas/ScopeString"
       - name: request
         description: an object containing a JSON-RPC request with `method` and `params`
         deprecated: false
