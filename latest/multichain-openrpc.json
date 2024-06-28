@@ -12,10 +12,10 @@
             "params": [
                 {
                     "name": "scope",
-                    "description": "a valid `scopeObject` that has been previously authorized via `provider_authorize`",
+                    "description": "a valid `scope` string that has been previously authorized via `provider_authorize`",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/Scope"
+                        "$ref": "#/components/schemas/ScopeString"
                     }
                 },
                 {
@@ -152,7 +152,7 @@
                             "name": "requiredScopes",
                             "value": {
                                 "eip155": {
-                                    "chains": [
+                                    "scopes": [
                                         "eip155:1",
                                         "eip155:137"
                                     ],
@@ -206,7 +206,7 @@
                             "sessionId": "0xdeadbeef",
                             "sessionScopes": {
                                 "eip155": {
-                                    "chains": [
+                                    "scopes": [
                                         "eip155:1",
                                         "eip155:137"
                                     ],
@@ -315,7 +315,7 @@
                     "methods"
                 ],
                 "properties": {
-                    "chains": {
+                    "scopes": {
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/ScopeString"
