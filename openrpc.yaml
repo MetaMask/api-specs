@@ -1110,6 +1110,10 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Permission'
+    Caip10Address:
+      title: Caip10Address
+      type: string
+      description: CAIP-10 defines a way to identify an account/address in any blockchain.
   tags:
     MetaMask:
       name: MetaMask
