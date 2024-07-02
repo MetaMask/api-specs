@@ -22,12 +22,9 @@ info:
     MetaMask, and may or may not be supported by other wallets.
 
     - **Restricted** - These methods are restricted and require requesting
-    permission using
-    [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions)
+    permission using [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions).
 
     - **Mobile** - These methods are only available on MetaMask Mobile.
-
-    - **Snaps** - These methods are related to interacting with [Snaps](/snaps).
 
     - **Experimental** - These methods are experimental and may be changed in
     the future.
@@ -94,13 +91,13 @@ methods:
               chainId: '0x64'
               chainName: Gnosis
               rpcUrls:
-                - 'https://rpc.ankr.com/gnosis'
+                - 'https://rpc.gnosischain.com'
               iconUrls:
                 - 'https://xdaichain.com/fake/example/url/xdai.svg'
                 - 'https://xdaichain.com/fake/example/url/xdai.png'
               nativeCurrency:
-                name: xDAI
-                symbol: xDAI
+                name: XDAI
+                symbol: XDAI
                 decimals: 18
               blockExplorerUrls:
                 - 'https://blockscout.com/poa/xdai/'
@@ -185,31 +182,6 @@ methods:
           name: permissionList
           value:
             eth_accounts: {}
-      - name: >-
-          wallet_requestPermissions example of requesting the wallet_snap
-          permission
-        params:
-          - name: requestPermissionObject
-            value:
-              wallet_snap:
-                caveats:
-                  - type: snapIds
-                    value:
-                      'npm:@metamask/example-snap':
-                        version: 1.0.0
-                      'npm:fooSnap':
-                        version: 1.2.1
-        result:
-          name: permissionList
-          value:
-            wallet_snap:
-              caveats:
-                - type: snapIds
-                  value:
-                    'npm:@metamask/example-snap':
-                      version: 1.0.0
-                    'npm:fooSnap':
-                      version: 1.2.1
     errors:
       - $ref: '#/components/errors/UserRejected'
   - name: wallet_revokePermissions
@@ -218,7 +190,7 @@ methods:
       - $ref: '#/components/tags/Experimental'
     summary: Revokes the current dapp permissions.
     description: >-
-      Revokes previously granted permissions for the current dapp identified by
+      Revokes previously granted permissions for the current dapp identified by its
       origin. This method is specified by
       [MIP-2](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md)
       and is only available for the browser extension.
@@ -252,9 +224,10 @@ methods:
       Presents a plain text signature challenge to the user and returns the
       signed response. Equivalent to `eth_sign` on some other wallets, and
       prepends a safe prefix to the signed message to prevent the challenge
-      tricking users into signing a financial transaction. This method requires
-      that the user has granted permission to interact with their account first,
-      so make sure to call `eth_requestAccounts` first.
+      tricking users into signing a financial transaction.
+      This method requires that the user has granted permission to interact
+      with their account first, so make sure to call `eth_requestAccounts` (recommended)
+      or `wallet_requestPermissions` first.
     deprecated: false
     params:
       - name: Challenge
@@ -277,6 +250,16 @@ methods:
       description: A hex-encoded 129-byte array starting with `0x`.
       schema:
         $ref: '#/components/schemas/bytes'
+    examples:
+      - name: personal_sign example
+        params:
+          - name: options
+            value:
+              challenge: '0x506c65617365207369676e2074686973206d65737361676520746f20636f6e6669726d20796f7572206964656e746974792e'
+              address: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+        result:
+          name: personal_signExampleResult
+          value: '0x43d7215ebe96c09a5adac69fc76dea5647286b501954ea273e417cf65e6c80e1db4891826375a7de02467a3e01caf125f64c851a8e9ee9467fd6f7e83523b2115bed8e79d527a85e28a36807d79b85fc551b5c15c1ead2e43456c31f565219203db2aed86cb3601b33ec3b410836d4be7718c6148dc9ac82ecc0a04c5edecd8914'
   - name: eth_signTypedData_v4
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -286,6 +269,8 @@ methods:
       Presents a data message for the user to sign in a structured and readable
       format and returns the signed response. Introduced by
       [EIP-712](https://eips.ethereum.org/EIPS/eip-712).
+      This method requires that the user has granted permission to interact with their account first,
+      so make sure to call `eth_requestAccounts` (recommended) or `wallet_requestPermissions` first.
     params:
       - name: Address
         required: true
@@ -518,184 +503,6 @@ methods:
       schema:
         type: string
         title: ScanQRCodeResult
-  - name: wallet_getSnaps
-    tags:
-      - $ref: '#/components/tags/MetaMask'
-      - $ref: '#/components/tags/Snaps'
-    summary: Gets the dapp's permitted Snaps.
-    description: Returns the IDs of the dapp's permitted Snaps and some relevant metadata.
-    params: []
-    result:
-      name: GetSnapsResult
-      description: An object mapping the IDs of permitted Snaps to their metadata.
-      schema:
-        $ref: '#/components/schemas/SnapsMap'
-    examples:
-      - name: wallet_getSnaps example
-        params: []
-        result:
-          name: wallet_getSnapsResult
-          value:
-            'npm:@metamask/example-snap':
-              version: 1.0.0
-              id: 'npm:@metamask/example-snap'
-              enabled: true
-              blocked: false
-  - name: wallet_requestSnaps
-    tags:
-      - $ref: '#/components/tags/MetaMask'
-      - $ref: '#/components/tags/Snaps'
-    summary: Requests permission to communicate with Snaps.
-    description: >-
-      Requests permission for a dapp to communicate with the specified Snaps and
-      attempts to install them if they're not already installed. If the
-      installation of any Snap fails, returns the error that caused the failure.
-    params:
-      - name: RequestSnapsParameter
-        description: >-
-          An object mapping the IDs of requested Snaps to optional SemVer
-          version ranges.
-        required: true
-        schema:
-          title: RequestSnapsParameter
-          type: object
-          properties:
-            id:
-              type: object
-              properties:
-                version:
-                  description: >-
-                    (Optional) A SemVer version range for the Snap. This uses
-                    the same semantics as npm package.json ranges. If specified,
-                    MetaMask attempts to install a version of the Snap that
-                    satisfies the range. If a compatible version of the Snap is
-                    already installed, the request succeeds. If an incompatible
-                    version is installed, MetaMask attempts to update the Snap
-                    to the latest version that satisfies the range. The request
-                    succeeds if the Snap is succesfully installed.
-                  type: string
-    result:
-      name: RequestSnapsResult
-      description: An object mapping the IDs of installed Snaps to their metadata.
-      schema:
-        $ref: '#/components/schemas/SnapsMap'
-    examples:
-      - name: wallet_requestSnaps example
-        params:
-          - name: RequestSnapsParameter
-            value:
-              'npm:@metamask/example-snap': {}
-              'npm:fooSnap':
-                version: ^1.0.2
-        result:
-          name: wallet_requestSnapsResult
-          value:
-            'npm:@metamask/example-snap':
-              version: 1.0.0
-              id: 'npm:@metamask/example-snap'
-              enabled: true
-              blocked: false
-            'npm:fooSnap':
-              version: 1.0.5
-              id: 'npm:fooSnap'
-              enabled: true
-              blocked: false
-  - name: wallet_snap
-    tags:
-      - $ref: '#/components/tags/MetaMask'
-      - $ref: '#/components/tags/Snaps'
-      - $ref: '#/components/tags/Restricted'
-    summary: Calls a Snap method.
-    description: >-
-      Calls the specified JSON-RPC API method of the specified Snap. The Snap
-      must be installed and the dapp must have permission to communicate with
-      the Snap, or the request is rejected. The dapp can install the Snap and
-      request permission to communicate with it using `wallet_requestSnaps`.
-
-       This method is synonymous to `wallet_invokeSnap`.
-    params:
-      - name: SnapParameter
-        required: true
-        schema:
-          title: SnapParameter
-          type: object
-          properties:
-            snapId:
-              description: The ID of the Snap to invoke.
-              type: string
-            request:
-              description: The JSON-RPC request object to send to the invoked Snap.
-              type: object
-              properties:
-                method:
-                  type: string
-                params:
-                  type: object
-    result:
-      name: SnapResult
-      description: Result of the Snap method call.
-      schema:
-        title: SnapResult
-        type: object
-    examples:
-      - name: wallet_snap example
-        params:
-          - name: SnapParameter
-            value:
-              snapId: 'npm:@metamask/example-snap'
-              request:
-                method: hello
-        result:
-          name: wallet_snapResult
-          value: {}
-  - name: wallet_invokeSnap
-    tags:
-      - $ref: '#/components/tags/MetaMask'
-      - $ref: '#/components/tags/Snaps'
-      - $ref: '#/components/tags/Restricted'
-    summary: Calls a Snap method.
-    description: >-
-      Calls the specified JSON-RPC API method of the specified Snap. The Snap
-      must be installed and the dapp must have permission to communicate with
-      the Snap, or the request is rejected. The dapp can install the Snap and
-      request permission to communicate with it using `wallet_requestSnaps`.
-
-       This method is synonymous to `wallet_snap`.
-    params:
-      - name: InvokeSnapParameter
-        required: true
-        schema:
-          title: InvokeSnapParameter
-          type: object
-          properties:
-            snapId:
-              description: The ID of the Snap to invoke.
-              type: string
-            request:
-              description: The JSON-RPC request object to send to the invoked Snap.
-              type: object
-              properties:
-                method:
-                  type: string
-                params:
-                  type: object
-    result:
-      name: InvokeSnapResult
-      description: Result of the Snap method call.
-      schema:
-        title: InvokeSnapResult
-        type: object
-    examples:
-      - name: wallet_invokeSnap example
-        params:
-          - name: InvokeSnapParameter
-            value:
-              snapId: 'npm:@metamask/example-snap'
-              request:
-                method: hello
-        result:
-          name: wallet_invokeSnapResult
-          value: {}
   - name: eth_requestAccounts
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -715,11 +522,20 @@ methods:
           $ref: '#/components/schemas/address'
     errors:
       - $ref: '#/components/errors/UserRejected'
+    examples:
+      - name: eth_requestAccounts example
+        params: []
+        result:
+          name: eth_requestAccountsExampleResult
+          value: '0xa77392123a1085f75e62eec7dea7e0e1e5142d5f'
   - name: eth_accounts
     tags:
       - $ref: '#/components/tags/MetaMask'
       - $ref: '#/components/tags/Restricted'
-    description: Returns a list of addresses for the accounts owned by the user.
+    description: >-
+      Returns a list of addresses for the accounts owned by the user.
+      This method requires calling `wallet_requestPermissions` for permission.
+      We recommend using `eth_requestAccounts`, which internally calls `wallet_requestPermission`.
     summary: Gets a list of addresses for the user's accounts.
     params: []
     result:
@@ -728,6 +544,12 @@ methods:
         type: array
         items:
           $ref: '#/components/schemas/address'
+    examples:
+      - name: eth_accounts example
+        params: []
+        result:
+          name: eth_accountsExampleResult
+          value: '0xa77392123a1085f75e62eec7dea7e0e1e5142d5f'
   - name: eth_sendTransaction
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -735,8 +557,8 @@ methods:
     description: >-
       Creates a new wallet confirmation to make an Ethereum transaction from the
       user's account. This method requires that the user has granted permission
-      to interact with their account first, so make sure to call
-      `eth_requestAccounts` or `wallet_requestPermissions` first.
+      to interact with their account first, so make sure to call `eth_requestAccounts` (recommended)
+      or `wallet_requestPermissions` first.
     summary: Initiates a new transaction.
     params:
       - name: Transaction
@@ -747,7 +569,7 @@ methods:
           title: Transaction
           description: >-
             The parameters to customize a transaction. If a `to` address is not
-            provided. It will be assumed that the transaction is a contract
+            provided, it will be assumed that the transaction is a contract
             creation transaction, and the `data` field of the transaction will
             be used as the contract initialization code. `gasPrice` cannot be
             used together with `maxPriorityFeePerGas` and `maxFeePerGas`.
@@ -801,6 +623,24 @@ methods:
       description: The transaction hash of the sent transaction.
       schema:
         $ref: '#/components/schemas/bytes32'
+    errors:
+      - code: 4100
+        message: >-
+          The requested account and/or method has not been authorized by the user.
+    examples:
+      - name: sendTransaction
+        params:
+          - name: transactionDetails
+            value:
+              to: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+              from: '0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF'
+              gas: '0x76c0'
+              value: '0x8ac7230489e80000'
+              data: '0x'
+              gasPrice: '0x4a817c800'
+        result:
+          name: eth_sendTransactionExampleResult
+          value: '0x4e306b5a5a37532e1734503f7d2427a86f2c992fbe471f5be403b9f734e667c8'
   - name: eth_decrypt
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -810,7 +650,9 @@ methods:
     description: |-
       This method is deprecated and may be removed in the future.
 
-       Requests that MetaMask decrypt the specified encrypted message. The message must have been encrypted using the public encryption key of the specified Ethereum address. Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.
+       Requests that MetaMask decrypt the specified encrypted message.
+       The message must have been encrypted using the public encryption key of the specified Ethereum address.
+       Returns a promise that resolves to the decrypted message, or rejects if the decryption attempt fails.
     params:
       - name: EncryptedMessage
         required: true
@@ -826,6 +668,20 @@ methods:
       name: PermissionsList
       schema:
         $ref: '#/components/schemas/PermissionsList'
+    errors:
+      - code: 4100
+        message: >-
+          The requested account and/or method has not been authorized by the user.
+    examples:
+      - name: decryptExample
+        params:
+          - name: decryptParameter
+            value:
+              - '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+              - '0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF'
+        result:
+          name: eth_decryptExampleResult
+          value: 'Hello, Ethereum!'
   - name: eth_getEncryptionPublicKey
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -835,7 +691,9 @@ methods:
     description: |-
       This method is deprecated and may be removed in the future.
 
-       Requests that the user share their public encryption key. Returns a public encryption key, or rejects if the user denies the request. The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.
+       Requests that the user share their public encryption key.
+       Returns a public encryption key, or rejects if the user denies the request.
+       The public key is computed from entropy associated with the specified user account, using the NaCl implementation of the `X25519_XSalsa20_Poly1305` algorithm.
     params:
       - name: Address
         required: true
@@ -846,6 +704,15 @@ methods:
       name: EncryptionKey
       schema:
         type: string
+    examples:
+      - name: eth_getEncryptionPublicKey
+        params:
+          - name: getEncryptionPublicKey
+            value:
+              - '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+        result:
+          name: eth_getEncryptionPublicKeyExampleResult
+          value: '0x04bfcab3b7ca7e8b3f3b62b2f7f77e9e4b68080bbf8f0f4a1c8f890864d2c7c1d3c45d8b2e3f5f1c27dfeea4c2f5733e90bfc7484e2a690aa9b8ac4559d2e6a8d7'
   - name: web3_clientVersion
     tags:
       - $ref: '#/components/tags/Ethereum'
@@ -1082,8 +949,8 @@ components:
               type: array
               description: >-
                 An array specifying one or more of the following domain
-                separator values: 1) `name` - The user-readable name of signing
-                domain, i.e., the name of the dapp or the protocol. 2) `version`
+                separator values: 1) `name` - The user-readable name of the signing
+                domain, that is, the name of the dapp or the protocol. 2) `version`
                 - The current major version of the signing domain. 3) `chainId`
                 - The chain ID of the network. 4) `verifyingContract` - The
                 address of the contract that will verify the signature. 5)
@@ -1139,8 +1006,8 @@ components:
         iconUrls:
           description: >-
             (Optional) One or more URLs pointing to reasonably sized images that
-            can be used to visually identify the chain. NOTE: MetaMask will not 
-            currently display these images. Values can still be included so 
+            can be used to visually identify the chain. NOTE: MetaMask will not
+            currently display these images. Values can still be included so
             that they are utilized if MetaMask incorporates them into the display
             of custom networks in the future.
           type: array
@@ -1171,7 +1038,7 @@ components:
       properties:
         decimals:
           description: A non-negative integer.
-          min: 0
+          minimum: 0
           type: integer
         name:
           description: A human-readable name.
@@ -1243,34 +1110,6 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Permission'
-    SnapsMap:
-      title: SnapsMap
-      type: object
-      properties:
-        id:
-          type: object
-          properties:
-            id:
-              description: The ID of the Snap.
-              type: string
-            initialPermissions:
-              description: >-
-                The initial permissions of the Snap, which will be requested
-                when the Snap is installed.
-              type: object
-            version:
-              description: The version of the Snap.
-              type: string
-            enabled:
-              description: Indicates whether the Snap is enabled.
-              type: boolean
-            blocked:
-              description: Indicates whether the Snap is blocked.
-              type: boolean
-    Caip10Address:
-      type: string
-      pattern: '^[-a-zA-Z0-9]{3,8}:[-_a-zA-Z0-9]{1,32}:[-.%a-zA-Z0-9]{1,128}$'
-      description: A CAIP-10 formatted address, which includes the CAIP-2 blockchain identifier, a colon (:), and the account address specific to that blockchain. This format is used for specifying token and user addresses in a blockchain-agnostic manner.
   tags:
     MetaMask:
       name: MetaMask
@@ -1284,9 +1123,6 @@ components:
     Mobile:
       name: Mobile
       description: Mobile-specific methods.
-    Snaps:
-      name: Snaps
-      description: Methods related to interacting with Snaps.
     Experimental:
       name: Experimental
       description: Experimental methods.

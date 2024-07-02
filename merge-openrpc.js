@@ -4,9 +4,10 @@ const mergeOpenRPC = require("./merge-utils");
 const yaml = require("js-yaml");
 
 const MetaMaskOpenRPC = yaml.load(fs.readFileSync(__dirname + "/openrpc.yaml", "utf8"));
+const TransportOpenRPC = yaml.load(fs.readFileSync(__dirname + "/multichain/openrpc.yaml", "utf8"));
 
 const getFilteredExecutionAPIs = () => {
-  return fetch("https://raw.githubusercontent.com/ethereum/execution-apis/assembled-spec/refs-openrpc.json")
+  return fetch("https://raw.githubusercontent.com/ethereum/execution-apis/59e6a6f9947859e8bb41bc63b248aa026b0781bd/refs-openrpc.json")
     .then(async (res) => {
       return filterExecutionAPIs(await res.json());
     });
@@ -32,6 +33,14 @@ getFilteredExecutionAPIs().then((EthereumOpenRPC) => {
       4
     )
   );
+  fs.writeFileSync(__dirname + "/src/build/multichain-openrpc.json",
+    JSON.stringify(
+      TransportOpenRPC,
+      null,
+      4
+    )
+  );
+
 });
 
 const unneeded = [

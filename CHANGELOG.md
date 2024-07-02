@@ -6,6 +6,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.2]
+### Uncategorized
+- fix: provider_authorize scopes ([#242](https://github.com/MetaMask/api-specs/pull/242))
+- fix: change scope to scope string ([#240](https://github.com/MetaMask/api-specs/pull/240))
+
+## [0.10.1]
+### Uncategorized
+- fix: add caip-27 + fix strings in yaml for multichain ([#238](https://github.com/MetaMask/api-specs/pull/238))
+
+## [0.10.0]
+### Uncategorized
+- Added Transport OpenRPC Document for the MultiChain API ([#236](https://github.com/MetaMask/api-specs/pull/236))
+
+## [0.9.3]
+### Uncategorized
+- Fixed npm publish via downgrading action ([#229](https://github.com/MetaMask/api-specs/pull/229))
+- Fixed prepack script ([#228](https://github.com/MetaMask/api-specs/pull/228))
+
+## [0.9.2]
+### Uncategorized
+- Fixed publish release to be on main branch instead ([#226](https://github.com/MetaMask/api-specs/pull/226))
+
+## [0.9.1]
+### Uncategorized
+- Add npm publish to gh actions workflow ([#224](https://github.com/MetaMask/api-specs/pull/224))
+
+## [0.9.0]
+### Uncategorized
+- Fixed execution-apis spec version to specific commit + added API Reference docs to README ([#222](https://github.com/MetaMask/api-specs/pull/222))
+- remove Snaps methods ([#218](https://github.com/MetaMask/api-specs/pull/218))
+
+## [0.8.4]
+### Uncategorized
+- Fix eth_requestAccounts example ([#219](https://github.com/MetaMask/api-specs/pull/219))
+
+## [0.8.3]
+### Uncategorized
+- Fixed eth_accounts example params ([#216](https://github.com/MetaMask/api-specs/pull/216))
+
+## [0.8.2]
+### Uncategorized
+- small typo correction ([#213](https://github.com/MetaMask/api-specs/pull/213))
+- remove files throwing erros ([#211](https://github.com/MetaMask/api-specs/pull/211))
+
+## [0.8.1]
+### Uncategorized
+- Convert native currency decimal properties non-negative min property to minimum ([#200](https://github.com/MetaMask/api-specs/pull/200))
+- Add examples  ([#207](https://github.com/MetaMask/api-specs/pull/207))
+- Update restricted text ([#202](https://github.com/MetaMask/api-specs/pull/202))
+
 ## [0.8.0]
 ### Uncategorized
 - Update method tags ([#195](https://github.com/MetaMask/api-specs/pull/195))
@@ -155,7 +205,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.10.2...HEAD
+[0.10.2]: https://github.com/MetaMask/api-specs/compare/v0.10.1...v0.10.2
+[0.10.1]: https://github.com/MetaMask/api-specs/compare/v0.10.0...v0.10.1
+[0.10.0]: https://github.com/MetaMask/api-specs/compare/v0.9.3...v0.10.0
+[0.9.3]: https://github.com/MetaMask/api-specs/compare/v0.9.2...v0.9.3
+[0.9.2]: https://github.com/MetaMask/api-specs/compare/v0.9.1...v0.9.2
+[0.9.1]: https://github.com/MetaMask/api-specs/compare/v0.9.0...v0.9.1
+[0.9.0]: https://github.com/MetaMask/api-specs/compare/v0.8.4...v0.9.0
+[0.8.4]: https://github.com/MetaMask/api-specs/compare/v0.8.3...v0.8.4
+[0.8.3]: https://github.com/MetaMask/api-specs/compare/v0.8.2...v0.8.3
+[0.8.2]: https://github.com/MetaMask/api-specs/compare/v0.8.1...v0.8.2
+[0.8.1]: https://github.com/MetaMask/api-specs/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/MetaMask/api-specs/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/MetaMask/api-specs/compare/v0.6.2...v0.7.0
 [0.6.2]: https://github.com/MetaMask/api-specs/compare/v0.6.1...v0.6.2
