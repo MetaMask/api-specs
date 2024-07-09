@@ -253,10 +253,10 @@ methods:
     examples:
       - name: personal_sign example
         params:
-          - name: options
-            value:
-              challenge: '0x506c65617365207369676e2074686973206d65737361676520746f20636f6e6669726d20796f7572206964656e746974792e'
-              address: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+          - name: Challenge
+            value: '0x506c65617365207369676e2074686973206d65737361676520746f20636f6e6669726d20796f7572206964656e746974792e'
+          - name: Address
+            value: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
         result:
           name: personal_signExampleResult
           value: '0x43d7215ebe96c09a5adac69fc76dea5647286b501954ea273e417cf65e6c80e1db4891826375a7de02467a3e01caf125f64c851a8e9ee9467fd6f7e83523b2115bed8e79d527a85e28a36807d79b85fc551b5c15c1ead2e43456c31f565219203db2aed86cb3601b33ec3b410836d4be7718c6148dc9ac82ecc0a04c5edecd8914'
@@ -630,7 +630,7 @@ methods:
     examples:
       - name: sendTransaction
         params:
-          - name: transactionDetails
+          - name: Transaction
             value:
               to: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
               from: '0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF'
@@ -675,10 +675,8 @@ methods:
     examples:
       - name: decryptExample
         params:
-          - name: decryptParameter
-            value:
-              - '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
-              - '0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF'
+          - name: Address
+            value: '0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF'
         result:
           name: eth_decryptExampleResult
           value: 'Hello, Ethereum!'
@@ -707,9 +705,8 @@ methods:
     examples:
       - name: eth_getEncryptionPublicKey
         params:
-          - name: getEncryptionPublicKey
-            value:
-              - '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+          - name: Address
+            value: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
         result:
           name: eth_getEncryptionPublicKeyExampleResult
           value: '0x04bfcab3b7ca7e8b3f3b62b2f7f77e9e4b68080bbf8f0f4a1c8f890864d2c7c1d3c45d8b2e3f5f1c27dfeea4c2f5733e90bfc7484e2a690aa9b8ac4559d2e6a8d7'
