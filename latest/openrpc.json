@@ -147,12 +147,12 @@
             ]
         },
         {
+            "name": "wallet_getPermissions",
             "tags": [
                 {
                     "$ref": "#/components/tags/MetaMask"
                 }
             ],
-            "name": "wallet_getPermissions",
             "summary": "Gets the user's permissions.",
             "description": "Gets the user's permissions. Introduced by [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255).",
             "params": [],
@@ -292,7 +292,7 @@
             ],
             "result": {
                 "name": "Signature",
-                "description": "A hex-encoded 129-byte array starting with `0x`.",
+                "description": "A hex-encoded 65-byte array starting with `0x`.",
                 "schema": {
                     "$ref": "#/components/schemas/bytes"
                 }
@@ -302,11 +302,12 @@
                     "name": "personal_sign example",
                     "params": [
                         {
-                            "name": "options",
-                            "value": {
-                                "challenge": "0x506c65617365207369676e2074686973206d65737361676520746f20636f6e6669726d20796f7572206964656e746974792e",
-                                "address": "0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7"
-                            }
+                            "name": "Challenge",
+                            "value": "0x506c65617365207369676e2074686973206d65737361676520746f20636f6e6669726d20796f7572206964656e746974792e"
+                        },
+                        {
+                            "name": "Address",
+                            "value": "0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7"
                         }
                     ],
                     "result": {
@@ -828,7 +829,7 @@
                     "name": "sendTransaction",
                     "params": [
                         {
-                            "name": "transactionDetails",
+                            "name": "Transaction",
                             "value": {
                                 "to": "0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7",
                                 "from": "0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF",
@@ -896,11 +897,8 @@
                     "name": "decryptExample",
                     "params": [
                         {
-                            "name": "decryptParameter",
-                            "value": [
-                                "0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7",
-                                "0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF"
-                            ]
+                            "name": "Address",
+                            "value": "0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF"
                         }
                     ],
                     "result": {
@@ -946,10 +944,8 @@
                     "name": "eth_getEncryptionPublicKey",
                     "params": [
                         {
-                            "name": "getEncryptionPublicKey",
-                            "value": [
-                                "0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7"
-                            ]
+                            "name": "Address",
+                            "value": "0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7"
                         }
                     ],
                     "result": {
