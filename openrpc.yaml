@@ -247,7 +247,7 @@ methods:
           $ref: '#/components/schemas/address'
     result:
       name: Signature
-      description: A hex-encoded 129-byte array starting with `0x`.
+      description: A hex-encoded 65-byte array starting with `0x`.
       schema:
         $ref: '#/components/schemas/bytes'
     examples:
