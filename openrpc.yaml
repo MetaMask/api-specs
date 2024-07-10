@@ -488,10 +488,10 @@ methods:
       - name: regex
         required: false
         description: >-
-          An array containing a regular expression (regex) string for matching
-          arbitrary QR code strings.
+          A regular expression (regex) string for matching arbitrary QR code
+          strings.
         schema:
-          type: array
+          type: string
           title: regex
     result:
       name: ScanQRCodeResult
@@ -675,8 +675,10 @@ methods:
     examples:
       - name: decryptExample
         params:
+          - name: EncryptedMessage
+            value: '0x7b2276657273696f6e223a227832353531392d7873616c736132302d706f6c7931333035222c226e6f6e6365223a2243533967507076467071765358704655416679726a7179774e35302b7a747766222c22657068656d5075626c69634b6579223a224372774b61456d2f4b356d6d714239764c376f5872636d6441417757764479324f784c3333527135576e553d222c2263697068657274657874223a2248347a65336e7177572b753174663956343945506167454e343872774f766b6952676244566e47587a38493d227d'
           - name: Address
-            value: '0xDeaDbeefdEAdbeefdEadbEEFdeadbeefDEADbEEF'
+            value: '0xD1F5279BE4B4dD94133A23deE1B23F5bfC0Db1d0'
         result:
           name: eth_decryptExampleResult
           value: 'Hello, Ethereum!'
