@@ -751,8 +751,7 @@ methods:
       to receive notifications.
     description: >-
       Subscribes to specific events on the Ethereum network, such as new blocks,
-      new pending transactions, or changes in the state of an account. When an
-      event occurs, a notification is sent to the client with the corresponding
+      or logs. When an event occurs, a notification is sent to the client with the corresponding
       data. To stop receiving notifications, the client can unsubscribe using
       `eth_unsubscribe`.
     params:
@@ -764,14 +763,10 @@ methods:
           enum:
             - newHeads
             - logs
-            - newPendingTransactions
-            - syncing
           description: |-
             The type of subscription to create. Must be one of the following:
             1. `newHeads` - New block headers.
             2. `logs` - Logs matching a filter object.
-            3. `newPendingTransactions` - New pending transactions.
-            4. `syncing` - Changes in syncing status.
       - name: filterOptions
         required: false
         schema:
