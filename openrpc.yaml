@@ -893,28 +893,10 @@ methods:
       schema:
         type: boolean
     errors:
-      - code: -32602
-        message: "The swap could not be completed as requested"
-      - code: -32004
-        message: "Currently we do not support multiple tokens swap"
-      - code: -32602
-        message: "fromToken is not defined"
-      - code: -32602
-        message: "toToken is not defined"
-      - code: -32602
-        message: "fromToken address property of from is not defined"
-      - code: -32602
-        message: "toToken address property of to is not defined"
       - code: -32000
         message: "Swap is not available on this chain {{chainName}}"
       - code: -32004
         message: "Cross-chain swaps are currently not supported. Both fromToken and toToken must be on the same blockchain."
-      - code: -32602
-        message: "Invalid caip-10 user address"
-      - code: -32602
-        message: "Invalid caip-10 fromToken address"
-      - code: -32602
-        message: "Invalid caip-10 toToken address"
     examples:
       - name: wallet_swapAsset example
         params:
