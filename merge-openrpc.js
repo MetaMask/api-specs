@@ -48,7 +48,9 @@ const unneeded = [
   /eth_sign/,
   /debug_.*/,
   /engine_.*/,
-  /eth_createAccessList/
+  /eth_createAccessList/,
+  /eth_getBlockReceipts/,
+  /eth_maxPriorityFeePerGas/,
 ];
 
 const filterExecutionAPIs = (openrpcDocument) => {
