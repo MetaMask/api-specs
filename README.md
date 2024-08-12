@@ -22,12 +22,36 @@ You can then run `yarn run build` to generate the output file again.
 To test the result, you can paste the resulting file from `dist/build/openrpc.json` into [the OpenRPC playground](https://playground.open-rpc.org/) and view the result.
 
 ### Build Process
-- filter out methods that are not supported/implemented by metamask
-- merge wallet methods with execution api methods
+
+To build, run:
+
+- `yarn install`, if you haven't setup the repo
+- `yarn build`
+
+The build process will:
+- filter out methods that are not supported/implemented by MetaMask
+- merge wallet methods with execution API methods
 - output to `build`
 
+<details>
+  <summary>Build and merge summary</summary>
+    <div>
+	  The build includes the script `merge-openrpc.js`, this script:
+
+		- Loads openrpc.yaml and multichain/openrpc.yaml from the local file system.
+		- Fetches the Ethereum OpenRPC JSON spec from a remote URL and filters the methods using filterExecutionAPIs.
+		- Merges the local MetaMask OpenRPC specification with the fetched Ethereum OpenRPC specification.
+		- Adds tags to methods:
+			> Adds a tag to each method in the Ethereum OpenRPC specification.
+		- Writes out the merged and filtered OpenRPC specifications to temporary files:
+			- src/build/openrpc.json.
+			- src/build/multichain-openrpc.json.
+
+	These files are then output to the `dist` folder. 
+ </div>
+</details>
 
 ## Deploy
-- On release uploads to npm at `@metamask/api-specs`
-- On release uploads to github pages at `https://metamask.github.io/api-specs/latest/metamask-openrpc.json`
+- [On release](RELEASING.md), uploads to npm at `@metamask/api-specs`
+- [On release](RELEASING.md), uploads to [GitHub pages](https://metamask.github.io/api-specs/latest/metamask-openrpc.json)
 
