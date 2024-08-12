@@ -17,9 +17,9 @@ MetaMask's effectiveness as an enterprise-grade application platform depends on 
 
 Edit the `openrpc.yaml` file.
 
-You can then run `yarn run build` to generate the output file again.
+Run `yarn build` to regenerate the output file: `dist/build/openrpc.json`.
 
-To test the result, you can paste the resulting file from `dist/build/openrpc.json` into [the OpenRPC playground](https://playground.open-rpc.org/) and view the result.
+> To view the result, paste that file's contents into [the OpenRPC playground](https://playground.open-rpc.org/).
 
 ### Build Process
 
@@ -39,7 +39,8 @@ The build process will:
 	  The build includes the script `merge-openrpc.js`, this script:
 
 		- Loads openrpc.yaml and multichain/openrpc.yaml from the local file system.
-		- Fetches the Ethereum OpenRPC JSON spec from a remote URL and filters the methods using filterExecutionAPIs.
+		- Fetches the Ethereum OpenRPC JSON spec from a [remote URL](https://raw.githubusercontent.com/ethereum/execution-apis/59e6a6f9947859e8bb41bc63b248aa026b0781bd/refs-openrpc.json
+) and filters the methods using filterExecutionAPIs.
 		- Merges the local MetaMask OpenRPC specification with the fetched Ethereum OpenRPC specification.
 		- Adds tags to methods:
 			> Adds a tag to each method in the Ethereum OpenRPC specification.
