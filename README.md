@@ -7,7 +7,7 @@ Latest build: https://metamask.github.io/api-specs/latest/openrpc.json
 
 JSON-RPC API provided by MetaMask.
 
-MetaMask dapp developers lack a formal RPC specification. This attempts to document which methods MetaMask supports in a way that's versionable, human- and machine-readable. It will improve the accuracy of documentation, API, and clients.
+Previously, MetaMask dapp developers lacked a formal RPC specification. This repository contains a specification that documents which methods MetaMask supports in a way that's versionable, human-readable, and machine-readable. This spec improves the accuracy of documentation, API, and clients.
 
 MetaMask's effectiveness as an enterprise-grade application platform depends on its ability to provide a reliable and predictable developer experience.
 
