@@ -31,7 +31,6 @@ The build process:
   <summary>Build and merge summary</summary>
     <div>
 	  The build includes the script `merge-openrpc.js`, this script:
-
 		- Loads openrpc.yaml and multichain/openrpc.yaml from the local file system.
 		- Fetches the Ethereum OpenRPC JSON spec from a [remote URL](https://raw.githubusercontent.com/ethereum/execution-apis/59e6a6f9947859e8bb41bc63b248aa026b0781bd/refs-openrpc.json) and filters the methods using filterExecutionAPIs.
 		- Merges the local MetaMask OpenRPC specification with the Ethereum OpenRPC specification.
@@ -40,7 +39,6 @@ The build process:
 		- Writes out the merged and filtered OpenRPC specifications to temporary files:
 			- src/build/openrpc.json.
 			- src/build/multichain-openrpc.json.
-
 		These files are then output to the `dist` folder. 
  </div>
 </details>
