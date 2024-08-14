@@ -17,21 +17,17 @@ MetaMask's effectiveness as an enterprise-grade application platform depends on 
 
 Edit the `openrpc.yaml` file.
 
-Run `yarn build` to regenerate the output file: `dist/build/openrpc.json`.
+- `yarn install` to setup the repo
+- `yarn build` to regenerate the output file: `dist/build/openrpc.json`.
 
 > To view the result, paste that file's contents into [the OpenRPC playground](https://playground.open-rpc.org/).
 
 ### Build Process
 
-To build, run:
-
-- `yarn install`, if you haven't setup the repo
-- `yarn build`
-
-The build process will:
-- filter out methods that are not supported/implemented by MetaMask
-- merge wallet methods with execution API methods
-- output to `dist` for release
+The build process:
+- filters out methods that are not supported/implemented by MetaMask
+- merges wallet methods with execution API methods
+- outputs to `dist` for release
 
 <details>
   <summary>Build and merge summary</summary>
@@ -47,7 +43,7 @@ The build process will:
 			- src/build/openrpc.json.
 			- src/build/multichain-openrpc.json.
 
-	These files are then output to the `dist` folder. 
+		These files are then output to the `dist` folder. 
  </div>
 </details>
 
