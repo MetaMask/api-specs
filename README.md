@@ -13,7 +13,7 @@ MetaMask's effectiveness as an enterprise-grade application platform depends on 
 
 ## Contributing
 
-> Before making any significant changes to the API spec, consider whether to first submit a [MIP](https://github.com/MetaMask/metamask-improvement-proposals/tree/main) and complete the MIP [workflow](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/PROCESS-GUIDE.md).
+> **Note:** To make a significant change to the API, please submit a [MIP](https://github.com/MetaMask/metamask-improvement-proposals/tree/main).
 
 Edit the `openrpc.yaml` file.
 
