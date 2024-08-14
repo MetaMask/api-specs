@@ -15,12 +15,10 @@ MetaMask's effectiveness as an enterprise-grade application platform depends on 
 
 > **Note:** To make a significant change to the API, please submit a [MIP](https://github.com/MetaMask/metamask-improvement-proposals/tree/main).
 
-Edit the `openrpc.yaml` file.
-
-- `yarn install` to setup the repo
-- `yarn build` to regenerate the output file: `dist/build/openrpc.json`.
-
-> To view the result, paste that file's contents into [the OpenRPC playground](https://playground.open-rpc.org/).
+1. Edit the API specification in the `openrpc.yaml` file.
+2. Run `yarn install` if you haven't previously set up the repository. 
+3. Run `yarn run build` to re-generate the output file: `dist/build/openrpc.json`.
+4. To view the result, paste that file's contents into [the OpenRPC playground](https://playground.open-rpc.org/).
 
 ### Build Process
 
