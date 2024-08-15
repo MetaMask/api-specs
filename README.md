@@ -23,14 +23,6 @@ MetaMask's effectiveness as an enterprise-grade application platform depends on 
 ### Build Process
 
 The build process:
-- filters out methods that are not supported/implemented by MetaMask
-- merges wallet methods with execution API methods
-- outputs to `dist` for release
-
-<details>
-  <summary>Build and merge summary</summary>
-The build uses the script `merge-openrpc.js`, which:
-
 1. Loads `openrpc.yaml` and `multichain/openrpc.yaml` from the local file system.
 2. Fetches the Ethereum execution API OpenRPC spec from a [remote URL](https://raw.githubusercontent.com/ethereum/execution-apis/59e6a6f9947859e8bb41bc63b248aa026b0781bd/refs-openrpc.json) and filters out methods that are not supported/implemented by MetaMask, using `filterExecutionAPIs`.
 3. Merges the local MetaMask OpenRPC spec with the Ethereum execution API OpenRPC spec.
@@ -38,7 +30,7 @@ The build uses the script `merge-openrpc.js`, which:
 5. Writes out the merged and filtered OpenRPC spec to temporary files:
 	 - `src/build/openrpc.json`
 	 - `src/build/multichain-openrpc.json`
-6. Outputs these files to the `dist` folder. 
+6. Outputs these files to the `dist` folder and deletes src/build contents. 
 
 ## Deploy
 - [On release](RELEASING.md), uploads to npm at `@metamask/api-specs`
