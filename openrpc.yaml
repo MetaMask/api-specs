@@ -853,6 +853,13 @@ components:
           properties:
             EIP712Domain:
               type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  type:
+                    type: string
               description: >-
                 An array specifying one or more of the following domain
                 separator values: 1) `name` - The user-readable name of the signing
