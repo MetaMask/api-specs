@@ -1008,7 +1008,7 @@
                 }
             ],
             "summary": "Subscribes to specific Ethereum events, returning a subscription ID used to receive notifications.",
-            "description": "Subscribes to specific events on the Ethereum network, such as new blocks, new pending transactions, or changes in the state of an account. When an event occurs, a notification is sent to the client with the corresponding data. To stop receiving notifications, the client can unsubscribe using `eth_unsubscribe`.",
+            "description": "Subscribes to specific events on the Ethereum network, such as new blocks, or logs. When an event occurs, a notification is sent to the client with the corresponding data. To stop receiving notifications, the client can unsubscribe using `eth_unsubscribe`.",
             "params": [
                 {
                     "name": "subscriptionType",
@@ -1018,11 +1018,9 @@
                         "type": "string",
                         "enum": [
                             "newHeads",
-                            "logs",
-                            "newPendingTransactions",
-                            "syncing"
+                            "logs"
                         ],
-                        "description": "The type of subscription to create. Must be one of the following:\n1. `newHeads` - New block headers.\n2. `logs` - Logs matching a filter object.\n3. `newPendingTransactions` - New pending transactions.\n4. `syncing` - Changes in syncing status."
+                        "description": "The type of subscription to create. Must be one of the following:\n1. `newHeads` - New block headers.\n2. `logs` - Logs matching a filter object."
                     }
                 },
                 {
@@ -2184,6 +2182,17 @@
                         "properties": {
                             "EIP712Domain": {
                                 "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
                                 "description": "An array specifying one or more of the following domain separator values: 1) `name` - The user-readable name of the signing domain, that is, the name of the dapp or the protocol. 2) `version` - The current major version of the signing domain. 3) `chainId` - The chain ID of the network. 4) `verifyingContract` - The address of the contract that will verify the signature. 5) `salt` - A disambiguating salt for the protocol."
                             }
                         },
