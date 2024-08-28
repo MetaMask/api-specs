@@ -51,6 +51,7 @@ const unneeded = [
   /eth_createAccessList/,
   /eth_getBlockReceipts/,
   /eth_maxPriorityFeePerGas/,
+  /eth_blobBaseFee/,
 ];
 
 const filterExecutionAPIs = (openrpcDocument) => {
