@@ -260,14 +260,6 @@
                     "message": "Requested notifications are not supported"
                 },
                 {
-                    "code": 5203,
-                    "message": "Scope/chain mismatch"
-                },
-                {
-                    "code": 5204,
-                    "message": "ChainId defined in two different scopes"
-                },
-                {
                     "code": 5300,
                     "message": "Invalid scopedProperties requested"
                 },
