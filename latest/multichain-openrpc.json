@@ -248,14 +248,6 @@
                     "message": "Unknown error with request"
                 },
                 {
-                    "code": 5001,
-                    "message": "User disapproved requested methods"
-                },
-                {
-                    "code": 5002,
-                    "message": "User disapproved requested notifications"
-                },
-                {
                     "code": 5100,
                     "message": "Requested networks are not supported"
                 },
@@ -266,14 +258,6 @@
                 {
                     "code": 5102,
                     "message": "Requested notifications are not supported"
-                },
-                {
-                    "code": 5201,
-                    "message": "Unknown method(s) requested"
-                },
-                {
-                    "code": 5202,
-                    "message": "Unknown notifications(s) requested"
                 },
                 {
                     "code": 5203,
