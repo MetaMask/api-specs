@@ -5,7 +5,7 @@ info:
   description: >-
     This provides the specs for the MultiChain API Layer for the MetaMask API
 methods:
-  - name: provider_request
+  - name: wallet_invokeMethod
     paramStructure: by-name
     params:
       - name: scope
@@ -30,11 +30,11 @@ methods:
         schema:
           type: "string"
     result:
-      name: provider_requestResult
+      name: wallet_invokeMethodResult
       schema:
         true
     examples:
-      - name: provider_requestExample
+      - name: wallet_invokeMethodExample
         params:
           - name: scope
             value: eip155:1
@@ -45,9 +45,9 @@ methods:
           - name: sessionId
             value: "0xdeadbeef"
         result:
-          name: provider_requestResult
+          name: wallet_invokeMethodResult
           value: "0x1"
-  - name: provider_authorize
+  - name: wallet_createSession
     paramStructure: by-name
     params:
       - name: requiredScopes
@@ -92,8 +92,8 @@ methods:
                 type: string
                 format: date-time
     examples:
-      - name: provider_authorizeExample
-        description: Example of a provider authorization request.
+      - name: wallet_createSessionExample
+        description: Example of a createSession request.
         params:
           - name: requiredScopes
             value:
