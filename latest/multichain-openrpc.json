@@ -7,7 +7,7 @@
     },
     "methods": [
         {
-            "name": "provider_request",
+            "name": "wallet_invokeMethod",
             "paramStructure": "by-name",
             "params": [
                 {
@@ -42,12 +42,12 @@
                 }
             ],
             "result": {
-                "name": "provider_requestResult",
+                "name": "wallet_invokeMethodResult",
                 "schema": true
             },
             "examples": [
                 {
-                    "name": "provider_requestExample",
+                    "name": "wallet_invokeMethodExample",
                     "params": [
                         {
                             "name": "scope",
@@ -66,14 +66,14 @@
                         }
                     ],
                     "result": {
-                        "name": "provider_requestResult",
+                        "name": "wallet_invokeMethodResult",
                         "value": "0x1"
                     }
                 }
             ]
         },
         {
-            "name": "provider_authorize",
+            "name": "wallet_createSession",
             "paramStructure": "by-name",
             "params": [
                 {
@@ -145,8 +145,8 @@
             },
             "examples": [
                 {
-                    "name": "provider_authorizeExample",
-                    "description": "Example of a provider authorization request.",
+                    "name": "wallet_createSessionExample",
+                    "description": "Example of a createSession request.",
                     "params": [
                         {
                             "name": "requiredScopes",
