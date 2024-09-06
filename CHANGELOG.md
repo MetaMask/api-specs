@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.10]
+### Uncategorized
+- fix: rename multichain methods ([#264](https://github.com/MetaMask/api-specs/pull/264))
+
 ## [0.10.9]
 ### Uncategorized
 - Update execution-apis reference ([#262](https://github.com/MetaMask/api-specs/pull/262))
@@ -238,7 +242,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.10.9...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.10.10...HEAD
+[0.10.10]: https://github.com/MetaMask/api-specs/compare/v0.10.9...v0.10.10
 [0.10.9]: https://github.com/MetaMask/api-specs/compare/v0.10.8...v0.10.9
 [0.10.8]: https://github.com/MetaMask/api-specs/compare/v0.10.7...v0.10.8
 [0.10.7]: https://github.com/MetaMask/api-specs/compare/v0.10.6...v0.10.7
