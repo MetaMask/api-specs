@@ -4,7 +4,7 @@ This repository contains the OpenRPC specification for MetaMask's Wallet JSON-RP
 You can view the specs in the following formats:
 
 - [MetaMask developer docs interactive API reference](https://docs.metamask.io/wallet/reference/json-rpc-api/)
-- [OpenRPC API playground](https://metamask.github.io/api-playground/api-documentation)
+- [OpenRPC playground](https://metamask.github.io/api-playground/api-documentation)
 - [Latest build](https://metamask.github.io/api-specs/latest/openrpc.json)
 
 [OpenRPC](https://open-rpc.org/) is way to specify JSON-RPC APIs that is versionable,
@@ -17,29 +17,29 @@ You can contribute to the API specs using the following steps.
 
 > **Note:** These steps are for updating the API specs.
 > To make a significant change to the API itself, please submit a
-> [MIP](https://github.com/MetaMask/metamask-improvement-proposals/tree/main).
+> [MetaMask Improvement Proposal (MIP)](https://github.com/MetaMask/metamask-improvement-proposals/tree/main).
 
 1. Edit the API specs in the `openrpc.yaml` file.
-   See the [OpenRPC](https://open-rpc.org/) docs for more information about how to format the specs.
+   See the [OpenRPC](https://open-rpc.org/) docs for more information on how to format the specs.
 2. Run `yarn install` if you haven't previously set up the repository.
 3. Run `yarn run build` to re-generate the output file: `dist/build/openrpc.json`.
-4. To view the result, paste that file's contents into
-   [the OpenRPC playground](https://playground.open-rpc.org/).
+4. To view the result, paste that file's contents into the
+   [OpenRPC playground](https://playground.open-rpc.org/).
 
-For more information about publishing changes to the interactive API reference in the MetaMask
-developer docs site, see the
-[doc contribution guidelines](https://github.com/MetaMask/metamask-docs/blob/main/CONTRIBUTING.md#update-the-interactive-api-reference).
+For information about publishing changes to the interactive API reference in the MetaMask developer
+docs, see the
+[docs contribution guidelines](https://github.com/MetaMask/metamask-docs/blob/main/CONTRIBUTING.md#update-the-interactive-api-reference).
 
 ## Build process
 
 When you build the project, the following happens:
 
-1. `openrpc.yaml` and `multichain/openrpc.yaml` are loaded the local file system.
-2. The [Ethereum Execution API](https://github.com/ethereum/execution-apis) OpenRPC specs are
+1. The MetaMask-specific API specs `openrpc.yaml` are loaded from the local file system.
+2. The [Ethereum Execution API specs](https://github.com/ethereum/execution-apis) are
    fetched from a remote URL and methods not supported/implemented by MetaMask are filtered out.
 3. The local MetaMask specs are merged with the Ethereum specs.
 4. Each Ethereum method is tagged with the "Ethereum API" tag.
-5. The merged and filtered OpenRPC specs are written out to temporary files:
+5. The merged and filtered specs are written out to temporary files:
 	 - `src/build/openrpc.json`
 	 - `src/build/multichain-openrpc.json`
 6. These files are output to the `dist` folder and the `src/build` contents are deleted.
@@ -49,6 +49,6 @@ When you build the project, the following happens:
 On release, the specs are published to npm at `@metamask/api-specs` and to
 [GitHub Pages](https://metamask.github.io/api-specs/latest/metamask-openrpc.json).
 
-For information about publishing to the interactive API reference in the MetaMask developer docs
-site, see the
-[doc contribution guidelines](https://github.com/MetaMask/metamask-docs/blob/main/CONTRIBUTING.md#update-the-interactive-api-reference).
+For information about publishing to the interactive API reference in the MetaMask developer docs,
+see the
+[docs contribution guidelines](https://github.com/MetaMask/metamask-docs/blob/main/CONTRIBUTING.md#update-the-interactive-api-reference).
