@@ -7,7 +7,7 @@ const MetaMaskOpenRPC = yaml.load(fs.readFileSync(__dirname + "/openrpc.yaml", "
 const TransportOpenRPC = yaml.load(fs.readFileSync(__dirname + "/multichain/openrpc.yaml", "utf8"));
 
 const getFilteredExecutionAPIs = () => {
-  return fetch("https://raw.githubusercontent.com/ethereum/execution-apis/ac19b518a2596221cd7cd6421ee3dc654d7ff3b7/refs-openrpc.json")
+  return fetch("https://raw.githubusercontent.com/ethereum/execution-apis/337eec34772dc15228092e032fd299042e1ece99/refs-openrpc.json")
     .then(async (res) => {
       return filterExecutionAPIs(await res.json());
     });
