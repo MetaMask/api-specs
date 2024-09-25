@@ -147,7 +147,7 @@ methods:
               type: string
               format: date-time
     result:
-      name: provider_authorizeResult
+      name: wallet_createSessionResult
       schema:
         type: object
         properties:
@@ -169,8 +169,6 @@ methods:
           - name: requiredScopes
             value:
               eip155:1337:
-                accounts:
-                  - eip155:1337:0x5cfe73b6021e818b776b421b1c4db2474086a7e1
                 methods:
                   - wallet_watchAsset
                   - eth_sendTransaction
@@ -212,14 +210,11 @@ methods:
                 notifications:
                   - eth_subscription
               wallet:
-                accounts: []
                 methods:
                   - wallet_registerOnboarding
                   - wallet_scanQRCode
                 notifications: []
               wallet:eip155:
-                accounts:
-                  - wallet:eip155:0x5cfe73b6021e818b776b421b1c4db2474086a7e1
                 methods:
                   - wallet_addEthereumChain
                   - personal_sign
@@ -229,7 +224,7 @@ methods:
             value:
               expiry: "2022-12-24T17:07:31+00:00"
         result:
-          name: provider_authorizationResultExample
+          name: wallet_createSessionResultExample
           value:
             sessionId: "0xdeadbeef"
             sessionScopes:
