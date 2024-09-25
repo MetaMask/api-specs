@@ -47,6 +47,44 @@ methods:
         result:
           name: wallet_invokeMethodResult
           value: "0x1"
+  - name: wallet_getSession
+    params: []
+    result:
+      name: provider_authorizeResult
+      schema:
+        type: object
+        properties:
+          sessionScopes:
+            $ref: "#/components/schemas/SessionScopes"
+    examples:
+      - name: wallet_createSessionExample
+        description: Example of a createSession request.
+        params: []
+        result:
+          name: wallet_getSessionResultExample
+          value:
+            sessionScopes:
+              eip155:1:
+                methods:
+                  - eth_getBalance
+                notifications: []
+                accounts: []
+              eip155:1337:
+                methods:
+                  - eth_sendTransaction
+                  - eth_getBalance
+                  - personal_sign
+                notifications: []
+                accounts:
+                  - eip155:42161:0x0910e12C68d02B561a34569E1367c9AAb42bd810
+              eip155:11155111:
+                methods:
+                  - eth_sendTransaction
+                  - eth_getBalance
+                  - personal_sign
+                notifications: []
+                accounts:
+                  - eip155:42161:0x0910e12C68d02B561a34569E1367c9AAb42bd810
   - name: wallet_createSession
     paramStructure: by-name
     params:
@@ -81,10 +119,7 @@ methods:
             description: A unique identifier for the session. Defined by [CAIP-171](https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-171.md)
             type: string
           sessionScopes:
-            type: object
-            patternProperties:
-              "[-a-z0-9]{3,8}:[-_a-zA-Z0-9]{1,32}":
-                $ref: "#/components/schemas/Scope"
+            $ref: "#/components/schemas/SessionScopes"
           sessionProperties:
             type: object
             properties:
@@ -172,6 +207,11 @@ methods:
         message: Invalid sessionProperties requested
 components:
   schemas:
+    SessionScopes:
+      type: object
+      patternProperties:
+        "[-a-z0-9]{3,8}:[-_a-zA-Z0-9]{1,32}":
+          $ref: "#/components/schemas/Scope"
     ScopeString:
       type: string
       pattern: "[-a-z0-9]{3,8}(:[-_a-zA-Z0-9]{1,32})?"
