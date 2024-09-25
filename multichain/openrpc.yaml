@@ -50,15 +50,15 @@ methods:
   - name: wallet_getSession
     params: []
     result:
-      name: provider_authorizeResult
+      name: wallet_getSessionResult
       schema:
         type: object
         properties:
           sessionScopes:
             $ref: "#/components/schemas/SessionScopes"
     examples:
-      - name: wallet_createSessionExample
-        description: Example of a createSession request.
+      - name: wallet_getSessionExample
+        description: Example of a getSession request.
         params: []
         result:
           name: wallet_getSessionResultExample
