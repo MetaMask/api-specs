@@ -47,6 +47,80 @@ methods:
         result:
           name: wallet_invokeMethodResult
           value: "0x1"
+  - name: wallet_getSession
+    params: []
+    result:
+      name: wallet_getSessionResult
+      schema:
+        type: object
+        properties:
+          sessionScopes:
+            $ref: "#/components/schemas/SessionScopes"
+    examples:
+      - name: wallet_getSessionExample
+        description: Example of a getSession request.
+        params: []
+        result:
+          name: wallet_getSessionResultExample
+          value:
+            sessionScopes:
+              eip155:1337:
+                accounts:
+                  - eip155:1337:0x5cfe73b6021e818b776b421b1c4db2474086a7e1
+                methods:
+                  - wallet_watchAsset
+                  - eth_sendTransaction
+                  - eth_decrypt
+                  - eth_getEncryptionPublicKey
+                  - web3_clientVersion
+                  - eth_subscribe
+                  - eth_unsubscribe
+                  - eth_blockNumber
+                  - eth_call
+                  - eth_chainId
+                  - eth_estimateGas
+                  - eth_feeHistory
+                  - eth_gasPrice
+                  - eth_getBalance
+                  - eth_getBlockByHash
+                  - eth_getBlockByNumber
+                  - eth_getBlockTransactionCountByHash
+                  - eth_getBlockTransactionCountByNumber
+                  - eth_getCode
+                  - eth_getFilterChanges
+                  - eth_getFilterLogs
+                  - eth_getLogs
+                  - eth_getProof
+                  - eth_getStorageAt
+                  - eth_getTransactionByBlockHashAndIndex
+                  - eth_getTransactionByBlockNumberAndIndex
+                  - eth_getTransactionByHash
+                  - eth_getTransactionCount
+                  - eth_getTransactionReceipt
+                  - eth_getUncleCountByBlockHash
+                  - eth_getUncleCountByBlockNumber
+                  - eth_newBlockFilter
+                  - eth_newFilter
+                  - eth_newPendingTransactionFilter
+                  - eth_sendRawTransaction
+                  - eth_syncing
+                  - eth_uninstallFilter
+                notifications:
+                  - eth_subscription
+              wallet:
+                accounts: []
+                methods:
+                  - wallet_registerOnboarding
+                  - wallet_scanQRCode
+                notifications: []
+              wallet:eip155:
+                accounts:
+                  - wallet:eip155:0x5cfe73b6021e818b776b421b1c4db2474086a7e1
+                methods:
+                  - wallet_addEthereumChain
+                  - personal_sign
+                  - eth_signTypedData_v4
+                notifications: []
   - name: wallet_createSession
     paramStructure: by-name
     params:
@@ -73,7 +147,7 @@ methods:
               type: string
               format: date-time
     result:
-      name: provider_authorizeResult
+      name: wallet_createSessionResult
       schema:
         type: object
         properties:
@@ -81,10 +155,7 @@ methods:
             description: A unique identifier for the session. Defined by [CAIP-171](https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-171.md)
             type: string
           sessionScopes:
-            type: object
-            patternProperties:
-              "[-a-z0-9]{3,8}:[-_a-zA-Z0-9]{1,32}":
-                $ref: "#/components/schemas/Scope"
+            $ref: "#/components/schemas/SessionScopes"
           sessionProperties:
             type: object
             properties:
@@ -97,62 +168,123 @@ methods:
         params:
           - name: requiredScopes
             value:
-              eip155:
-                scopes:
-                  - eip155:1
-                  - eip155:1337
+              eip155:1337:
                 methods:
+                  - wallet_watchAsset
                   - eth_sendTransaction
+                  - eth_decrypt
+                  - eth_getEncryptionPublicKey
+                  - web3_clientVersion
+                  - eth_subscribe
+                  - eth_unsubscribe
+                  - eth_blockNumber
+                  - eth_call
+                  - eth_chainId
+                  - eth_estimateGas
+                  - eth_feeHistory
+                  - eth_gasPrice
                   - eth_getBalance
-                  - personal_sign
+                  - eth_getBlockByHash
+                  - eth_getBlockByNumber
+                  - eth_getBlockTransactionCountByHash
+                  - eth_getBlockTransactionCountByNumber
+                  - eth_getCode
+                  - eth_getFilterChanges
+                  - eth_getFilterLogs
+                  - eth_getLogs
+                  - eth_getProof
+                  - eth_getStorageAt
+                  - eth_getTransactionByBlockHashAndIndex
+                  - eth_getTransactionByBlockNumberAndIndex
+                  - eth_getTransactionByHash
+                  - eth_getTransactionCount
+                  - eth_getTransactionReceipt
+                  - eth_getUncleCountByBlockHash
+                  - eth_getUncleCountByBlockNumber
+                  - eth_newBlockFilter
+                  - eth_newFilter
+                  - eth_newPendingTransactionFilter
+                  - eth_sendRawTransaction
+                  - eth_syncing
+                  - eth_uninstallFilter
                 notifications:
-                  - accountsChanged
-                  - chainChanged
-              eip155:10:
+                  - eth_subscription
+              wallet:
                 methods:
-                  - eth_getBalance
-                notifications:
-                  - accountsChanged
-                  - chainChanged
-          - name: optionalScopes
-            value:
-              eip155:11155111:
+                  - wallet_registerOnboarding
+                  - wallet_scanQRCode
+                notifications: []
+              wallet:eip155:
                 methods:
-                  - eth_sendTransaction
-                  - eth_getBalance
+                  - wallet_addEthereumChain
                   - personal_sign
-                notifications:
-                  - accountsChanged
-                  - chainChanged
+                  - eth_signTypedData_v4
+                notifications: []
           - name: sessionProperties
             value:
               expiry: "2022-12-24T17:07:31+00:00"
         result:
-          name: provider_authorizationResultExample
+          name: wallet_createSessionResultExample
           value:
             sessionId: "0xdeadbeef"
             sessionScopes:
-              eip155:1:
-                methods:
-                  - eth_getBalance
-                notifications: []
-                accounts: []
               eip155:1337:
-                methods:
-                  - eth_sendTransaction
-                  - eth_getBalance
-                  - personal_sign
-                notifications: []
                 accounts:
-                  - eip155:42161:0x0910e12C68d02B561a34569E1367c9AAb42bd810
-              eip155:11155111:
+                  - eip155:1337:0x5cfe73b6021e818b776b421b1c4db2474086a7e1
                 methods:
+                  - wallet_watchAsset
                   - eth_sendTransaction
+                  - eth_decrypt
+                  - eth_getEncryptionPublicKey
+                  - web3_clientVersion
+                  - eth_subscribe
+                  - eth_unsubscribe
+                  - eth_blockNumber
+                  - eth_call
+                  - eth_chainId
+                  - eth_estimateGas
+                  - eth_feeHistory
+                  - eth_gasPrice
                   - eth_getBalance
-                  - personal_sign
+                  - eth_getBlockByHash
+                  - eth_getBlockByNumber
+                  - eth_getBlockTransactionCountByHash
+                  - eth_getBlockTransactionCountByNumber
+                  - eth_getCode
+                  - eth_getFilterChanges
+                  - eth_getFilterLogs
+                  - eth_getLogs
+                  - eth_getProof
+                  - eth_getStorageAt
+                  - eth_getTransactionByBlockHashAndIndex
+                  - eth_getTransactionByBlockNumberAndIndex
+                  - eth_getTransactionByHash
+                  - eth_getTransactionCount
+                  - eth_getTransactionReceipt
+                  - eth_getUncleCountByBlockHash
+                  - eth_getUncleCountByBlockNumber
+                  - eth_newBlockFilter
+                  - eth_newFilter
+                  - eth_newPendingTransactionFilter
+                  - eth_sendRawTransaction
+                  - eth_syncing
+                  - eth_uninstallFilter
+                notifications:
+                  - eth_subscription
+              wallet:
+                accounts: []
+                methods:
+                  - wallet_registerOnboarding
+                  - wallet_scanQRCode
                 notifications: []
+              wallet:eip155:
                 accounts:
-                  - eip155:42161:0x0910e12C68d02B561a34569E1367c9AAb42bd810
+                  - wallet:eip155:0x5cfe73b6021e818b776b421b1c4db2474086a7e1
+                methods:
+                  - wallet_addEthereumChain
+                  - personal_sign
+                  - eth_signTypedData_v4
+                notifications: []
               sessionProperties:
                 expiry: "2022-11-31T17:07:31+00:00"
     errors:
@@ -172,6 +304,11 @@ methods:
         message: Invalid sessionProperties requested
 components:
   schemas:
+    SessionScopes:
+      type: object
+      patternProperties:
+        "[-a-z0-9]{3,8}:[-_a-zA-Z0-9]{1,32}":
+          $ref: "#/components/schemas/Scope"
     ScopeString:
       type: string
       pattern: "[-a-z0-9]{3,8}(:[-_a-zA-Z0-9]{1,32})?"
