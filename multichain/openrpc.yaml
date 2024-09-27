@@ -66,9 +66,7 @@ methods:
     paramStructure: by-name
     description: >-
       This notification is published by the wallet to notify the callers of updates to a shared session's authorization scopes.
-      The event payload contains the new `sessionScopes`. If a connection between the wallet and the caller is severed
-      and the possibility of missed events arises, the caller should immediately call `wallet_getSession` to retrieve
-      the current session scopes.
+      The event payload contains the new `sessionScopes`.
     params:
       - name: sessionScopes
         schema:
