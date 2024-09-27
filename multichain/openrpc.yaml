@@ -64,6 +64,8 @@ methods:
         result:
           name: wallet_revokeSessionExampleResult
           value: true
+    errors:
+      - $ref: "#/components/errors/UnknownError"
   - name: wallet_getSession
     description: |-
       The `wallet_getSession` method returns an active session.
@@ -310,8 +312,7 @@ methods:
               sessionProperties:
                 expiry: "2022-11-31T17:07:31+00:00"
     errors:
-      - code: 5000
-        message: Unknown error with request
+      - $ref: "#/components/errors/UnknownError"
       - code: 5100
         message: Requested networks are not supported
       - code: 5101
@@ -325,6 +326,10 @@ methods:
       - code: 5302
         message: Invalid sessionProperties requested
 components:
+  errors:
+    UnknownError:
+      code: 5000
+      message: Unknown error with request
   schemas:
     SessionScopes:
       type: object
