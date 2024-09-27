@@ -73,7 +73,7 @@ methods:
           $ref: "#/components/schemas/SessionScopes"
     examples:
       - name: wallet_sessionChangedExample
-        description: Example of a sessionChanged notification.
+        description: Example of a wallet_sessionChanged notification.
         params:
           - name: sessionScopes
             value:
