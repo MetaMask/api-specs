@@ -48,11 +48,7 @@ methods:
           name: wallet_invokeMethodResult
           value: "0x1"
   - name: wallet_revokeSession
-    description: |-
-      The `wallet_revokeSession` method revokes the entire active session.
-      If a `sessionId` parameter is provided, it revokes that specific session only;
-      If no `sessionId` parameter is provided and there is an active session without a `sessionId` this session gets revoked and a success result is returned;
-      otherwise, an appropriate error message is sent.
+    description: The `wallet_revokeSession` method revokes the entire active session.
     params: []
     result:
       name: wallet_revokeSessionResult
@@ -67,11 +63,7 @@ methods:
     errors:
       - $ref: "#/components/errors/UnknownError"
   - name: wallet_getSession
-    description: |-
-      The `wallet_getSession` method returns an active session.
-      If a `sessionId` is provided, it returns the authorizations for that specific session;
-      If no `sessionId` parameter is provided - and there is a single active session with no `sessionId` assigned - it returns the session authorizations and properties for that session;
-      otherwise, an appropriate error message;
+    description: The `wallet_getSession` method returns an active session.
     params: []
     result:
       name: wallet_getSessionResult
