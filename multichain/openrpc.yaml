@@ -406,7 +406,7 @@ components:
     SessionScopes:
       type: object
       patternProperties:
-        "[-a-z0-9]{3,8}:[-_a-zA-Z0-9]{1,32}":
+        "[-a-z0-9]{3,8}(:[-_a-zA-Z0-9]{1,32})?":
           $ref: "#/components/schemas/Scope"
     ScopeString:
       type: string
