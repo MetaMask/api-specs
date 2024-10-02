@@ -5,6 +5,25 @@ info:
   description: >-
     This provides the specs for the MultiChain API Layer for the MetaMask API
 methods:
+  - name: wallet_notify
+    paramStructure: by-name
+    params:
+      - name: scope
+        description: a valid `scope` string that has been previously authorized via `provider_authorize`
+        required: true
+        schema:
+          $ref: "#/components/schemas/ScopeString"
+      - name: notification
+        description: an object containing a JSON-RPC notification with `method` and `params`
+        deprecated: false
+        required: true
+        schema:
+          type: "object"
+          properties:
+            method:
+              type: "string"
+            params:
+              true
   - name: wallet_invokeMethod
     paramStructure: by-name
     params:
@@ -24,11 +43,6 @@ methods:
               type: "string"
             params:
               true
-      - name: "sessionId"
-        description: >-
-          [CAIP-171](https://chainagnostic.org/CAIPs/caip-171) `SessionId` referencing a known, open session
-        schema:
-          type: "string"
     result:
       name: wallet_invokeMethodResult
       schema:
@@ -42,8 +56,6 @@ methods:
             value:
               method: eth_getBalance
               params: []
-          - name: sessionId
-            value: "0xdeadbeef"
         result:
           name: wallet_invokeMethodResult
           value: "0x1"
@@ -239,9 +251,6 @@ methods:
       schema:
         type: object
         properties:
-          sessionId:
-            description: A unique identifier for the session. Defined by [CAIP-171](https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-171.md)
-            type: string
           sessionScopes:
             $ref: "#/components/schemas/SessionScopes"
           sessionProperties:
@@ -314,7 +323,6 @@ methods:
         result:
           name: wallet_createSessionResultExample
           value:
-            sessionId: "0xdeadbeef"
             sessionScopes:
               eip155:1337:
                 accounts:
@@ -398,7 +406,7 @@ components:
     SessionScopes:
       type: object
       patternProperties:
-        "[-a-z0-9]{3,8}:[-_a-zA-Z0-9]{1,32}":
+        "[-a-z0-9]{3,8}(:[-_a-zA-Z0-9]{1,32})?":
           $ref: "#/components/schemas/Scope"
     ScopeString:
       type: string
