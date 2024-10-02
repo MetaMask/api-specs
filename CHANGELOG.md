@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.12]
+### Uncategorized
+- Added wallet_notify + remove everything sessionId related ([#272](https://github.com/MetaMask/api-specs/pull/272))
+- Added sessionChanged  ([#271](https://github.com/MetaMask/api-specs/pull/271))
+- Added revokeSession + add description to getSession ([#270](https://github.com/MetaMask/api-specs/pull/270))
+- Added getSession ([#269](https://github.com/MetaMask/api-specs/pull/269))
+
 ## [0.10.11]
 ### Uncategorized
 - fix: update eth spec version to latest ([#267](https://github.com/MetaMask/api-specs/pull/267))
@@ -247,7 +254,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.10.11...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.10.12...HEAD
+[0.10.12]: https://github.com/MetaMask/api-specs/compare/v0.10.11...v0.10.12
 [0.10.11]: https://github.com/MetaMask/api-specs/compare/v0.10.10...v0.10.11
 [0.10.10]: https://github.com/MetaMask/api-specs/compare/v0.10.9...v0.10.10
 [0.10.9]: https://github.com/MetaMask/api-specs/compare/v0.10.8...v0.10.9
