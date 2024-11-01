@@ -3,42 +3,15 @@ info:
   title: JSON-RPC API
   version: 1.0.0
   description: >-
-    This section provides an interactive reference for the JSON-RPC API of
-    MetaMask's [Wallet API](/wallet/concepts/wallet-api). The API builds on a
-    set of standard Ethereum methods with MetaMask-specific enhancements, and is
-    designed for seamless integration into dapps.
-
-
-    View the JSON-RPC API methods by selecting a method in the left sidebar. You
-    can test the methods directly in the page using the API playground, with
-    pre-configured examples or custom parameters. You can also save URLs with
-    custom parameters using your browser's bookmarks.
-
-
-    Each method may have one or more of the following labels:
-
-
-    - **MetaMask** - The functionalities of these methods are specific to
-    MetaMask, and may or may not be supported by other wallets.
-
-    - **Restricted** - These methods are restricted and require requesting
-    permission using [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions).
-
-    - **Mobile** - These methods are only available on MetaMask Mobile.
-
-    - **Experimental** - These methods are experimental and may be changed in
-    the future.
-
-    - **Deprecated** - These methods are deprecated and may be removed in the
-    future.
-
-    - **Ethereum API** - These are standard Ethereum JSON-RPC API methods. See
-    the [Ethereum wiki](https://eth.wiki/json-rpc/API#json-rpc-methods) for more
-    information about these methods.
+    This section provides an interactive reference for MetaMask's Wallet
+    JSON-RPC API. The API builds on a set of standard Ethereum methods with
+    MetaMask-specific enhancements, and is designed for seamless integration
+    into dapps.
 methods:
   - name: wallet_addEthereumChain
     tags:
       - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Multichain'
     summary: Adds an Ethereum chain to the wallet.
     description: >-
       Creates a confirmation asking the user to add the specified chain to the
@@ -219,6 +192,7 @@ methods:
     tags:
       - $ref: '#/components/tags/MetaMask'
       - $ref: '#/components/tags/Restricted'
+      - $ref: '#/components/tags/Multichain'
     summary: Presents a plain text signature challenge to the user.
     description: >-
       Presents a plain text signature challenge to the user and returns the
@@ -264,6 +238,7 @@ methods:
     tags:
       - $ref: '#/components/tags/MetaMask'
       - $ref: '#/components/tags/Restricted'
+      - $ref: '#/components/tags/Multichain'
     summary: Presents a structured data message for the user to sign.
     description: >-
       Presents a data message for the user to sign in a structured and readable
@@ -335,6 +310,7 @@ methods:
   - name: wallet_registerOnboarding
     tags:
       - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Multichain'
     summary: Redirects the user back to the site after onboarding.
     description: >-
       Registers the requesting site with MetaMask as the initiator of
@@ -354,6 +330,7 @@ methods:
     tags:
       - $ref: '#/components/tags/MetaMask'
       - $ref: '#/components/tags/Experimental'
+      - $ref: '#/components/tags/Multichain'
     summary: Tracks a token in MetaMask.
     description: >-
       Requests that the user track the specified token in MetaMask. Returns a
@@ -480,6 +457,7 @@ methods:
     tags:
       - $ref: '#/components/tags/MetaMask'
       - $ref: '#/components/tags/Mobile'
+      - $ref: '#/components/tags/Multichain'
     summary: Requests that the user scan a QR code.
     description: >-
       Requests that the user scan a QR code using their device camera.
@@ -554,6 +532,7 @@ methods:
     tags:
       - $ref: '#/components/tags/MetaMask'
       - $ref: '#/components/tags/Restricted'
+      - $ref: '#/components/tags/Multichain'
     description: >-
       Creates a new wallet confirmation to make an Ethereum transaction from the
       user's account. This method requires that the user has granted permission
@@ -715,6 +694,7 @@ methods:
   - name: web3_clientVersion
     tags:
       - $ref: '#/components/tags/Ethereum'
+      - $ref: '#/components/tags/Multichain'
     description: >-
       Returns the current MetaMask client version. This differs slightly per
       client. For example, the browser extension returns a string like
@@ -746,6 +726,7 @@ methods:
   - name: eth_subscribe
     tags:
       - $ref: '#/components/tags/Ethereum'
+      - $ref: '#/components/tags/Multichain'
     summary: >-
       Subscribes to specific Ethereum events, returning a subscription ID used
       to receive notifications.
@@ -806,6 +787,7 @@ methods:
   - name: eth_unsubscribe
     tags:
       - $ref: '#/components/tags/Ethereum'
+      - $ref: '#/components/tags/Multichain'
     summary: >-
       Unsubscribes from a specific Ethereum event, using the subscription ID
       provided by `eth_subscribe`.
@@ -1045,6 +1027,9 @@ components:
     Ethereum:
       name: Ethereum API
       description: Ethereum execution API methods.
+    Multichain:
+      name: Multichain API
+      description: Multichain API methods.
   errors:
     UserRejected:
       code: 4001
