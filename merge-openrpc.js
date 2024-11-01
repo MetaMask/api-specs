@@ -16,14 +16,18 @@ const getFilteredExecutionAPIs = () => {
 // fetch, merge and write
 getFilteredExecutionAPIs().then((EthereumOpenRPC) => {
   EthereumOpenRPC.methods.forEach((method) => {
-    const tag = {
+    const ethereumTag = {
       name: "Ethereum API",
       description: "Ethereum Node JSON-RPC method",
     };
+    const multichainTag = {
+      name: "Multichain API",
+      description: "Multichain JSON-RPC method",
+    };
     if (method.tags) {
-      method.tags.push(tag);
+      method.tags.push(ethereumTag, multichainTag);
     } else {
-      method.tags = [tag];
+      method.tags = [ethereumTag, multichainTag];
     }
   });
   fs.writeFileSync(__dirname + "/src/build/openrpc.json",
