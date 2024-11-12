@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.13]
+### Uncategorized
+- Add multichain tag ([#275](https://github.com/MetaMask/api-specs/pull/275))
+
 ## [0.10.12]
 ### Uncategorized
 - Added wallet_notify + remove everything sessionId related ([#272](https://github.com/MetaMask/api-specs/pull/272))
@@ -254,7 +258,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.10.12...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.10.13...HEAD
+[0.10.13]: https://github.com/MetaMask/api-specs/compare/v0.10.12...v0.10.13
 [0.10.12]: https://github.com/MetaMask/api-specs/compare/v0.10.11...v0.10.12
 [0.10.11]: https://github.com/MetaMask/api-specs/compare/v0.10.10...v0.10.11
 [0.10.10]: https://github.com/MetaMask/api-specs/compare/v0.10.9...v0.10.10
