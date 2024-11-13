@@ -3,7 +3,7 @@
     "info": {
         "title": "JSON-RPC API",
         "version": "1.0.0",
-        "description": "This section provides an interactive reference for the JSON-RPC API of MetaMask's [Wallet API](/wallet/concepts/wallet-api). The API builds on a set of standard Ethereum methods with MetaMask-specific enhancements, and is designed for seamless integration into dapps.\n\nView the JSON-RPC API methods by selecting a method in the left sidebar. You can test the methods directly in the page using the API playground, with pre-configured examples or custom parameters. You can also save URLs with custom parameters using your browser's bookmarks.\n\nEach method may have one or more of the following labels:\n\n- **MetaMask** - The functionalities of these methods are specific to MetaMask, and may or may not be supported by other wallets.\n- **Restricted** - These methods are restricted and require requesting permission using [`wallet_requestPermissions`](/wallet/reference/wallet_requestpermissions).\n- **Mobile** - These methods are only available on MetaMask Mobile.\n- **Experimental** - These methods are experimental and may be changed in the future.\n- **Deprecated** - These methods are deprecated and may be removed in the future.\n- **Ethereum API** - These are standard Ethereum JSON-RPC API methods. See the [Ethereum wiki](https://eth.wiki/json-rpc/API#json-rpc-methods) for more information about these methods."
+        "description": "This section provides an interactive reference for MetaMask's Wallet JSON-RPC API. The API builds on a set of standard Ethereum methods with MetaMask-specific enhancements, and is designed for seamless integration into dapps."
     },
     "methods": [
         {
@@ -11,6 +11,9 @@
             "tags": [
                 {
                     "$ref": "#/components/tags/MetaMask"
+                },
+                {
+                    "$ref": "#/components/tags/Multichain"
                 }
             ],
             "summary": "Adds an Ethereum chain to the wallet.",
@@ -266,6 +269,9 @@
                 },
                 {
                     "$ref": "#/components/tags/Restricted"
+                },
+                {
+                    "$ref": "#/components/tags/Multichain"
                 }
             ],
             "summary": "Presents a plain text signature challenge to the user.",
@@ -325,6 +331,9 @@
                 },
                 {
                     "$ref": "#/components/tags/Restricted"
+                },
+                {
+                    "$ref": "#/components/tags/Multichain"
                 }
             ],
             "summary": "Presents a structured data message for the user to sign.",
@@ -440,6 +449,9 @@
             "tags": [
                 {
                     "$ref": "#/components/tags/MetaMask"
+                },
+                {
+                    "$ref": "#/components/tags/Multichain"
                 }
             ],
             "summary": "Redirects the user back to the site after onboarding.",
@@ -461,6 +473,9 @@
                 },
                 {
                     "$ref": "#/components/tags/Experimental"
+                },
+                {
+                    "$ref": "#/components/tags/Multichain"
                 }
             ],
             "summary": "Tracks a token in MetaMask.",
@@ -641,6 +656,9 @@
                 },
                 {
                     "$ref": "#/components/tags/Mobile"
+                },
+                {
+                    "$ref": "#/components/tags/Multichain"
                 }
             ],
             "summary": "Requests that the user scan a QR code.",
@@ -741,6 +759,9 @@
                 },
                 {
                     "$ref": "#/components/tags/Restricted"
+                },
+                {
+                    "$ref": "#/components/tags/Multichain"
                 }
             ],
             "description": "Creates a new wallet confirmation to make an Ethereum transaction from the user's account. This method requires that the user has granted permission to interact with their account first, so make sure to call `eth_requestAccounts` (recommended) or `wallet_requestPermissions` first.",
@@ -964,6 +985,9 @@
             "tags": [
                 {
                     "$ref": "#/components/tags/Ethereum"
+                },
+                {
+                    "$ref": "#/components/tags/Multichain"
                 }
             ],
             "description": "Returns the current MetaMask client version. This differs slightly per client. For example, the browser extension returns a string like `MetaMask/v10.33.1`, while the mobile app returns a string like `MetaMask/8.1.2/Mobile`.",
@@ -1005,6 +1029,9 @@
             "tags": [
                 {
                     "$ref": "#/components/tags/Ethereum"
+                },
+                {
+                    "$ref": "#/components/tags/Multichain"
                 }
             ],
             "summary": "Subscribes to specific Ethereum events, returning a subscription ID used to receive notifications.",
@@ -1077,6 +1104,9 @@
             "tags": [
                 {
                     "$ref": "#/components/tags/Ethereum"
+                },
+                {
+                    "$ref": "#/components/tags/Multichain"
                 }
             ],
             "summary": "Unsubscribes from a specific Ethereum event, using the subscription ID provided by `eth_subscribe`.",
@@ -1138,6 +1168,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -1192,6 +1226,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -1219,6 +1257,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -1246,6 +1288,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -1297,6 +1343,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -1489,6 +1539,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -1517,6 +1571,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -1568,6 +1626,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -1664,6 +1726,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -1760,6 +1826,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -1807,6 +1877,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -1854,6 +1928,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -1905,6 +1983,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -1971,6 +2053,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2037,6 +2123,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2108,6 +2198,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2199,6 +2293,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2261,6 +2359,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2335,6 +2437,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2409,6 +2515,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2472,6 +2582,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2523,6 +2637,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2586,6 +2704,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2633,6 +2755,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2680,6 +2806,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2707,6 +2837,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2751,6 +2885,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2778,6 +2916,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2818,6 +2960,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2849,6 +2995,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         },
@@ -2888,6 +3038,10 @@
                 {
                     "name": "Ethereum API",
                     "description": "Ethereum Node JSON-RPC method"
+                },
+                {
+                    "name": "Multichain API",
+                    "description": "Multichain JSON-RPC method"
                 }
             ]
         }
@@ -5175,6 +5329,10 @@
             "Ethereum": {
                 "name": "Ethereum API",
                 "description": "Ethereum execution API methods."
+            },
+            "Multichain": {
+                "name": "Multichain API",
+                "description": "Multichain API methods."
             }
         },
         "contentDescriptors": {},
