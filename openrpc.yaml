@@ -893,7 +893,7 @@ methods:
       schema:
         type: boolean
     errors:
-      - code: -36000
+      - code: 6000
         message: "Swap is not available on this chain {{chainName}}"
       - code: -32600
         message: "Cross-chain swaps are currently not supported. Both fromToken and toToken must be on the same blockchain."
