@@ -895,7 +895,7 @@ methods:
     errors:
       - code: -36000
         message: "Swap is not available on this chain {{chainName}}"
-      - code: -32004
+      - code: -32600
         message: "Cross-chain swaps are currently not supported. Both fromToken and toToken must be on the same blockchain."
     examples:
       - name: wallet_swapAsset example
