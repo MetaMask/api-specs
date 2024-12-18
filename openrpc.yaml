@@ -85,18 +85,18 @@ methods:
       [EIP-3326](https://eips.ethereum.org/EIPS/eip-3326).
     params:
       - name: Chain
-        required: true
         schema:
           title: Chain
           description: Object containing the chain ID to switch to.
           type: object
+          required:
+            - chainId
           properties:
             chainId:
               description: >-
                 The chain ID as a `0x`-prefixed hexadecimal string, as returned by the
                 `eth_chainId` method.
               type: string
-              required: true
     result:
       name: Null response
       description: This method returns `null` if the active chain is switched.
