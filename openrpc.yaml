@@ -157,7 +157,6 @@ methods:
                 The permission object. `method_name` is the name of the method for which
                 the permission is being requested.
               additionalProperties: true
-              required: true
     result:
       name: Permissions list
       schema:
@@ -199,7 +198,6 @@ methods:
                 The permission object. `method_name` is the name of the method for which
                 the permission is being revoked.
               additionalProperties: true
-              required: true
     result:
       name: Null response
       description: This method returns `null` if the permission is revoked.
