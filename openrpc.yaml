@@ -151,11 +151,11 @@ methods:
           description: Object containing the permission to request.
           type: object
           properties:
-            method_name:
+            permission_name:
               type: object
               description: >-
-                The permission object. `method_name` is the name of the method for which
-                the permission is being requested.
+                The permission object. `permission_name` is the name of the permission
+                being requested.
               additionalProperties: true
     result:
       name: Permissions list
@@ -192,11 +192,11 @@ methods:
           description: Object containing the permission to revoke.
           type: object
           properties:
-            method_name:
+            permission_name:
               type: object
               description: >-
-                The permission object. `method_name` is the name of the method for which
-                the permission is being revoked.
+                The permission object. `permission_name` is the name of the permission
+                being revoked.
               additionalProperties: true
     result:
       name: Null response
@@ -1048,13 +1048,11 @@ components:
     Caveats:
       title: Caveats
       description: >-
-        A capability document modifies the caveat property to specify usage
-        restrictions. Capabilities inherit restrictions from the caveat
-        properties of their parent documents and can add new caveats in addition
-        to those inherited from their parents.
+        An array of caveats that specify restrictions on the permission.
       type: array
       items:
         title: Caveat
+        description: Object containing information about the caveat.
         type: object
         properties:
           type:
@@ -1076,24 +1074,19 @@ components:
         id:
           description: The permission ID.
           type: string
-        '@context':
+        parentCapability:
           description: >-
-            When two people communicate with one another, the conversation takes
-            place in a shared environment, typically called 'the context of the
-            conversation.' This shared context allows the individuals to use
-            shortcut terms, such as the first name of a mutual friend, to
-            communicate more quickly without losing accuracy. A context in
-            JSON-LD works the same way: it allows two applications to use
-            shortcut terms to communicate more efficiently without losing
-            accuracy.
-          type: array
-          items:
-            type: string
+            The name of the permission being granted. For example, `eth_accounts` or
+            `endowment:permitted-chains`.
+          type: string
         invoker:
-          description: A URI of the dapp being granted this permission.
+          description: The URI of the dapp being granted this permission.
           type: string
         caveats:
           $ref: '#/components/schemas/Caveats'
+        date:
+          description: The timestamp of the permission request.
+          type: number
     PermissionsList:
       title: Permissions list
       description: An array of the user's permissions.
