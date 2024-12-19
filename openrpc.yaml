@@ -15,12 +15,10 @@ methods:
     summary: Adds an Ethereum chain to the wallet.
     description: >-
       Creates a confirmation asking the user to add the specified chain to the
-      wallet application. The caller must specify a chain ID and some chain
-      metadata. The wallet application may refuse or accept the request. `null`
-      is returned if the chain is added, and an error otherwise. Introduced by
-      [EIP-3085](https://eips.ethereum.org/EIPS/eip-3085).
+      wallet application. The caller must specify a chain ID and some chain metadata.
+      Specified by [EIP-3085](https://eips.ethereum.org/EIPS/eip-3085).
     params:
-      - name: AddEthereumChainParameter
+      - name: Chain
         schema:
           $ref: '#/components/schemas/AddEthereumChainParameter'
     errors:
@@ -53,13 +51,14 @@ methods:
 
           ${ticker}
     result:
-      name: AddEthereumChainResult
+      name: Null response
+      description: This method returns `null` if the chain is added.
       schema:
         type: 'null'
     examples:
       - name: wallet_addEthereumChain example
         params:
-          - name: AddEthereumChainParameter
+          - name: Chain
             value:
               chainId: '0x64'
               chainName: Gnosis
@@ -75,30 +74,32 @@ methods:
               blockExplorerUrls:
                 - 'https://blockscout.com/poa/xdai/'
         result:
-          name: wallet_addEthereumChainExampleResult
+          name: Null response
           value: 'null'
   - name: wallet_switchEthereumChain
     tags:
       - $ref: '#/components/tags/MetaMask'
     summary: Switches the wallet's active Ethereum chain.
     description: >-
-      Requests that the wallet switches its active Ethereum chain. Introduced by
-      [EIP-3326](https://ethereum-magicians.org/t/eip-3326-wallet-switchethereumchain).
+      Requests that the wallet switches its active Ethereum chain. Specified by
+      [EIP-3326](https://eips.ethereum.org/EIPS/eip-3326).
     params:
-      - name: SwitchEthereumChainParameter
+      - name: Chain
         schema:
-          title: SwitchEthereumChainParameter
+          title: Chain
+          description: Object containing the chain ID to switch to.
           type: object
           required:
             - chainId
           properties:
             chainId:
               description: >-
-                The chain ID as a `0x`-prefixed hexadecimal string, per the
+                The chain ID as a `0x`-prefixed hexadecimal string, as returned by the
                 `eth_chainId` method.
               type: string
     result:
-      name: SwitchEthereumChainResult
+      name: Null response
+      description: This method returns `null` if the active chain is switched.
       schema:
         type: 'null'
     errors:
@@ -109,50 +110,66 @@ methods:
     examples:
       - name: wallet_switchEthereumChain example
         params:
-          - name: SwitchEthereumChainParameter
+          - name: Chain
             value:
               chainId: '0x64'
         result:
-          name: wallet_switchEthereumChainExampleResult
+          name: Null response
           value: 'null'
   - name: wallet_getPermissions
     tags:
       - $ref: '#/components/tags/MetaMask'
     summary: Gets the user's permissions.
     description: >-
-      Gets the user's permissions. Introduced by
+      Gets the user's permissions. Specified by
       [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255).
     params: []
     result:
-      name: PermissionsList
+      name: Permissions list
       schema:
         $ref: '#/components/schemas/PermissionsList'
+    examples:
+      - name: wallet_getPermissions example
+        params: []
+        result:
+          name: Permission list
+          value:
+            eth_accounts: {}
   - name: wallet_requestPermissions
     tags:
       - $ref: '#/components/tags/MetaMask'
     summary: Requests additional permissions.
     description: >-
-      Requests additional permissions from the user. Introduced by
+      Requests additional permissions from the user. This method accepts
+      a single permission per call. Specified by
       [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255).
     params:
-      - name: requestPermissionsObject
+      - name: Permission
         required: true
         schema:
-          $ref: '#/components/schemas/PermissionObject'
+          title: Permission
+          description: Object containing the permission to request.
+          type: object
+          properties:
+            permission_name:
+              type: object
+              description: >-
+                The permission object. `permission_name` is the name of the permission
+                being requested.
+              additionalProperties: true
     result:
-      name: PermissionsList
+      name: Permissions list
       schema:
         $ref: '#/components/schemas/PermissionsList'
     examples:
       - name: >-
-          wallet_requestPermissions example of requesting the eth_accounts
-          permission
+          wallet_requestPermissions example
         params:
-          - name: requestPermissionObject
+          - name: Permission
             value:
               eth_accounts: {}
         result:
-          name: permissionList
+          name: Permission list
           value:
             eth_accounts: {}
     errors:
@@ -164,30 +181,39 @@ methods:
     summary: Revokes the current dapp permissions.
     description: >-
       Revokes previously granted permissions for the current dapp identified by its
-      origin. This method is specified by
+      origin. This method accepts a single permission per call. Specified by
       [MIP-2](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md)
-      and is only available for the browser extension.
+      and only available for the MetaMask browser extension.
     params:
-      - name: revokePermissionObject
+      - name: Permission
         required: true
         schema:
-          $ref: '#/components/schemas/PermissionObject'
+          title: Permission
+          description: Object containing the permission to revoke.
+          type: object
+          properties:
+            permission_name:
+              type: object
+              description: >-
+                The permission object. `permission_name` is the name of the permission
+                being revoked.
+              additionalProperties: true
     result:
-      name: RevokePermissionsResult
+      name: Null response
+      description: This method returns `null` if the permission is revoked.
       schema:
         type: 'null'
     errors: []
     examples:
       - name: >-
-          wallet_revokePermissions example of revoking the eth_accounts
-          permission
+          wallet_revokePermissions example
         params:
-          - name: revokePermissionObject
+          - name: Permission
             value:
               eth_accounts: {}
         result:
-          name: RevokePermissionsResult
-          value: null
+          name: Null response
+          value: 'null'
   - name: personal_sign
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -196,9 +222,12 @@ methods:
     summary: Presents a plain text signature challenge to the user.
     description: >-
       Presents a plain text signature challenge to the user and returns the
-      signed response. Equivalent to `eth_sign` on some other wallets, and
-      prepends a safe prefix to the signed message to prevent the challenge
+      signed response. Prepends a safe prefix to the signed message to prevent the challenge
       tricking users into signing a financial transaction.
+      <br><br>
+      MetaMask implements `personal_sign` similarly to the Go Ethereum client's `eth_sign`
+      implementation. MetaMask's `personal_sign` doesn't accept a password.
+      <br><br>
       This method requires that the user has granted permission to interact
       with their account first, so make sure to call `eth_requestAccounts` (recommended)
       or `wallet_requestPermissions` first.
@@ -218,12 +247,14 @@ methods:
         required: true
         description: The address of the requested signing account.
         schema:
-          $ref: '#/components/schemas/address'
+          type: string
+          pattern: '^0x[0-9a-fA-F]{40}$'
     result:
       name: Signature
-      description: A hex-encoded 65-byte array starting with `0x`.
+      description: A hex-encoded signature.
       schema:
-        $ref: '#/components/schemas/bytes'
+        type: string
+        pattern: '^0x[0-9a-f]*$'
     examples:
       - name: personal_sign example
         params:
@@ -232,7 +263,7 @@ methods:
           - name: Address
             value: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
         result:
-          name: personal_signExampleResult
+          name: Signature
           value: '0x43d7215ebe96c09a5adac69fc76dea5647286b501954ea273e417cf65e6c80e1db4891826375a7de02467a3e01caf125f64c851a8e9ee9467fd6f7e83523b2115bed8e79d527a85e28a36807d79b85fc551b5c15c1ead2e43456c31f565219203db2aed86cb3601b33ec3b410836d4be7718c6148dc9ac82ecc0a04c5edecd8914'
   - name: eth_signTypedData_v4
     tags:
@@ -943,7 +974,8 @@ components:
           type: object
           description: The message you're proposing the user to sign.
     AddEthereumChainParameter:
-      title: AddEthereumChainParameter
+      title: Chain
+      description: Object containing information about the chain to add.
       type: object
       required:
         - chainId
@@ -960,30 +992,32 @@ components:
           type: string
         blockExplorerUrls:
           description: >-
-            (Optional) One or more URLs pointing to block explorer sites for the
+            (Optional) An array of one or more URLs pointing to block explorer sites for the
             chain.
           type: array
           items:
             type: string
+            description: Block explorer URL.
         chainName:
           description: A human-readable name for the chain.
           type: string
         iconUrls:
           description: >-
-            (Optional) One or more URLs pointing to reasonably sized images that
-            can be used to visually identify the chain. NOTE: MetaMask will not
-            currently display these images. Values can still be included so
-            that they are utilized if MetaMask incorporates them into the display
+            (Optional) An array of one or more URLs pointing to icons that
+            can be used to visually identify the chain. Note: MetaMask will not
+            currently display these icons. You can still include icon URLs so
+            they are used if MetaMask incorporates them into the display
             of custom networks in the future.
           type: array
           items:
             format: uri
             type: string
+            description: Icon URL.
         nativeCurrency:
           $ref: '#/components/schemas/NativeCurrency'
         rpcUrls:
           description: >-
-            One or more URLs pointing to RPC endpoints that can be used to
+            An array of one or more URLs pointing to RPC endpoints that can be used to
             communicate with the chain. At least one item is required, and only
             the first item is used.
           type: array
@@ -991,36 +1025,34 @@ components:
           items:
             format: uri
             type: string
+            description: RPC URL.
     NativeCurrency:
       title: NativeCurrency
       type: object
       description: >-
-        Describes the native currency of the chain using the name, symbol, and
-        decimals fields.
+        An object containing information about the native currency of the chain.
       required:
         - decimals
         - symbol
       properties:
         decimals:
-          description: A non-negative integer.
+          description: A non-negative integer representing the number of decimals the native currency uses.
           minimum: 0
           type: integer
         name:
-          description: A human-readable name.
+          description: A human-readable name of the native currency.
           type: string
         symbol:
-          description: A human-readable symbol.
+          description: A human-readable symbol of the native currency.
           type: string
     Caveats:
       title: Caveats
       description: >-
-        A capability document modifies the caveat property to specify usage
-        restrictions. Capabilities inherit restrictions from the caveat
-        properties of their parent documents and can add new caveats in addition
-        to those inherited from their parents.
+        An array of caveats that specify restrictions on the permission.
       type: array
       items:
         title: Caveat
+        description: Object containing information about the caveat.
         type: object
         properties:
           type:
@@ -1034,44 +1066,30 @@ components:
             title: Name
             type: string
             description: Name of the caveat.
-    PermissionObject:
-      type: object
-      title: PermissionObject
-      additionalProperties:
-        type: object
-        additionalProperties: true
-      properties:
-        permission:
-          description: The requested permission.
-          type: object
-          additionalProperties: true
     Permission:
       title: Permission
+      description: Object containing information about the permission.
       type: object
       properties:
         id:
           description: The permission ID.
           type: string
-        '@context':
+        parentCapability:
           description: >-
-            When two people communicate with one another, the conversation takes
-            place in a shared environment, typically called 'the context of the
-            conversation.' This shared context allows the individuals to use
-            shortcut terms, such as the first name of a mutual friend, to
-            communicate more quickly without losing accuracy. A context in
-            JSON-LD works the same way: it allows two applications to use
-            shortcut terms to communicate more efficiently without losing
-            accuracy.
-          type: array
-          items:
-            type: string
+            The name of the permission being granted. For example, `eth_accounts` or
+            `endowment:permitted-chains`.
+          type: string
         invoker:
-          description: A URI of the dapp being granted this permission.
+          description: The URI of the dapp being granted this permission.
           type: string
         caveats:
           $ref: '#/components/schemas/Caveats'
+        date:
+          description: The timestamp of the permission request.
+          type: number
     PermissionsList:
-      title: PermissionsList
+      title: Permissions list
+      description: An array of the user's permissions.
       type: array
       items:
         $ref: '#/components/schemas/Permission'
