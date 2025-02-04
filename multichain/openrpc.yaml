@@ -479,9 +479,9 @@ methods:
           name: wallet_createSessionUnsupportedScopesResultExample
           value:
             sessionScopes:
-             eip155:1337:
+             eip155:1:
                 accounts:
-                  - eip155:1337:0x5cfe73b6021e818b776b421b1c4db2474086a7e1
+                  - eip155:1:0x5cfe73b6021e818b776b421b1c4db2474086a7e1
                 methods:
                   - wallet_watchAsset
                   - eth_sendTransaction
@@ -522,20 +522,49 @@ methods:
                   - eth_uninstallFilter
                 notifications:
                   - eth_subscription
-            wallet:
-                accounts: []
-                methods:
-                  - wallet_registerOnboarding
-                  - wallet_scanQRCode
-                notifications: []
-            wallet:eip155:
+             eip155:59144:
                 accounts:
-                  - wallet:eip155:0x5cfe73b6021e818b776b421b1c4db2474086a7e1
+                  - eip155:59144:0x5cfe73b6021e818b776b421b1c4db2474086a7e1
                 methods:
-                  - wallet_addEthereumChain
-                  - personal_sign
-                  - eth_signTypedData_v4
-                notifications: []
+                  - wallet_watchAsset
+                  - eth_sendTransaction
+                  - eth_decrypt
+                  - eth_getEncryptionPublicKey
+                  - web3_clientVersion
+                  - eth_subscribe
+                  - eth_unsubscribe
+                  - eth_blockNumber
+                  - eth_call
+                  - eth_chainId
+                  - eth_estimateGas
+                  - eth_feeHistory
+                  - eth_gasPrice
+                  - eth_getBalance
+                  - eth_getBlockByHash
+                  - eth_getBlockByNumber
+                  - eth_getBlockTransactionCountByHash
+                  - eth_getBlockTransactionCountByNumber
+                  - eth_getCode
+                  - eth_getFilterChanges
+                  - eth_getFilterLogs
+                  - eth_getLogs
+                  - eth_getProof
+                  - eth_getStorageAt
+                  - eth_getTransactionByBlockHashAndIndex
+                  - eth_getTransactionByBlockNumberAndIndex
+                  - eth_getTransactionByHash
+                  - eth_getTransactionCount
+                  - eth_getTransactionReceipt
+                  - eth_getUncleCountByBlockHash
+                  - eth_getUncleCountByBlockNumber
+                  - eth_newBlockFilter
+                  - eth_newFilter
+                  - eth_newPendingTransactionFilter
+                  - eth_sendRawTransaction
+                  - eth_syncing
+                  - eth_uninstallFilter
+                notifications:
+                  - eth_subscription
           sessionProperties:
               expiry: "2022-11-31T17:07:31+00:00"
             
