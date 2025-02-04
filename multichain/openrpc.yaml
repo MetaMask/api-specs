@@ -450,7 +450,7 @@ methods:
                 notifications:
                   - eth_subscription
               wallet:
-              accounts: []
+                accounts: []
                 methods:
                   - wallet_registerOnboarding
                   - wallet_scanQRCode
