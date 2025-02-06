@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.10.15]
 ### Uncategorized
-- Fix typo in wallet_createSessionUnsupportedScopesResultExample ([#281](https://github.com/MetaMask/api-specs/pull/281))
+- Fix wallet_createSessionUnsupportedScopesExample results value [#281](https://github.com/MetaMask/api-specs/pull/281))
 
 ## [0.10.14]
 ### Uncategorized
