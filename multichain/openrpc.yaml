@@ -475,7 +475,7 @@ methods:
                   - eth_getBalance
                 notifications:
                   - eth_subscription
-      - result:
+        result:
           name: wallet_createSessionUnsupportedScopesResultExample
           value:
             sessionScopes:
@@ -567,7 +567,7 @@ methods:
                   - eth_subscription
           sessionProperties:
               expiry: "2022-11-31T17:07:31+00:00"
-            
+
     errors:
       - $ref: "#/components/errors/UnknownError"
       - code: 5100
