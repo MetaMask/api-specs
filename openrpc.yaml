@@ -361,11 +361,11 @@ methods:
       schema:
         type: boolean
     examples:
-        - name: wallet_registerOnboarding example
-          params: []
-          result:
-            name: Registered
-            value: true
+      - name: wallet_registerOnboarding example
+        params: []
+        result:
+          name: Registered
+          value: true
   - name: wallet_watchAsset
     tags:
       - $ref: '#/components/tags/MetaMask'
