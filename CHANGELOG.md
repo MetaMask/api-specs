@@ -8,9 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.10.14]
 ### Uncategorized
-- update `wallet_createSession` examples ([#279](https://github.com/MetaMask/api-specs/pull/279))
+- Update `wallet_createSession` examples ([#279](https://github.com/MetaMask/api-specs/pull/279))
 - Fix spec for doc rendering (Part 1) ([#277](https://github.com/MetaMask/api-specs/pull/277))
-- wallet_swapAsset v1 ([#201](https://github.com/MetaMask/api-specs/pull/201))
+- Add `wallet_swapAsset` ([#201](https://github.com/MetaMask/api-specs/pull/201))
 
 ## [0.10.13]
 ### Uncategorized
