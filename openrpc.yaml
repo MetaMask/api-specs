@@ -282,21 +282,24 @@ methods:
         required: true
         description: The address of the requested signing account.
         schema:
-          $ref: '#/components/schemas/address'
-      - name: TypedData
+          type: string
+          pattern: '^0x[0-9a-fA-F]{40}$'
+      - name: Typed data
         required: true
         schema:
           $ref: '#/components/schemas/TypedData'
     result:
       name: Signature
+      description: A hex-encoded signature.
       schema:
-        $ref: '#/components/schemas/bytes'
+        type: string
+        pattern: '^0x[0-9a-f]*$'
     examples:
       - name: eth_SignTypedData_v4 example
         params:
           - name: Address
             value: '0x0000000000000000000000000000000000000000'
-          - name: TypedData
+          - name: Typed data
             value:
               types:
                 EIP712Domain:
@@ -346,17 +349,23 @@ methods:
     description: >-
       Registers the requesting site with MetaMask as the initiator of
       onboarding, enabling MetaMask to redirect the user back to the site after
-      onboarding. Returns a promise that resolves to `true`, or rejects if
+      onboarding. Returns a promise that resolves to `true`, or rejects the request if
       there's an error. Instead of calling this method directly, you should use
       the
       [`@metamask/onboarding`](https://github.com/MetaMask/metamask-onboarding)
       library.
     params: []
     result:
-      name: RegisterOnboardingResult
+      name: Registered
       description: '`true` if the request was successful, `false` otherwise.'
       schema:
         type: boolean
+    examples:
+      - name: wallet_registerOnboarding example
+        params: []
+        result:
+          name: Registered
+          value: true
   - name: wallet_watchAsset
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -375,11 +384,11 @@ methods:
         schema:
           type: string
           description: >-
-            Supports ERC-20, ERC-721, and ERC-1155 tokens. Support for ERC-721
+            The token type (`ERC20`, `ERC721`, or `ERC1155`). Support for ERC-721
             and ERC-1155 tokens is experimental and currently only available on
             the extension (not on mobile). See
             [MIP-1](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-1.md)
-            and [MIP proposal
+            and the [MIP proposal
             lifecycle](https://github.com/MetaMask/metamask-improvement-proposals/blob/main/PROCESS-GUIDE.md#proposal-lifecycle)
             for more information.
           enum:
@@ -389,7 +398,7 @@ methods:
         required: true
       - name: options
         schema:
-          title: WatchAssetOptions
+          description: An object containing information about the token.
           type: object
           required:
             - address
@@ -444,7 +453,7 @@ methods:
           supported or the user's currently selected network does not match the
           chain of the asset in question.
     result:
-      name: WatchAssetResult
+      name: Added
       description: '`true` if the token was added, `false` otherwise.'
       schema:
         type: boolean
@@ -460,7 +469,7 @@ methods:
               decimals: 18
               image: 'https://foo.io/token-image.svg'
         result:
-          name: wallet_watchAssetExampleResult
+          name: Added
           value: true
       - name: wallet_watchAsset ERC-721 example
         params:
@@ -471,7 +480,7 @@ methods:
               address: '0x123456789abcdef0123456789abcdef01234567'
               tokenId: '42'
         result:
-          name: wallet_watchAssetERC721ExampleResult
+          name: Added
           value: true
       - name: wallet_watchAsset ERC-1155 example
         params:
@@ -482,7 +491,7 @@ methods:
               address: '0xabcdef0123456789abcdef0123456789abcdef01'
               tokenId: '1337'
         result:
-          name: wallet_watchAssetERC1155ExampleResult
+          name: Added
           value: true
   - name: wallet_scanQRCode
     tags:
@@ -494,7 +503,7 @@ methods:
       Requests that the user scan a QR code using their device camera.
       Introduced by [EIP-945](https://github.com/ethereum/EIPs/issues/945).
     params:
-      - name: regex
+      - name: Regex
         required: false
         description: >-
           A regular expression (regex) string for matching arbitrary QR code
@@ -503,7 +512,7 @@ methods:
           type: string
           title: regex
     result:
-      name: ScanQRCodeResult
+      name: QR code string
       description: >-
         A string corresponding to the scanned QR code. If a regex string is
         provided, the resulting string matches it. If no regex string is
@@ -511,54 +520,68 @@ methods:
         condition is met, the method returns an error.
       schema:
         type: string
-        title: ScanQRCodeResult
+        title: QR code string
   - name: eth_requestAccounts
     tags:
       - $ref: '#/components/tags/MetaMask'
     description: >-
-      Requests that the user provide an Ethereum address to be identified by.
+      Requests that the user provide access to one or more Ethereum addresses.
       This method is specified by
       [EIP-1102](https://eips.ethereum.org/EIPS/eip-1102). Internally, this
       method calls `wallet_requestPermissions` for permission to call
       `eth_accounts`.
-    summary: Requests that the user provide an Ethereum address.
+    summary: Requests that the user provide access to addresses.
     params: []
     result:
-      name: AddressList
+      name: Address list
       schema:
         type: array
+        description: >-
+          An array of Ethereum addresses that the user has authorized the dapp
+          to access.
         items:
-          $ref: '#/components/schemas/address'
+          title: Address
+          description: A hex-encoded address.
+          type: string
+          pattern: '^0x[0-9a-fA-F]{40}$'
     errors:
       - $ref: '#/components/errors/UserRejected'
     examples:
       - name: eth_requestAccounts example
         params: []
         result:
-          name: eth_requestAccountsExampleResult
-          value: '0xa77392123a1085f75e62eec7dea7e0e1e5142d5f'
+          name: Address list
+          value:
+            - '0xa77392123a1085f75e62eec7dea7e0e1e5142d5f'
   - name: eth_accounts
     tags:
       - $ref: '#/components/tags/MetaMask'
       - $ref: '#/components/tags/Restricted'
     description: >-
-      Returns a list of addresses for the accounts owned by the user.
+      Returns a list of addresses that the user has authorized the dapp to access.
       This method requires calling `wallet_requestPermissions` for permission.
       We recommend using `eth_requestAccounts`, which internally calls `wallet_requestPermission`.
-    summary: Gets a list of addresses for the user's accounts.
+    summary: Gets a list of authorized addresses.
     params: []
     result:
-      name: AddressList
+      name: Address list
       schema:
         type: array
+        description: >-
+          An array of Ethereum addresses that the user has authorized the dapp
+          to access.
         items:
-          $ref: '#/components/schemas/address'
+          title: Address
+          description: A hex-encoded address.
+          type: string
+          pattern: '^0x[0-9a-fA-F]{40}$'
     examples:
       - name: eth_accounts example
         params: []
         result:
-          name: eth_accountsExampleResult
-          value: '0xa77392123a1085f75e62eec7dea7e0e1e5142d5f'
+          name: Address list
+          value:
+            - '0xa77392123a1085f75e62eec7dea7e0e1e5142d5f'
   - name: eth_sendTransaction
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -579,9 +602,9 @@ methods:
           title: Transaction
           description: >-
             The parameters to customize a transaction. If a `to` address is not
-            provided, it will be assumed that the transaction is a contract
-            creation transaction, and the `data` field of the transaction will
-            be used as the contract initialization code. `gasPrice` cannot be
+            provided, the transaction is assumed to be a contract
+            creation transaction, and the `data` field is
+            used as the contract initialization code. `gasPrice` cannot be
             used together with `maxPriorityFeePerGas` and `maxFeePerGas`.
           required:
             - from
@@ -595,44 +618,45 @@ methods:
               - data
           properties:
             to:
-              title: to address
+              description: The recipient's address.
               $ref: '#/components/schemas/address'
             from:
-              title: from address
+              description: The sender's address.
               $ref: '#/components/schemas/address'
             gas:
-              title: gas limit
+              description: >-
+                The maximum amount of gas the transaction is allowed to use.
               $ref: '#/components/schemas/uint'
             value:
-              title: value
+              description: The amount to transfer in wei.
               $ref: '#/components/schemas/uint'
             data:
-              title: data
+              description: >-
+                The data to include in the transaction. Used for contract
+                creation transactions.
               $ref: '#/components/schemas/bytes'
             gasPrice:
-              title: gas price
               description: >-
                 The gas price the sender is willing to pay to miners in wei.
                 Used in pre-1559 transactions.
               $ref: '#/components/schemas/uint'
             maxPriorityFeePerGas:
-              title: max priority fee per gas
               description: >-
                 Maximum fee per gas the sender is willing to pay to miners in
                 wei. Used in 1559 transactions.
               $ref: '#/components/schemas/uint'
             maxFeePerGas:
-              title: max fee per gas
               description: >-
                 The maximum total fee per gas the sender is willing to pay
                 (includes the network / base fee and miner / priority fee) in
                 wei. Used in 1559 transactions.
               $ref: '#/components/schemas/uint'
     result:
-      name: TransactionHash
+      name: Transaction hash
       description: The transaction hash of the sent transaction.
       schema:
-        $ref: '#/components/schemas/bytes32'
+        type: string
+        pattern: '^0x[0-9a-f]{64}$'
     errors:
       - code: 4100
         message: >-
@@ -921,7 +945,8 @@ methods:
 components:
   schemas:
     TypedData:
-      title: TypedData
+      title: Typed data
+      description: Object containing information about the typed data to sign.
       type: object
       required:
         - types
@@ -931,6 +956,7 @@ components:
       properties:
         types:
           type: object
+          description: Object containing type information.
           required:
             - EIP712Domain
           properties:
@@ -938,19 +964,26 @@ components:
               type: array
               items:
                 type: object
+                title: Domain separator value
+                description: Object containing information about the domain separator value.
                 properties:
                   name:
                     type: string
+                    description: Name of the domain separator value.
                   type:
                     type: string
+                    description: Data type of the domain separator value.
               description: >-
                 An array specifying one or more of the following domain
-                separator values: 1) `name` - The user-readable name of the signing
-                domain, that is, the name of the dapp or the protocol. 2) `version`
-                - The current major version of the signing domain. 3) `chainId`
-                - The chain ID of the network. 4) `verifyingContract` - The
-                address of the contract that will verify the signature. 5)
-                `salt` - A disambiguating salt for the protocol.
+                separator values:
+                <br><br>
+                <ul>
+                  <li>`name` - The user-readable name of the signing domain, that is, the name of the dapp or the protocol.</li>
+                  <li>`version` - The current major version of the signing domain.</li>
+                  <li>`chainId` - The chain ID of the network.</li>
+                  <li>`verifyingContract` - The address of the contract that will verify the signature.</li>
+                  <li>`salt` - A disambiguating salt for the protocol.</li>
+                </ul>
           additionalProperties:
             type: array
             required:
@@ -966,10 +999,11 @@ components:
         domain:
           type: object
           description: >-
-            Contains the domain separator values specified in the `EIP712Domain`
+            Object containing the domain separator values specified in the `EIP712Domain`
             type.
         primaryType:
           type: string
+          description: The primary type of the message.
         message:
           type: object
           description: The message you're proposing the user to sign.
