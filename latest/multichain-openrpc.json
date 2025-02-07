@@ -643,9 +643,7 @@
                                 }
                             }
                         }
-                    ]
-                },
-                {
+                    ],
                     "result": {
                         "name": "wallet_createSessionUnsupportedScopesResultExample",
                         "value": {
