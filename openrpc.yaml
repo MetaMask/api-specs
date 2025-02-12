@@ -526,19 +526,21 @@ methods:
       - $ref: '#/components/tags/MetaMask'
     summary: Sends a batch of calls.
     description: >-
-      Requests that the wallet submits a batch of multiple calls. All calls should
-      be sent from the same sender and on the same chain. Specified by
+      Requests that the wallet submits a batch of calls. Specified by
       [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792).
     params:
       - name: Calls
         required: true
         schema:
+          description: An object containing information about a batch of calls.
           type: object
-          description: A batch of calls to send.
           required:
             - from
             - calls
           properties:
+            version:
+              description: The version of the request format.
+              type: string
             from:
               description: The sender's address.
               $ref: '#/components/schemas/address'
@@ -548,8 +550,8 @@ methods:
                 type: array
                 items:
                   title: Call
-                  type: object
                   description: An object containing information about the call.
+                  type: object
                   properties:
                     to:
                       description: The address of the call's recipient.
@@ -561,13 +563,15 @@ methods:
                       description: The value to send with the call.
                       $ref: '#/components/schemas/uint'
                     chainId:
-                      description: The chain ID of the call.
+                      description: >-
+                        The chain ID of the call. If specified, this must match the
+                        currently selected network in the wallet.
                       $ref: '#/components/schemas/uint'
             capabilities:
-              type: object
               description: >-
-                An object specifying the wallet capabilities to use when executing
-                the calls.
+                Dapps can use this object to communicate with the wallet about
+                supported capabilities.
+              type: object
               additionalProperties: true
     result:
       name: Batch ID
@@ -579,19 +583,15 @@ methods:
         params:
           - name: Calls
             value:
+              version: '1.0'
               from: '0xd46e8dd67c5d32be8058bb8eb970870f07244567'
               calls:
                 - to: '0xd46e8dd67c5d32be8058bb8eb970870f07244567'
                   value: '0x9184e72a'
                   data: '0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675'
-                  chainId: '0x01'
                 - to: '0xd46e8dd67c5d32be8058bb8eb970870f07244567'
                   value: '0x182183'
                   data: '0xfbadbaf01'
-                  chainId: '0x01'
-              capabilities:
-                paymasterService:
-                  url: 'https://paymaster.example.com'
         result:
           name: Batch ID
           value: '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331'
@@ -606,43 +606,44 @@ methods:
     params:
       - name: Batch ID
         required: true
-        description: The ID of a batch of calls.
+        description: >-
+          The ID of a batch of calls (the value returned by `wallet_sendCalls`).
         schema:
           type: string
     result:
-      name: Batch result
+      name: Batch status
       schema:
-        type: object
         description: >-
-          An object containing the status of the batch of calls.
+          An object containing status information of the batch of calls.
+        type: object
         properties:
           status:
-            type: string
             description: The status of the batch of calls.
+            type: string
             enum:
               - PENDING
               - CONFIRMED
           receipts:
-            type: array
             description: >-
-              An array of transaction receipts, each corresponding to a transaction
-              in the batch. If the wallet executed multiple calls atomically (that is,
-              in a single transaction), a single receipt is returned.
+              An array of transaction receipts. If the wallet executed the calls
+              atomically (that is, in a single transaction), a single receipt is
+              returned.
+            type: array
             items:
               title: Receipt
-              type: object
               description: A transaction receipt object.
+              type: object
               properties:
                 logs:
-                  type: array
                   description: An array of log objects.
+                  type: array
                   items:
                     title: Log
-                    type: object
                     description: An object containing information about the log.
+                    type: object
                     properties:
                       address:
-                        description: The address of the contract that emitted the log.
+                        description: The address that generated the log.
                         type: string
                         pattern: '^0x[0-9a-fA-F]{40}$'
                       data:
@@ -650,18 +651,18 @@ methods:
                         type: string
                         pattern: '^0x[0-9a-f]*$'
                       topics:
-                        type: array
                         description: An array of log topics.
+                        type: array
                         items:
                           title: Topic
                           description: A log topic.
                           type: string
                           pattern: '^0x[0-9a-f]*$'
                 status:
-                  type: string
                   description: >-
                     The status of the transaction. `0x1` indicates success, and `0x0`
                     indicates failure.
+                  type: string
                   pattern: '^0x[0-1]$'
                 chainId:
                   description: The chain ID of the transaction.
@@ -683,6 +684,7 @@ methods:
                   description: The hash of the transaction.
                   type: string
                   pattern: '^0x[0-9a-f]{64}$'
+              additionalProperties: true
     examples:
       - name: wallet_getCallsStatus example
         params:
@@ -714,8 +716,8 @@ methods:
       [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792).
     params:
       - name: Batch ID
-        required: true
         description: The ID of a batch of calls.
+        required: true
         schema:
           type: string
     result:
@@ -735,41 +737,41 @@ methods:
       - $ref: '#/components/tags/MetaMask'
     summary: Gets the capabilities of the wallet.
     description: >-
-      Gets the capabilities supported by the wallet for a specific address, such
-      as paymaster communication or atomic batch calls. Specified by
+      Gets the capabilities supported by the wallet, such as atomic batch
+      transactions. Specified by
       [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792).
     params:
       - name: Address
-        required: true
         description: A wallet address.
+        required: true
         schema:
           type: string
           pattern: '^0x[0-9a-fA-F]{40}$'
     result:
       name: Capabilities
       schema:
-        type: object
         description: >-
           An object containing the capabilities supported by the wallet.
+        type: object
         properties:
           chain_id:
-            type: object
             description: >-
               An object containing the capabilities supported by the wallet for a
               specific chain ID. `chain_id` is the
               [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain ID in
               hexadecimal format.
+            type: object
             properties:
               capability_name:
-                type: object
                 description: >-
                   An object containing information about the capability.
                   `capability_name` is the name of the capability.
+                type: object
                 properties:
                   supported:
-                    type: boolean
                     description: >-
                       `true` if the capability is supported.
+                    type: boolean
             additionalProperties: true
         additionalProperties: true
     examples:
@@ -780,12 +782,7 @@ methods:
         result:
           name: Capabilities
           value:
-            '0x2105':
-              paymasterService:
-                supported: true
-              sessionKeys:
-                supported: true
-            '0x14A34':
+            '0x01':
               atomicBatch:
                 supported: true
   - name: eth_requestAccounts
