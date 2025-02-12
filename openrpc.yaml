@@ -568,18 +568,12 @@ methods:
               description: >-
                 An object specifying the wallet capabilities to use when executing
                 the calls.
-              properties:
-                capability_name:
-                  type: object
-                  description: >-
-                    An object containing information about the capability.
-                    `capability_name` is the name of the capability.
-                  additionalProperties: true
               additionalProperties: true
     result:
       name: Batch ID
       description: The ID of the batch of calls.
-      type: string
+      schema:
+        type: string
     examples:
       - name: wallet_sendCalls example
         params:
@@ -613,78 +607,82 @@ methods:
       - name: Batch ID
         required: true
         description: The ID of a batch of calls.
-        type: string
+        schema:
+          type: string
     result:
       name: Batch result
-      description: >-
-        An object containing the status of the batch of calls.
-      type: object
-      properties:
-        status:
-          type: string
-          description: The status of the batch of calls.
-          enum:
-            - PENDING
-            - CONFIRMED
-        receipts:
-          type: array
-          description: >-
-            An array of transaction receipts, each corresponding to a transaction
-            in the batch. If the wallet executed multiple calls atomically (that is,
-            in a single transaction), a single receipt is returned.
-          items:
-            title: Receipt
-            type: object
-            description: A transaction receipt object.
-            properties:
-              logs:
-                type: array
-                description: An array of log objects.
-                items:
-                  title: Log
-                  type: object
-                  description: An object containing information about the log.
-                  properties:
-                    address:
-                      description: The address of the contract that emitted the log.
-                      $ref: '#/components/schemas/address'
-                    data:
-                      description: The data of the log.
-                      $ref: '#/components/schemas/bytes'
-                    topics:
-                      type: array
-                      description: An array of log topics.
-                      items:
-                        title: Topic
-                        description: A log topic.
+      schema:
+        type: object
+        description: >-
+          An object containing the status of the batch of calls.
+        properties:
+          status:
+            type: string
+            description: The status of the batch of calls.
+            enum:
+              - PENDING
+              - CONFIRMED
+          receipts:
+            type: array
+            description: >-
+              An array of transaction receipts, each corresponding to a transaction
+              in the batch. If the wallet executed multiple calls atomically (that is,
+              in a single transaction), a single receipt is returned.
+            items:
+              title: Receipt
+              type: object
+              description: A transaction receipt object.
+              properties:
+                logs:
+                  type: array
+                  description: An array of log objects.
+                  items:
+                    title: Log
+                    type: object
+                    description: An object containing information about the log.
+                    properties:
+                      address:
+                        description: The address of the contract that emitted the log.
+                        type: string
+                        pattern: '^0x[0-9a-fA-F]{40}$'
+                      data:
+                        description: The data of the log.
                         type: string
                         pattern: '^0x[0-9a-f]*$'
-              status:
-                type: string
-                description: >-
-                  The status of the transaction. `0x1` indicates success, and `0x0`
-                  indicates failure.
-                pattern: '^0x[0-1]$'
-              chainId:
-                description: The chain ID of the transaction.
-                type: string
-                pattern: '^0x([1-9a-f]+[0-9a-f]*|0)$'
-              blockHash:
-                description: The hash of the block containing the transaction.
-                type: string
-                pattern: '^0x[0-9a-f]{64}$'
-              blockNumber:
-                description: The number of the block containing the transaction.
-                type: string
-                pattern: '^0x([1-9a-f]+[0-9a-f]*|0)$'
-              gasUsed:
-                description: The amount of gas used by the transaction.
-                type: string
-                pattern: '^0x([1-9a-f]+[0-9a-f]*|0)$'
-              transactionHash:
-                description: The hash of the transaction.
-                type: string
-                pattern: '^0x[0-9a-f]{64}$'
+                      topics:
+                        type: array
+                        description: An array of log topics.
+                        items:
+                          title: Topic
+                          description: A log topic.
+                          type: string
+                          pattern: '^0x[0-9a-f]*$'
+                status:
+                  type: string
+                  description: >-
+                    The status of the transaction. `0x1` indicates success, and `0x0`
+                    indicates failure.
+                  pattern: '^0x[0-1]$'
+                chainId:
+                  description: The chain ID of the transaction.
+                  type: string
+                  pattern: '^0x([1-9a-f]+[0-9a-f]*|0)$'
+                blockHash:
+                  description: The hash of the block containing the transaction.
+                  type: string
+                  pattern: '^0x[0-9a-f]{64}$'
+                blockNumber:
+                  description: The number of the block containing the transaction.
+                  type: string
+                  pattern: '^0x([1-9a-f]+[0-9a-f]*|0)$'
+                gasUsed:
+                  description: The amount of gas used by the transaction.
+                  type: string
+                  pattern: '^0x([1-9a-f]+[0-9a-f]*|0)$'
+                transactionHash:
+                  description: The hash of the transaction.
+                  type: string
+                  pattern: '^0x[0-9a-f]{64}$'
     examples:
       - name: wallet_getCallsStatus example
         params:
@@ -718,54 +716,62 @@ methods:
       - name: Batch ID
         required: true
         description: The ID of a batch of calls.
-        type: string
+        schema:
+          type: string
     result:
+      name: No result
       description: This method doesn't return anything.
+      schema: {}
     examples:
       - name: wallet_showCallsStatus example
         params:
-        - name: Batch ID
-          value: '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331'
+          - name: Batch ID
+            value: '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331'
+        result:
+          name: No result
+          value: {}
   - name: wallet_getCapabilities
     tags:
       - $ref: '#/components/tags/MetaMask'
     summary: Gets the capabilities of the wallet.
     description: >-
-      Gets the capabilities supported by the wallet for a specific address,
-      such as paymaster communication or atomic batch calls. Specified
-      by [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792).
+      Gets the capabilities supported by the wallet for a specific address, such
+      as paymaster communication or atomic batch calls. Specified by
+      [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792).
     params:
       - name: Address
         required: true
         description: A wallet address.
-        type: string
-        pattern: '^0x[0-9a-fA-F]{40}$'
+        schema:
+          type: string
+          pattern: '^0x[0-9a-fA-F]{40}$'
     result:
       name: Capabilities
-      description: >-
-        An object containing the capabilities supported by the wallet.
-      type: object
-      properties:
-        chain_id:
-          type: object
-          description: >-
-            An object containing the capabilities supported by the wallet for a
-            specific chain ID. `chain_id` is the
-            [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain ID in
-            hexadecimal format.
-          properties:
-            capability_name:
-              type: object
-              description: >-
-                An object containing information about the capability.
-                `capability_name` is the name of the capability.
-              properties:
-                supported:
-                  type: boolean
-                  description: >-
-                    `true` if the capability is supported.
-          additionalProperties: true
-      additionalProperties: true
+      schema:
+        type: object
+        description: >-
+          An object containing the capabilities supported by the wallet.
+        properties:
+          chain_id:
+            type: object
+            description: >-
+              An object containing the capabilities supported by the wallet for a
+              specific chain ID. `chain_id` is the
+              [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain ID in
+              hexadecimal format.
+            properties:
+              capability_name:
+                type: object
+                description: >-
+                  An object containing information about the capability.
+                  `capability_name` is the name of the capability.
+                properties:
+                  supported:
+                    type: boolean
+                    description: >-
+                      `true` if the capability is supported.
+            additionalProperties: true
+        additionalProperties: true
     examples:
       - name: wallet_getCapabilities example
         params:
