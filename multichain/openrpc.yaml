@@ -22,8 +22,7 @@ methods:
           properties:
             method:
               type: "string"
-            params:
-              true
+            params: true
   - name: wallet_invokeMethod
     paramStructure: by-name
     params:
@@ -41,12 +40,10 @@ methods:
           properties:
             method:
               type: "string"
-            params:
-              true
+            params: true
     result:
       name: wallet_invokeMethodResult
-      schema:
-        true
+      schema: true
     examples:
       - name: wallet_invokeMethodExample
         params:
@@ -263,7 +260,7 @@ methods:
       - name: wallet_createSessionEthExample
         description: Example of a createSession request.
         params:
-          - name: requiredScopes
+          - name: optionalScopes
             value:
               eip155:1337:
                 methods:
@@ -317,9 +314,6 @@ methods:
                   - personal_sign
                   - eth_signTypedData_v4
                 notifications: []
-          - name: sessionProperties
-            value:
-              expiry: "2022-12-24T17:07:31+00:00"
         result:
           name: wallet_createSessionResultExample
           value:
@@ -381,8 +375,6 @@ methods:
                   - personal_sign
                   - eth_signTypedData_v4
                 notifications: []
-              sessionProperties:
-                expiry: "2022-11-31T17:07:31+00:00"
 
       - name: wallet_createSessionEthUnsupportedMethodsExample
         description: Example of a createSession request with unsupported eip155 methods.
@@ -399,9 +391,6 @@ methods:
               wallet:eip155:
                 methods: []
                 notifications: []
-          - name: sessionProperties
-            value:
-              expiry: "2022-12-24T17:07:31+00:00"
         result:
           name: wallet_createSessionEthUnsupportedMethodsResultExample
           value:
@@ -463,12 +452,10 @@ methods:
                   - personal_sign
                   - eth_signTypedData_v4
                 notifications: []
-            sessionProperties:
-              expiry: "2022-11-31T17:07:31+00:00"
       - name: wallet_createSessionUnsupportedScopesExample
         description: Example of a createSession request with unsupported scopes.
         params:
-          - name: requiredScopes
+          - name: optionalScopes
             value:
               foobar:
                 methods:
@@ -565,8 +552,6 @@ methods:
                   - eth_uninstallFilter
                 notifications:
                   - eth_subscription
-          sessionProperties:
-              expiry: "2022-11-31T17:07:31+00:00"
 
     errors:
       - $ref: "#/components/errors/UnknownError"
