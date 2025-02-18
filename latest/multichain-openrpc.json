@@ -177,7 +177,10 @@
                                         "eth_newPendingTransactionFilter",
                                         "eth_sendRawTransaction",
                                         "eth_syncing",
-                                        "eth_uninstallFilter"
+                                        "eth_uninstallFilter",
+                                        "personal_sign",
+                                        "eth_signTypedData_v4",
+                                        "wallet_swapAsset"
                                     ],
                                     "notifications": [
                                         "eth_subscription"
@@ -196,9 +199,7 @@
                                         "wallet:eip155:0x5cfe73b6021e818b776b421b1c4db2474086a7e1"
                                     ],
                                     "methods": [
-                                        "wallet_addEthereumChain",
-                                        "personal_sign",
-                                        "eth_signTypedData_v4"
+                                        "wallet_addEthereumChain"
                                     ],
                                     "notifications": []
                                 }
@@ -273,7 +274,10 @@
                                         "eth_newPendingTransactionFilter",
                                         "eth_sendRawTransaction",
                                         "eth_syncing",
-                                        "eth_uninstallFilter"
+                                        "eth_uninstallFilter",
+                                        "personal_sign",
+                                        "eth_signTypedData_v4",
+                                        "wallet_swapAsset"
                                     ],
                                     "notifications": [
                                         "eth_subscription"
@@ -292,9 +296,7 @@
                                         "wallet:eip155:0x5cfe73b6021e818b776b421b1c4db2474086a7e1"
                                     ],
                                     "methods": [
-                                        "wallet_addEthereumChain",
-                                        "personal_sign",
-                                        "eth_signTypedData_v4"
+                                        "wallet_addEthereumChain"
                                     ],
                                     "notifications": []
                                 }
@@ -372,7 +374,7 @@
                     "description": "Example of a createSession request.",
                     "params": [
                         {
-                            "name": "requiredScopes",
+                            "name": "optionalScopes",
                             "value": {
                                 "eip155:1337": {
                                     "methods": [
@@ -427,18 +429,10 @@
                                 },
                                 "wallet:eip155": {
                                     "methods": [
-                                        "wallet_addEthereumChain",
-                                        "personal_sign",
-                                        "eth_signTypedData_v4"
+                                        "wallet_addEthereumChain"
                                     ],
                                     "notifications": []
                                 }
-                            }
-                        },
-                        {
-                            "name": "sessionProperties",
-                            "value": {
-                                "expiry": "2022-12-24T17:07:31+00:00"
                             }
                         }
                     ],
@@ -487,7 +481,10 @@
                                         "eth_newPendingTransactionFilter",
                                         "eth_sendRawTransaction",
                                         "eth_syncing",
-                                        "eth_uninstallFilter"
+                                        "eth_uninstallFilter",
+                                        "personal_sign",
+                                        "eth_signTypedData_v4",
+                                        "wallet_swapAsset"
                                     ],
                                     "notifications": [
                                         "eth_subscription"
@@ -506,14 +503,9 @@
                                         "wallet:eip155:0x5cfe73b6021e818b776b421b1c4db2474086a7e1"
                                     ],
                                     "methods": [
-                                        "wallet_addEthereumChain",
-                                        "personal_sign",
-                                        "eth_signTypedData_v4"
+                                        "wallet_addEthereumChain"
                                     ],
                                     "notifications": []
-                                },
-                                "sessionProperties": {
-                                    "expiry": "2022-11-31T17:07:31+00:00"
                                 }
                             }
                         }
@@ -540,12 +532,6 @@
                                     "methods": [],
                                     "notifications": []
                                 }
-                            }
-                        },
-                        {
-                            "name": "sessionProperties",
-                            "value": {
-                                "expiry": "2022-12-24T17:07:31+00:00"
                             }
                         }
                     ],
@@ -594,7 +580,10 @@
                                         "eth_newPendingTransactionFilter",
                                         "eth_sendRawTransaction",
                                         "eth_syncing",
-                                        "eth_uninstallFilter"
+                                        "eth_uninstallFilter",
+                                        "personal_sign",
+                                        "eth_signTypedData_v4",
+                                        "wallet_swapAsset"
                                     ],
                                     "notifications": [
                                         "eth_subscription"
@@ -613,15 +602,10 @@
                                         "wallet:eip155:0x5cfe73b6021e818b776b421b1c4db2474086a7e1"
                                     ],
                                     "methods": [
-                                        "wallet_addEthereumChain",
-                                        "personal_sign",
-                                        "eth_signTypedData_v4"
+                                        "wallet_addEthereumChain"
                                     ],
                                     "notifications": []
                                 }
-                            },
-                            "sessionProperties": {
-                                "expiry": "2022-11-31T17:07:31+00:00"
                             }
                         }
                     }
@@ -631,7 +615,7 @@
                     "description": "Example of a createSession request with unsupported scopes.",
                     "params": [
                         {
-                            "name": "requiredScopes",
+                            "name": "optionalScopes",
                             "value": {
                                 "foobar": {
                                     "methods": [
@@ -689,7 +673,60 @@
                                         "eth_newPendingTransactionFilter",
                                         "eth_sendRawTransaction",
                                         "eth_syncing",
-                                        "eth_uninstallFilter"
+                                        "eth_uninstallFilter",
+                                        "personal_sign",
+                                        "eth_signTypedData_v4",
+                                        "wallet_swapAsset"
+                                    ],
+                                    "notifications": [
+                                        "eth_subscription"
+                                    ]
+                                },
+                                "eip155:1337": {
+                                    "accounts": [
+                                        "eip155:1337:0x5cfe73b6021e818b776b421b1c4db2474086a7e1"
+                                    ],
+                                    "methods": [
+                                        "wallet_watchAsset",
+                                        "eth_sendTransaction",
+                                        "eth_decrypt",
+                                        "eth_getEncryptionPublicKey",
+                                        "web3_clientVersion",
+                                        "eth_subscribe",
+                                        "eth_unsubscribe",
+                                        "eth_blockNumber",
+                                        "eth_call",
+                                        "eth_chainId",
+                                        "eth_estimateGas",
+                                        "eth_feeHistory",
+                                        "eth_gasPrice",
+                                        "eth_getBalance",
+                                        "eth_getBlockByHash",
+                                        "eth_getBlockByNumber",
+                                        "eth_getBlockTransactionCountByHash",
+                                        "eth_getBlockTransactionCountByNumber",
+                                        "eth_getCode",
+                                        "eth_getFilterChanges",
+                                        "eth_getFilterLogs",
+                                        "eth_getLogs",
+                                        "eth_getProof",
+                                        "eth_getStorageAt",
+                                        "eth_getTransactionByBlockHashAndIndex",
+                                        "eth_getTransactionByBlockNumberAndIndex",
+                                        "eth_getTransactionByHash",
+                                        "eth_getTransactionCount",
+                                        "eth_getTransactionReceipt",
+                                        "eth_getUncleCountByBlockHash",
+                                        "eth_getUncleCountByBlockNumber",
+                                        "eth_newBlockFilter",
+                                        "eth_newFilter",
+                                        "eth_newPendingTransactionFilter",
+                                        "eth_sendRawTransaction",
+                                        "eth_syncing",
+                                        "eth_uninstallFilter",
+                                        "personal_sign",
+                                        "eth_signTypedData_v4",
+                                        "wallet_swapAsset"
                                     ],
                                     "notifications": [
                                         "eth_subscription"
@@ -736,16 +773,16 @@
                                         "eth_newPendingTransactionFilter",
                                         "eth_sendRawTransaction",
                                         "eth_syncing",
-                                        "eth_uninstallFilter"
+                                        "eth_uninstallFilter",
+                                        "personal_sign",
+                                        "eth_signTypedData_v4",
+                                        "wallet_swapAsset"
                                     ],
                                     "notifications": [
                                         "eth_subscription"
                                     ]
                                 }
                             }
-                        },
-                        "sessionProperties": {
-                            "expiry": "2022-11-31T17:07:31+00:00"
                         }
                     }
                 }
