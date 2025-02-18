@@ -738,9 +738,9 @@ methods:
       - $ref: '#/components/tags/MetaMask'
     summary: Gets the capabilities of the wallet.
     description: >-
-      Gets the capabilities supported by the wallet, such as atomic batch
-      transactions. Specified by
-      [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792).
+      Returns the `atomicBatch` capability if the wallet supports sending
+      multiple calls in one transaction using `wallet_sendCalls`. Specified
+      by [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792).
     params:
       - name: Address
         description: A wallet address.
@@ -752,21 +752,21 @@ methods:
       name: Capabilities
       schema:
         description: >-
-          An object containing the capabilities supported by the wallet.
+          An object containing the `atomicBatch` capability if the wallet
+          supports it.
         type: object
         properties:
           chain_id:
             description: >-
-              An object containing the capabilities supported by the wallet for a
-              specific chain ID. `chain_id` is the
+              An object containing the `atomicBatch` capability supported for
+              a specific chain ID. `chain_id` is the
               [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain ID in
               hexadecimal format.
             type: object
             properties:
-              capability_name:
+              atomicBatch:
                 description: >-
-                  An object containing information about the capability.
-                  `capability_name` is the name of the capability.
+                  The atomic batch capability object.
                 type: object
                 properties:
                   supported:
