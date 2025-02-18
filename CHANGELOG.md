@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.10.16]
-### Uncategorized
-- remove sessionProperties, switch requiredScopes to optionalScopes ([#285](https://github.com/MetaMask/api-specs/pull/285))
-- Fix spec for doc rendering (Part 2) ([#282](https://github.com/MetaMask/api-specs/pull/282))
+### Changed
+- Remove `sessionProperties`, switch `requiredScopes` to `optionalScopes`, and move methods to correct scopes in multichain spec examples ([#285](https://github.com/MetaMask/api-specs/pull/285))
+### Fixed
+- Fix spec for doc rendering ([#282](https://github.com/MetaMask/api-specs/pull/282))
 
 ## [0.10.15]
 ### Uncategorized
