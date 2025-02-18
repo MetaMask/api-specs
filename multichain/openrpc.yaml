@@ -127,6 +127,8 @@ methods:
                   - eth_sendRawTransaction
                   - eth_syncing
                   - eth_uninstallFilter
+                  - personal_sign
+                  - eth_signTypedData_v4
                 notifications:
                   - eth_subscription
               wallet:
@@ -140,8 +142,6 @@ methods:
                   - wallet:eip155:0x5cfe73b6021e818b776b421b1c4db2474086a7e1
                 methods:
                   - wallet_addEthereumChain
-                  - personal_sign
-                  - eth_signTypedData_v4
                 notifications: []
   - name: wallet_getSession
     description: The `wallet_getSession` method returns an active session.
@@ -202,6 +202,8 @@ methods:
                   - eth_sendRawTransaction
                   - eth_syncing
                   - eth_uninstallFilter
+                  - personal_sign
+                  - eth_signTypedData_v4
                 notifications:
                   - eth_subscription
               wallet:
@@ -215,8 +217,6 @@ methods:
                   - wallet:eip155:0x5cfe73b6021e818b776b421b1c4db2474086a7e1
                 methods:
                   - wallet_addEthereumChain
-                  - personal_sign
-                  - eth_signTypedData_v4
                 notifications: []
   - name: wallet_createSession
     paramStructure: by-name
@@ -311,8 +311,6 @@ methods:
               wallet:eip155:
                 methods:
                   - wallet_addEthereumChain
-                  - personal_sign
-                  - eth_signTypedData_v4
                 notifications: []
         result:
           name: wallet_createSessionResultExample
@@ -372,8 +370,6 @@ methods:
                   - wallet:eip155:0x5cfe73b6021e818b776b421b1c4db2474086a7e1
                 methods:
                   - wallet_addEthereumChain
-                  - personal_sign
-                  - eth_signTypedData_v4
                 notifications: []
 
       - name: wallet_createSessionEthUnsupportedMethodsExample
@@ -436,6 +432,9 @@ methods:
                   - eth_sendRawTransaction
                   - eth_syncing
                   - eth_uninstallFilter
+                  - personal_sign
+                  - eth_signTypedData_v4
+                  - wallet_swapAsset
                 notifications:
                   - eth_subscription
               wallet:
@@ -449,8 +448,6 @@ methods:
                   - wallet:eip155:0x5cfe73b6021e818b776b421b1c4db2474086a7e1
                 methods:
                   - wallet_addEthereumChain
-                  - personal_sign
-                  - eth_signTypedData_v4
                 notifications: []
       - name: wallet_createSessionUnsupportedScopesExample
         description: Example of a createSession request with unsupported scopes.
