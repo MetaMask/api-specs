@@ -7,9 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.10.17]
-### Uncategorized
-- modify ordering of methods in sessionScopes... this shouldnt be order sensitive in api-specs but it is... ([#287](https://github.com/MetaMask/api-specs/pull/287))
-
+### Changed
+- modify ordering of methods in sessionScopes ([#287](https://github.com/MetaMask/api-specs/pull/287))
 ## [0.10.16]
 ### Changed
 - Remove `sessionProperties`, switch `requiredScopes` to `optionalScopes`, and move methods to correct scopes in multichain spec examples ([#285](https://github.com/MetaMask/api-specs/pull/285))
