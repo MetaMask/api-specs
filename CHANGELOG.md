@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.10.17]
 ### Changed
 - modify ordering of methods in sessionScopes ([#287](https://github.com/MetaMask/api-specs/pull/287))
+
 ## [0.10.16]
 ### Changed
 - Remove `sessionProperties`, switch `requiredScopes` to `optionalScopes`, and move methods to correct scopes in multichain spec examples ([#285](https://github.com/MetaMask/api-specs/pull/285))
