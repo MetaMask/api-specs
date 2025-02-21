@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.10.17]
 ### Changed
-- modify ordering of methods in sessionScopes ([#287](https://github.com/MetaMask/api-specs/pull/287))
+- modify ordering of methods in `sessionScopes` to satisfy strict API specs testing requirements  ([#287](https://github.com/MetaMask/api-specs/pull/287))
 
 ## [0.10.16]
 ### Changed
