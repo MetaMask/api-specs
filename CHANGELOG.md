@@ -6,9 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.17]
+### Uncategorized
+- modify ordering of methods in sessionScopes... this shouldnt be order sensitive in api-specs but it is... ([#287](https://github.com/MetaMask/api-specs/pull/287))
+
 ## [0.10.16]
 ### Changed
 - Remove `sessionProperties`, switch `requiredScopes` to `optionalScopes`, and move methods to correct scopes in multichain spec examples ([#285](https://github.com/MetaMask/api-specs/pull/285))
+
 ### Fixed
 - Fix spec for doc rendering ([#282](https://github.com/MetaMask/api-specs/pull/282))
 
@@ -274,7 +279,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.10.16...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.10.17...HEAD
+[0.10.17]: https://github.com/MetaMask/api-specs/compare/v0.10.16...v0.10.17
 [0.10.16]: https://github.com/MetaMask/api-specs/compare/v0.10.15...v0.10.16
 [0.10.15]: https://github.com/MetaMask/api-specs/compare/v0.10.14...v0.10.15
 [0.10.14]: https://github.com/MetaMask/api-specs/compare/v0.10.13...v0.10.14
