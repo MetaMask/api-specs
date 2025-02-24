@@ -141,6 +141,8 @@
                                         "eip155:1337:0x5cfe73b6021e818b776b421b1c4db2474086a7e1"
                                     ],
                                     "methods": [
+                                        "personal_sign",
+                                        "eth_signTypedData_v4",
                                         "wallet_watchAsset",
                                         "eth_sendTransaction",
                                         "eth_decrypt",
@@ -148,6 +150,7 @@
                                         "web3_clientVersion",
                                         "eth_subscribe",
                                         "eth_unsubscribe",
+                                        "wallet_swapAsset",
                                         "eth_blockNumber",
                                         "eth_call",
                                         "eth_chainId",
@@ -177,10 +180,7 @@
                                         "eth_newPendingTransactionFilter",
                                         "eth_sendRawTransaction",
                                         "eth_syncing",
-                                        "eth_uninstallFilter",
-                                        "personal_sign",
-                                        "eth_signTypedData_v4",
-                                        "wallet_swapAsset"
+                                        "eth_uninstallFilter"
                                     ],
                                     "notifications": [
                                         "eth_subscription"
@@ -238,6 +238,8 @@
                                         "eip155:1337:0x5cfe73b6021e818b776b421b1c4db2474086a7e1"
                                     ],
                                     "methods": [
+                                        "personal_sign",
+                                        "eth_signTypedData_v4",
                                         "wallet_watchAsset",
                                         "eth_sendTransaction",
                                         "eth_decrypt",
@@ -245,6 +247,7 @@
                                         "web3_clientVersion",
                                         "eth_subscribe",
                                         "eth_unsubscribe",
+                                        "wallet_swapAsset",
                                         "eth_blockNumber",
                                         "eth_call",
                                         "eth_chainId",
@@ -274,10 +277,7 @@
                                         "eth_newPendingTransactionFilter",
                                         "eth_sendRawTransaction",
                                         "eth_syncing",
-                                        "eth_uninstallFilter",
-                                        "personal_sign",
-                                        "eth_signTypedData_v4",
-                                        "wallet_swapAsset"
+                                        "eth_uninstallFilter"
                                     ],
                                     "notifications": [
                                         "eth_subscription"
@@ -445,6 +445,8 @@
                                         "eip155:1337:0x5cfe73b6021e818b776b421b1c4db2474086a7e1"
                                     ],
                                     "methods": [
+                                        "personal_sign",
+                                        "eth_signTypedData_v4",
                                         "wallet_watchAsset",
                                         "eth_sendTransaction",
                                         "eth_decrypt",
@@ -452,6 +454,7 @@
                                         "web3_clientVersion",
                                         "eth_subscribe",
                                         "eth_unsubscribe",
+                                        "wallet_swapAsset",
                                         "eth_blockNumber",
                                         "eth_call",
                                         "eth_chainId",
@@ -481,10 +484,7 @@
                                         "eth_newPendingTransactionFilter",
                                         "eth_sendRawTransaction",
                                         "eth_syncing",
-                                        "eth_uninstallFilter",
-                                        "personal_sign",
-                                        "eth_signTypedData_v4",
-                                        "wallet_swapAsset"
+                                        "eth_uninstallFilter"
                                     ],
                                     "notifications": [
                                         "eth_subscription"
@@ -544,6 +544,8 @@
                                         "eip155:1337:0x5cfe73b6021e818b776b421b1c4db2474086a7e1"
                                     ],
                                     "methods": [
+                                        "personal_sign",
+                                        "eth_signTypedData_v4",
                                         "wallet_watchAsset",
                                         "eth_sendTransaction",
                                         "eth_decrypt",
@@ -551,6 +553,7 @@
                                         "web3_clientVersion",
                                         "eth_subscribe",
                                         "eth_unsubscribe",
+                                        "wallet_swapAsset",
                                         "eth_blockNumber",
                                         "eth_call",
                                         "eth_chainId",
@@ -580,10 +583,7 @@
                                         "eth_newPendingTransactionFilter",
                                         "eth_sendRawTransaction",
                                         "eth_syncing",
-                                        "eth_uninstallFilter",
-                                        "personal_sign",
-                                        "eth_signTypedData_v4",
-                                        "wallet_swapAsset"
+                                        "eth_uninstallFilter"
                                     ],
                                     "notifications": [
                                         "eth_subscription"
@@ -637,6 +637,8 @@
                                         "eip155:1:0x5cfe73b6021e818b776b421b1c4db2474086a7e1"
                                     ],
                                     "methods": [
+                                        "personal_sign",
+                                        "eth_signTypedData_v4",
                                         "wallet_watchAsset",
                                         "eth_sendTransaction",
                                         "eth_decrypt",
@@ -644,6 +646,7 @@
                                         "web3_clientVersion",
                                         "eth_subscribe",
                                         "eth_unsubscribe",
+                                        "wallet_swapAsset",
                                         "eth_blockNumber",
                                         "eth_call",
                                         "eth_chainId",
@@ -673,10 +676,7 @@
                                         "eth_newPendingTransactionFilter",
                                         "eth_sendRawTransaction",
                                         "eth_syncing",
-                                        "eth_uninstallFilter",
-                                        "personal_sign",
-                                        "eth_signTypedData_v4",
-                                        "wallet_swapAsset"
+                                        "eth_uninstallFilter"
                                     ],
                                     "notifications": [
                                         "eth_subscription"
@@ -687,6 +687,8 @@
                                         "eip155:1337:0x5cfe73b6021e818b776b421b1c4db2474086a7e1"
                                     ],
                                     "methods": [
+                                        "personal_sign",
+                                        "eth_signTypedData_v4",
                                         "wallet_watchAsset",
                                         "eth_sendTransaction",
                                         "eth_decrypt",
@@ -694,6 +696,7 @@
                                         "web3_clientVersion",
                                         "eth_subscribe",
                                         "eth_unsubscribe",
+                                        "wallet_swapAsset",
                                         "eth_blockNumber",
                                         "eth_call",
                                         "eth_chainId",
@@ -723,10 +726,7 @@
                                         "eth_newPendingTransactionFilter",
                                         "eth_sendRawTransaction",
                                         "eth_syncing",
-                                        "eth_uninstallFilter",
-                                        "personal_sign",
-                                        "eth_signTypedData_v4",
-                                        "wallet_swapAsset"
+                                        "eth_uninstallFilter"
                                     ],
                                     "notifications": [
                                         "eth_subscription"
@@ -737,6 +737,8 @@
                                         "eip155:59144:0x5cfe73b6021e818b776b421b1c4db2474086a7e1"
                                     ],
                                     "methods": [
+                                        "personal_sign",
+                                        "eth_signTypedData_v4",
                                         "wallet_watchAsset",
                                         "eth_sendTransaction",
                                         "eth_decrypt",
@@ -744,6 +746,7 @@
                                         "web3_clientVersion",
                                         "eth_subscribe",
                                         "eth_unsubscribe",
+                                        "wallet_swapAsset",
                                         "eth_blockNumber",
                                         "eth_call",
                                         "eth_chainId",
@@ -773,10 +776,7 @@
                                         "eth_newPendingTransactionFilter",
                                         "eth_sendRawTransaction",
                                         "eth_syncing",
-                                        "eth_uninstallFilter",
-                                        "personal_sign",
-                                        "eth_signTypedData_v4",
-                                        "wallet_swapAsset"
+                                        "eth_uninstallFilter"
                                     ],
                                     "notifications": [
                                         "eth_subscription"
