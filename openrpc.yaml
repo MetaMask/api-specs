@@ -707,32 +707,6 @@ methods:
                 blockNumber: '0xabcd'
                 gasUsed: '0xdef'
                 transactionHash: '0x9b7bb827c2e5e3c1a0a44dc53e573aa0b3af3bd1f9f5ed03071b100bb039eaff'
-  - name: wallet_showCallsStatus
-    tags:
-      - $ref: '#/components/tags/MetaMask'
-    summary: Requests that the wallet shows the status of a call batch.
-    description: >-
-      Requests that the wallet shows the status of a batch of calls that was
-      previously sent using `wallet_sendCalls`. Specified by
-      [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792).
-    params:
-      - name: Batch ID
-        description: The ID of a batch of calls.
-        required: true
-        schema:
-          type: string
-    result:
-      name: No result
-      description: This method doesn't return anything.
-      schema: {}
-    examples:
-      - name: wallet_showCallsStatus example
-        params:
-          - name: Batch ID
-            value: '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331'
-        result:
-          name: No result
-          value: {}
   - name: wallet_getCapabilities
     tags:
       - $ref: '#/components/tags/MetaMask'
