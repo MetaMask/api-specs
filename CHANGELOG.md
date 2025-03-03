@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.0]
+### Uncategorized
+- chore: add workflow_dispatch to security-code-scanner ([#290](https://github.com/MetaMask/api-specs/pull/290))
+
 ## [0.10.17]
 ### Changed
 - modify ordering of methods in `sessionScopes` to satisfy strict API specs testing requirements  ([#287](https://github.com/MetaMask/api-specs/pull/287))
@@ -279,7 +283,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.10.17...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/MetaMask/api-specs/compare/v0.10.17...v0.11.0
 [0.10.17]: https://github.com/MetaMask/api-specs/compare/v0.10.16...v0.10.17
 [0.10.16]: https://github.com/MetaMask/api-specs/compare/v0.10.15...v0.10.16
 [0.10.15]: https://github.com/MetaMask/api-specs/compare/v0.10.14...v0.10.15
