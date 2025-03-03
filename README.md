@@ -21,7 +21,11 @@ You can contribute to the API specs using the following steps.
 
 1. Edit the API specs in the `openrpc.yaml` file.
    See the [OpenRPC](https://open-rpc.org/) docs for more information on how to format the specs.
-2. Run `yarn install` if you haven't previously set up the repository.
+2. If you haven't previously set up the repository:
+   1. Install [Node.js](https://nodejs.org) 18
+     - If you are using [nvm](https://github.com/creationix/nvm#installation) (recommended) running `nvm install` will install the latest version and running `nvm use` will automatically choose the right node version for you.
+   2. Install [Yarn](https://yarnpkg.com) v4 via [Corepack](https://github.com/nodejs/corepack?tab=readme-ov-file#how-to-install)
+   3. Run `yarn install` to install dependencies and run any required post-install scripts
 3. Run `yarn run build` to re-generate the output file: `dist/build/openrpc.json`.
 4. To view the result, paste that file's contents into the
    [OpenRPC playground](https://playground.open-rpc.org/).
