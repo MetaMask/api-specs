@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.11.0]
-### Uncategorized
-- chore: add workflow_dispatch to security-code-scanner ([#290](https://github.com/MetaMask/api-specs/pull/290))
+### Removed
+- **BREAKING:** Remove `wallet_swapAsset` ([#289](https://github.com/MetaMask/api-specs/pull/289))
+  - This is not quite ready for primetime.
 
 ## [0.10.17]
 ### Changed
