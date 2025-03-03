@@ -24,6 +24,8 @@
   "author": "",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@lavamoat/allow-scripts": "^3.0.4",
+    "@lavamoat/preinstall-always-fail": "^2.0.0",
     "@open-rpc/meta-schema": "^1.14.2",
     "@open-rpc/schema-utils-js": "^1.16.1",
     "@types/jest": "^29.2.6",
@@ -36,5 +38,11 @@
     "ts-jest": "^29.0.5",
     "typescript": "~4.8.4"
   },
-  "version": "0.11.0"
+  "version": "0.11.0",
+  "packageManager": "yarn@4.7.0",
+  "lavamoat": {
+    "allowScripts": {
+      "@lavamoat/preinstall-always-fail": false
+    }
+  }
 }
