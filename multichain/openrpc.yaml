@@ -644,29 +644,35 @@ components:
         - notifications
         - methods
       properties:
-        scopes:
+        references:
+          description: references that are associated with this Scope - primarily used for shorthand when other parameters would otherwise be repeatitive. Only supported in requests.
           type: array
           items:
             $ref: "#/components/schemas/ScopeString"
         methods:
-          description: Methods that the wallet must support in order to be used with this provider.
+          description: Methods that are associated with the Scope. Supported in both requests & responses.
           type: array
           items:
             type: string
         notifications:
-          description: Notifications that the wallet must support in order to be used with this provider.
+          description: Notifications that are associated with the Scope. Supported in both requests & responses.
+          type: array
+          items:
+            type: string
+        accounts:
+          description: Accounts associated with the Scope. Supported in both requests & responses.
           type: array
           items:
             type: string
         rpcEndpoints:
-          description: JSON-RPC endpoints for this namespace.
+          description: JSON-RPC endpoints for this namespace. This parameter is not supported.
           type: array
           items:
             type: string
             format: uri
         rpcDocuments:
           type: array
-          description: OpenRPC documents that define RPC methods in which to anchor the methods authorized in a CAIP-25 interaction.
+          description: OpenRPC documents that define RPC methods in which to anchor the methods authorized in a CAIP-25 interaction. This parameter is not supported.
           items:
             type: string
             format: uri
