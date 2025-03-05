@@ -648,6 +648,11 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ScopeString"
+        references:
+          description: References to specific blockchains for this namespace.
+          type: array
+          items:
+            type: string
         methods:
           description: Methods that the wallet must support in order to be used with this provider.
           type: array
@@ -658,15 +663,9 @@ components:
           type: array
           items:
             type: string
-        rpcEndpoints:
-          description: JSON-RPC endpoints for this namespace.
+        accounts:
           type: array
-          items:
-            type: string
-            format: uri
-        rpcDocuments:
-          type: array
-          description: OpenRPC documents that define RPC methods in which to anchor the methods authorized in a CAIP-25 interaction.
+          description: Account IDs valid within this scope.
           items:
             type: string
             format: uri
