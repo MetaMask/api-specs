@@ -643,8 +643,6 @@ components:
       required:
         - notifications
         - methods
-      propertyNames:
-        $ref: "#/components/schemas/ScopeString"
       properties:
         references:
           description: >-
