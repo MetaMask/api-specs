@@ -6,6 +6,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.0]
+### Removed
+- **BREAKING:** Remove `wallet_swapAsset` ([#289](https://github.com/MetaMask/api-specs/pull/289))
+  - This is not quite ready for primetime.
+
+## [0.10.17]
+### Changed
+- modify ordering of methods in `sessionScopes` to satisfy strict API specs testing requirements  ([#287](https://github.com/MetaMask/api-specs/pull/287))
+
+## [0.10.16]
+### Changed
+- Remove `sessionProperties`, switch `requiredScopes` to `optionalScopes`, and move methods to correct scopes in multichain spec examples ([#285](https://github.com/MetaMask/api-specs/pull/285))
+
+### Fixed
+- Fix spec for doc rendering ([#282](https://github.com/MetaMask/api-specs/pull/282))
+
 ## [0.10.15]
 ### Uncategorized
 - Fix wallet_createSessionUnsupportedScopesExample results value [#281](https://github.com/MetaMask/api-specs/pull/281))
@@ -268,7 +284,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.10.15...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/MetaMask/api-specs/compare/v0.10.17...v0.11.0
+[0.10.17]: https://github.com/MetaMask/api-specs/compare/v0.10.16...v0.10.17
+[0.10.16]: https://github.com/MetaMask/api-specs/compare/v0.10.15...v0.10.16
 [0.10.15]: https://github.com/MetaMask/api-specs/compare/v0.10.14...v0.10.15
 [0.10.14]: https://github.com/MetaMask/api-specs/compare/v0.10.13...v0.10.14
 [0.10.13]: https://github.com/MetaMask/api-specs/compare/v0.10.12...v0.10.13
