@@ -537,14 +537,23 @@ methods:
           required:
             - version
             - from
+            - chainId
             - calls
           properties:
             version:
               description: The version of the request format.
               type: string
+            id:
+              description: The ID of the batch of calls.
+              $ref: '#/components/schemas/uint'
             from:
               description: The sender's address.
               $ref: '#/components/schemas/address'
+            chainId:
+              description: >-
+                The [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain ID
+                of the calls.
+              $ref: '#/components/schemas/uint'
             calls:
               description: An array of call objects.
               schema:
@@ -563,22 +572,52 @@ methods:
                     value:
                       description: The value to send with the call.
                       $ref: '#/components/schemas/uint'
-                    chainId:
+                    capabilities:
                       description: >-
-                        The chain ID of the call. If specified, this must match the
-                        currently selected network in the wallet.
-                      $ref: '#/components/schemas/uint'
+                        Dapps can use this object to communicate with the wallet about
+                        supported capabilities.
+                      type: object
+                      patternProperties:
+                        '^[a-zA-Z0-9_]*$':
+                          description: >-
+                            An object containing information about a specific capability.
+                          type: object
+                          properties:
+                            optional:
+                              description: >-
+                                `true` if the capability is optional.
+                              type: boolean
+                          additionalProperties: true
             capabilities:
               description: >-
                 Dapps can use this object to communicate with the wallet about
                 supported capabilities.
               type: object
-              additionalProperties: true
+              patternProperties:
+                '^[a-zA-Z0-9_]*$':
+                  description: >-
+                    An object containing information about a specific capability.
+                  type: object
+                  properties:
+                    optional:
+                      description: >-
+                        `true` if the capability is optional.
+                      type: boolean
+                  additionalProperties: true
     result:
-      name: Batch ID
-      description: The ID of the batch of calls.
+      name: Batch result
       schema:
-        type: string
+        description: An object containing information about the sent batch.
+        type: object
+        properties:
+          id:
+            description: The ID of the batch of calls.
+            $ref: '#/components/schemas/uint'
+          capabilities:
+            description: >-
+              Wallets can use this object to attach capability-specific metadata.
+            type: object
+            additionalProperties: true
     examples:
       - name: wallet_sendCalls example
         params:
@@ -586,6 +625,7 @@ methods:
             value:
               version: '1.0'
               from: '0xd46e8dd67c5d32be8058bb8eb970870f07244567'
+              chainId: '0x01'
               calls:
                 - to: '0xd46e8dd67c5d32be8058bb8eb970870f07244567'
                   value: '0x9184e72a'
@@ -594,8 +634,9 @@ methods:
                   value: '0x182183'
                   data: '0xfbadbaf01'
         result:
-          name: Batch ID
-          value: '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331'
+          name: Batch result
+          value:
+            id: '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331'
   - name: wallet_getCallsStatus
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -608,7 +649,7 @@ methods:
       - name: Batch ID
         required: true
         description: >-
-          The ID of a batch of calls (the value returned by `wallet_sendCalls`).
+          The ID of a batch of calls (the `id` value returned by `wallet_sendCalls`).
         schema:
           type: string
     result:
@@ -618,12 +659,27 @@ methods:
           An object containing status information of the batch of calls.
         type: object
         properties:
-          status:
-            description: The status of the batch of calls.
+          version:
+            description: The version of the response format.
             type: string
-            enum:
-              - PENDING
-              - CONFIRMED
+          id:
+            description: The ID of the batch of calls.
+            $ref: '#/components/schemas/uint'
+          chainId:
+            description: The chain ID of the calls.
+            $ref: '#/components/schemas/uint'
+          status:
+            description: >-
+              The status code of the batch of calls. Possible values are:
+              <br><br>
+              <ul>
+                <li>`100` - Pending</li>
+                <li>`200` - Confirmed</li>
+                <li>`400` - Failed offchain</li>
+                <li>`500` - Reverted</li>
+                <li>`600` - Partially reverted</li>
+              </ul>
+            type: number
           receipts:
             description: >-
               An array of transaction receipts. If the wallet executed the calls
@@ -665,10 +721,6 @@ methods:
                     indicates failure.
                   type: string
                   pattern: '^0x[0-1]$'
-                chainId:
-                  description: The chain ID of the transaction.
-                  type: string
-                  pattern: '^0x([1-9a-f]+[0-9a-f]*|0)$'
                 blockHash:
                   description: The hash of the block containing the transaction.
                   type: string
@@ -686,6 +738,10 @@ methods:
                   type: string
                   pattern: '^0x[0-9a-f]{64}$'
               additionalProperties: true
+          capabilities:
+            description: Capabilities associated with the batch of calls.
+            type: object
+            additionalProperties: true
     examples:
       - name: wallet_getCallsStatus example
         params:
@@ -694,7 +750,10 @@ methods:
         result:
           name: Batch status
           value:
-            status: CONFIRMED
+            version: '1.0'
+            chainId: '0x01'
+            id: '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331'
+            status: 200
             receipts:
               - logs:
                   - address: '0xa922b54716264130634d6ff183747a8ead91a40b'
@@ -702,7 +761,6 @@ methods:
                       - '0x5a2a90727cc9d000dd060b1132a5c977c9702bb3a52afe360c9c22f0e9451a68'
                     data: '0xabcd'
                 status: '0x1'
-                chainId: '0x01'
                 blockHash: '0xf19bbafd9fd0124ec110b848e8de4ab4f62bf60c189524e54213285e7f540d4a'
                 blockNumber: '0xabcd'
                 gasUsed: '0xdef'
@@ -722,6 +780,16 @@ methods:
         schema:
           type: string
           pattern: '^0x[0-9a-fA-F]{40}$'
+      - name: Chain IDs
+        description: An array of chain IDs to get capabilities for.
+        schema:
+          type: array
+          items:
+            title: Chain ID
+            description: >-
+              An [EIP-155](https://eips.ethereum.org/EIPS/eip-155)
+              chain ID in hexadecimal format.
+            $ref: '#/components/schemas/uint'
     result:
       name: Capabilities
       schema:
@@ -729,13 +797,11 @@ methods:
           An object containing the `atomicBatch` capability if the wallet
           supports it.
         type: object
-        properties:
-          chain_id:
+        patternProperties:
+          '^0x[0-9a-fA-F]+$':
             description: >-
               An object containing the `atomicBatch` capability supported for
-              a specific chain ID. `chain_id` is the
-              [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain ID in
-              hexadecimal format.
+              a specific [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain ID.
             type: object
             properties:
               atomicBatch:
@@ -747,8 +813,6 @@ methods:
                     description: >-
                       `true` if the capability is supported.
                     type: boolean
-            additionalProperties: true
-        additionalProperties: true
     examples:
       - name: wallet_getCapabilities example
         params:
