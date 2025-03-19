@@ -338,13 +338,7 @@
                     "name": "sessionProperties",
                     "description": "Properties that the wallet may use to determine if the session is valid.",
                     "schema": {
-                        "type": "object",
-                        "properties": {
-                            "expiry": {
-                                "type": "string",
-                                "format": "date-time"
-                            }
-                        }
+                        "type": "object"
                     }
                 }
             ],
@@ -357,13 +351,7 @@
                             "$ref": "#/components/schemas/SessionScopes"
                         },
                         "sessionProperties": {
-                            "type": "object",
-                            "properties": {
-                                "expiry": {
-                                    "type": "string",
-                                    "format": "date-time"
-                                }
-                            }
+                            "type": "object"
                         }
                     }
                 }
@@ -439,6 +427,7 @@
                     "result": {
                         "name": "wallet_createSessionResultExample",
                         "value": {
+                            "sessionProperties": {},
                             "sessionScopes": {
                                 "eip155:1337": {
                                     "accounts": [
@@ -538,6 +527,7 @@
                     "result": {
                         "name": "wallet_createSessionEthUnsupportedMethodsResultExample",
                         "value": {
+                            "sessionProperties": {},
                             "sessionScopes": {
                                 "eip155:1337": {
                                     "accounts": [
@@ -631,6 +621,7 @@
                     "result": {
                         "name": "wallet_createSessionUnsupportedScopesResultExample",
                         "value": {
+                            "sessionProperties": {},
                             "sessionScopes": {
                                 "eip155:1": {
                                     "accounts": [
