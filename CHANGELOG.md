@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.12.0]
-### Uncategorized
-- add empty sessionProperties values as expected return from wallet_createSession ([#297](https://github.com/MetaMask/api-specs/pull/297))
+### Changed
+- **BREAKING:** Add empty sessionProperties values as expected return from wallet_createSession ([#297](https://github.com/MetaMask/api-specs/pull/297))
 - Bump minimum Node version to v18.20 ([#294](https://github.com/MetaMask/api-specs/pull/294))
 
 ## [0.11.0]
