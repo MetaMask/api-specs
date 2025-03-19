@@ -241,10 +241,6 @@ methods:
         description: Properties that the wallet may use to determine if the session is valid.
         schema:
           type: object
-          properties:
-            expiry:
-              type: string
-              format: date-time
     result:
       name: wallet_createSessionResult
       schema:
@@ -254,10 +250,6 @@ methods:
             $ref: "#/components/schemas/SessionScopes"
           sessionProperties:
             type: object
-            properties:
-              expiry:
-                type: string
-                format: date-time
     examples:
       - name: wallet_createSessionEthExample
         description: Example of a createSession request.
@@ -317,6 +309,7 @@ methods:
         result:
           name: wallet_createSessionResultExample
           value:
+            sessionProperties: {}
             sessionScopes:
               eip155:1337:
                 accounts:
@@ -395,6 +388,7 @@ methods:
         result:
           name: wallet_createSessionEthUnsupportedMethodsResultExample
           value:
+            sessionProperties: {}
             sessionScopes:
               eip155:1337:
                 accounts:
@@ -467,6 +461,7 @@ methods:
         result:
           name: wallet_createSessionUnsupportedScopesResultExample
           value:
+            sessionProperties: {}
             sessionScopes:
               eip155:1:
                 accounts:
