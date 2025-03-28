@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.12.1]
+### Uncategorized
+- fix wallet_createSessionUnsupportedScopesExample ([#299](https://github.com/MetaMask/api-specs/pull/299))
+
 ## [0.12.0]
 ### Changed
 - **BREAKING:** Add empty sessionProperties values as expected return from wallet_createSession ([#297](https://github.com/MetaMask/api-specs/pull/297))
@@ -289,7 +293,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.12.0...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.12.1...HEAD
+[0.12.1]: https://github.com/MetaMask/api-specs/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/MetaMask/api-specs/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/MetaMask/api-specs/compare/v0.10.17...v0.11.0
 [0.10.17]: https://github.com/MetaMask/api-specs/compare/v0.10.16...v0.10.17
