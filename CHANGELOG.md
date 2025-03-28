@@ -6,9 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.12.1]
+## [0.13.0]
 ### Changed
-- Modify wallet_createSessionUnsupportedScopesExample, given a new error we throw in the wallet_createSession handler when all requested scopes are not supported ([#299](https://github.com/MetaMask/api-specs/pull/299))
+- Add `wallet_createSessionUnsupportedScopesExample` to the multichain spec, given a new error we throw in the wallet_createSession handler when all requested scopes are not supported ([#300](https://github.com/MetaMask/api-specs/pull/300))
 
 ## [0.12.0]
 ### Changed
@@ -293,8 +293,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.12.1...HEAD
-[0.12.1]: https://github.com/MetaMask/api-specs/compare/v0.12.0...v0.12.1
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.13.0...HEAD
+[0.13.0]: https://github.com/MetaMask/api-specs/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/MetaMask/api-specs/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/MetaMask/api-specs/compare/v0.10.17...v0.11.0
 [0.10.17]: https://github.com/MetaMask/api-specs/compare/v0.10.16...v0.10.17
