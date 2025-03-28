@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.12.1]
-### Uncategorized
-- fix wallet_createSessionUnsupportedScopesExample ([#299](https://github.com/MetaMask/api-specs/pull/299))
+### Changed
+- Modify wallet_createSessionUnsupportedScopesExample, given a new error we throw in the wallet_createSession handler when all requested scopes are not supported ([#299](https://github.com/MetaMask/api-specs/pull/299))
 
 ## [0.12.0]
 ### Changed
