@@ -538,6 +538,7 @@ methods:
             - version
             - from
             - chainId
+            - atomicRequired
             - calls
           properties:
             version:
@@ -552,8 +553,15 @@ methods:
             chainId:
               description: >-
                 The [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain ID
-                of the calls.
+                of the calls. This must match the currently selected network in
+                the wallet.
               $ref: '#/components/schemas/uint'
+            atomicRequired:
+              description: >-
+                `true` if the wallet must execute all calls atomically. If `false`, the
+                wallet may execute the calls sequentially without atomicity. If `false`
+                and the wallet is capable of executing the calls atomically, it may do so.
+              type: boolean
             calls:
               description: An array of call objects.
               schema:
@@ -626,6 +634,7 @@ methods:
               version: '1.0'
               from: '0xd46e8dd67c5d32be8058bb8eb970870f07244567'
               chainId: '0x01'
+              atomicRequired: true
               calls:
                 - to: '0xd46e8dd67c5d32be8058bb8eb970870f07244567'
                   value: '0x9184e72a'
@@ -680,11 +689,16 @@ methods:
                 <li>`600` - Partially reverted</li>
               </ul>
             type: number
+          atomic:
+            description: >-
+              `true` if the wallet executed the calls atomically. `false` if the
+              wallet executed the calls non-atomically.
+            type: boolean
           receipts:
             description: >-
               An array of transaction receipts. If the wallet executed the calls
-              atomically (that is, in a single transaction), a single receipt is
-              returned.
+              atomically, a single receipt or an array of receipts may be returned,
+              corresponding to how the batch of calls were included onchain.
             type: array
             items:
               title: Receipt
@@ -754,6 +768,7 @@ methods:
             chainId: '0x01'
             id: '0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331'
             status: 200
+            atomic: true
             receipts:
               - logs:
                   - address: '0xa922b54716264130634d6ff183747a8ead91a40b'
@@ -770,9 +785,9 @@ methods:
       - $ref: '#/components/tags/MetaMask'
     summary: Gets the capabilities of the wallet.
     description: >-
-      Returns the `atomicBatch` capability if the wallet supports sending
-      multiple calls in one transaction using `wallet_sendCalls`. Specified
-      by [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792).
+      Returns the `atomic` capability if the wallet supports sending multiple
+      calls atomically using `wallet_sendCalls`. Specified by
+      [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792).
     params:
       - name: Address
         description: A wallet address.
@@ -794,19 +809,19 @@ methods:
       name: Capabilities
       schema:
         description: >-
-          An object containing the `atomicBatch` capability if the wallet
+          An object containing the `atomic` capability if the wallet
           supports it.
         type: object
         patternProperties:
           '^0x[0-9a-fA-F]+$':
             description: >-
-              An object containing the `atomicBatch` capability supported for
-              a specific [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain ID.
+              An object containing the `atomic` capability supported for a
+              specific [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain ID.
             type: object
             properties:
-              atomicBatch:
+              atomic:
                 description: >-
-                  The atomic batch capability object.
+                  The atomic capability object.
                 type: object
                 properties:
                   supported:
@@ -822,7 +837,7 @@ methods:
           name: Capabilities
           value:
             '0x01':
-              atomicBatch:
+              atomic:
                 supported: true
   - name: eth_requestAccounts
     tags:
