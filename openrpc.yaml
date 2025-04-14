@@ -880,10 +880,10 @@ methods:
           value:
             '0x2105':
               atomic:
-                supported: true
+                status: supported
             '0x14A34':
               atomic:
-                supported: false
+                status: unsupported
   - name: eth_requestAccounts
     tags:
       - $ref: '#/components/tags/MetaMask'
