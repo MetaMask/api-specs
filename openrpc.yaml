@@ -547,6 +547,8 @@ methods:
               Wallets can use this object to attach capability-specific metadata.
             type: object
     errors:
+      - code: -32603
+        message: User rejected account upgrade.
       - $ref: '#/components/errors/InvalidParams'
       - $ref: '#/components/errors/UserRejected'
       - $ref: '#/components/errors/Unauthorized'
@@ -554,18 +556,11 @@ methods:
         message: >-
           The wallet does not support a capability that was not marked as optional.
       - code: 5710
-        message: The wallet does not support the specified chain ID.
+        message: EIP-7702 not supported on the specified chain ID.
       - code: 5720
         message: There is already a batch submitted with the specified batch ID.
       - code: 5740
         message: The batch is too large for the wallet to process.
-      - code: 5750
-        message: >-
-          The wallet can support atomicity after an upgrade, but the user
-          rejected the upgrade.
-      - code: 5760
-        message: >-
-          The wallet does not support atomicity, but the request requires it.
     examples:
       - name: wallet_sendCalls example
         params:
@@ -607,7 +602,7 @@ methods:
         type: object
         properties:
           version:
-            description: The version of the response format.
+            description: The version of the API format.
             type: string
           id:
             description: The ID of the batch of calls.
@@ -697,7 +692,7 @@ methods:
     errors:
       - $ref: '#/components/errors/InvalidParams'
       - code: 5730
-        message: The specified batch ID is unknown or has not been submitted.
+        message: No matching bundle found.
     examples:
       - name: wallet_getCallsStatus example
         params:
@@ -753,18 +748,18 @@ methods:
       name: Capabilities
       schema:
         description: >-
-          An object specifying whether the wallet supports the `atomic` capability
-          for specific [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain IDs.
+          An object specifying the status of the `atomic` capability for
+          specific [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain IDs.
           For each chain, the `atomic` capability can have a `status` of:
           <br>
           <ul>
             <li>`supported` - The wallet will execute calls sent using
                   `wallet_sendCalls` atomically.</li>
             <li>`ready` - The wallet can upgrade to `supported` pending user
-                    approval (for example, via EIP-7702).</li>
-            <li>`unsupported` - The wallet will not execute calls atomically or suggest
-                  an upgrade to the user.</li>
+                    approval to upgrade their account via EIP-7702.</li>
           </ul>
+          If the `atomic` capability is not `supported` or `ready` for a
+          specified chain ID, the wallet will not return anything for that chain ID.
         type: object
     errors:
       - $ref: '#/components/errors/InvalidParams'
@@ -1211,7 +1206,8 @@ components:
         - calls
       properties:
         version:
-          description: The version of the request format.
+          description: >-
+            The version of the API format. This must be `2.0.0`.
           type: string
         id:
           description: The ID of the batch of calls.
@@ -1417,4 +1413,4 @@ components:
       message: The wallet cannot parse the request.
     Unauthorized:
       code: 4100
-      message: The specified address is not connected or not in the wallet.
+      message: The requested account and/or method has not been authorized by the user.
