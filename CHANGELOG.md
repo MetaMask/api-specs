@@ -7,9 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.14.0]
-### Uncategorized
-- Add EIP-5792 methods ([#284](https://github.com/MetaMask/api-specs/pull/284))
-- Update codeowners ([#305](https://github.com/MetaMask/api-specs/pull/305))
+### Added
+- Add EIP-5792 methods: `wallet_sendCalls`, `wallet_getCallsStatus`, `wallet_getCapabilities` ([#284](https://github.com/MetaMask/api-specs/pull/284))
 
 ## [0.13.0]
 ### Changed
