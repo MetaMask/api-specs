@@ -547,9 +547,9 @@ methods:
               Wallets can use this object to attach capability-specific metadata.
             type: object
     errors:
-      - code: -32603
-        message: User rejected account upgrade.
       - $ref: '#/components/errors/InvalidParams'
+      - code: -32000
+        message: Version not supported.
       - $ref: '#/components/errors/UserRejected'
       - $ref: '#/components/errors/Unauthorized'
       - code: 5700
@@ -561,6 +561,8 @@ methods:
         message: There is already a batch submitted with the specified batch ID.
       - code: 5740
         message: The batch is too large for the wallet to process.
+      - code: 5750
+        message: EIP-7702 upgrade rejected for this chain and account.
     examples:
       - name: wallet_sendCalls example
         params:
@@ -691,6 +693,7 @@ methods:
             additionalProperties: true
     errors:
       - $ref: '#/components/errors/InvalidParams'
+      - $ref: '#/components/errors/Unauthorized'
       - code: 5730
         message: No matching bundle found.
     examples:
