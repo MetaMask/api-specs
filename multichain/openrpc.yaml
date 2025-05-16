@@ -1,20 +1,20 @@
 openrpc: 1.2.4
 info:
-  title: MetaMask MultiChain API
+  title: MetaMask Multichain API
   version: 1.0.0
   description: >-
-    This provides the specs for the MultiChain API Layer for the MetaMask API
+    Specification for the Multichain API layer of MetaMask's Wallet API.
 methods:
   - name: wallet_notify
     paramStructure: by-name
     params:
       - name: scope
-        description: a valid `scope` string that has been previously authorized via `provider_authorize`
+        description: A valid `scope` string that has been previously authorized to the dapp.
         required: true
         schema:
           $ref: "#/components/schemas/ScopeString"
       - name: notification
-        description: an object containing a JSON-RPC notification with `method` and `params`
+        description: An object containing a JSON-RPC notification with `method` and `params`.
         deprecated: false
         required: true
         schema:
@@ -27,12 +27,12 @@ methods:
     paramStructure: by-name
     params:
       - name: scope
-        description: a valid `scope` string that has been previously authorized via `provider_authorize`
+        description: A valid `scope` string that has been previously authorized to the dapp.
         required: true
         schema:
           $ref: "#/components/schemas/ScopeString"
       - name: request
-        description: an object containing a JSON-RPC request with `method` and `params`
+        description: An object containing a JSON-RPC request with `method` and `params`.
         deprecated: false
         required: true
         schema:
@@ -587,35 +587,38 @@ components:
     Scope:
       type: object
       title: Scope
-      description: Scope for a multi-chain connection
+      description: Scope for a multichain connection.
       additionalProperties: true
       required:
         - notifications
         - methods
       properties:
-        scopes:
+        references:
+          description: >-
+            References to specific blockchains associated with this scope.
+            Primarily used for shorthand when there would otherwise be
+            duplicate scopes. Supported only in requests.
           type: array
           items:
-            $ref: "#/components/schemas/ScopeString"
+            type: string
         methods:
-          description: Methods that the wallet must support in order to be used with this provider.
+          description: >-
+            Methods associated with this scope. Supported in both requests and
+            responses.
           type: array
           items:
             type: string
         notifications:
-          description: Notifications that the wallet must support in order to be used with this provider.
+          description: >-
+            Notifications associated with this scope. Supported in both requests
+            and responses.
           type: array
           items:
             type: string
-        rpcEndpoints:
-          description: JSON-RPC endpoints for this namespace.
+        accounts:
           type: array
+          description: >-
+            Account associated with this scope. Supported in both requests and
+            responses.
           items:
             type: string
-            format: uri
-        rpcDocuments:
-          type: array
-          description: OpenRPC documents that define RPC methods in which to anchor the methods authorized in a CAIP-25 interaction.
-          items:
-            type: string
-            format: uri
