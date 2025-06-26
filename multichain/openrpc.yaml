@@ -560,14 +560,6 @@ methods:
       - $ref: "#/components/errors/UnknownError"
       - code: 5100
         message: Requested networks are not supported
-      - code: 5101
-        message: Requested methods are not supported
-      - code: 5102
-        message: Requested notifications are not supported
-      - code: 5300
-        message: Invalid scopedProperties requested
-      - code: 5301
-        message: scopedProperties can only be outside of sessionScopes
       - code: 5302
         message: Invalid sessionProperties requested
 components:
