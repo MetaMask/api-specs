@@ -1495,13 +1495,12 @@ components:
             The [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain ID the
             permission applies to, as a `0x`-prefixed hexadecimal string.
           $ref: '#/components/schemas/uint'
-        address:
-          description: >-
-            (Optional) The account address the permission should be granted from.
-          $ref: '#/components/schemas/address'
         from:
           description: >-
-            (Optional) The account address the permission should be granted from.
+            (Optional) The account the permission should be granted from. Useful
+            when a connection has been established and multiple accounts have
+            been exposed; lets the user choose which account to grant the
+            permission for.
           $ref: '#/components/schemas/address'
         to:
           description: The address the permission is granted to (the redeemer/delegate).
