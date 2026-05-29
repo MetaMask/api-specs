@@ -828,7 +828,7 @@ methods:
                 rules:
                   - type: expiry
                     data:
-                      timestamp: 1739577600
+                      timestamp: 1893456000
         result:
           name: Granted permissions
           value:
@@ -844,7 +844,7 @@ methods:
               rules:
                 - type: expiry
                   data:
-                    timestamp: 1739577600
+                    timestamp: 1893456000
               context: '0x00000000000000000000000000000000000000000000000000000000000000'
               delegationManager: '0x2D48e6f5Ae053e4E918d2be53570961D880905F2'
               dependencies: []
@@ -1455,6 +1455,7 @@ components:
         - chainId
         - to
         - permission
+        - rules
       properties:
         chainId:
           description: >-
@@ -1477,7 +1478,8 @@ components:
           description: >-
             An array of rules constraining the permission. Time-bounded
             permissions are expressed as an `expiry` rule (with a UNIX
-            `timestamp` in its `data`) rather than a top-level field.
+            `timestamp` in its `data`) rather than a top-level field. Pass an
+            empty array to apply no constraints.
           type: array
           items:
             $ref: '#/components/schemas/ExecutionPermissionRule'
