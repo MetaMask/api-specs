@@ -825,7 +825,10 @@ methods:
                     periodAmount: '0x38d7ea4c68000'
                     periodDuration: 86400
                     justification: Permission to transfer 0.001 ETH every day
-                rules: []
+                rules:
+                  - type: expiry
+                    data:
+                      timestamp: 1739577600
         result:
           name: Granted permissions
           value:
@@ -838,7 +841,10 @@ methods:
                   periodAmount: '0x38d7ea4c68000'
                   periodDuration: 86400
                   justification: Permission to transfer 0.001 ETH every day
-              rules: []
+              rules:
+                - type: expiry
+                  data:
+                    timestamp: 1739577600
               context: '0x00000000000000000000000000000000000000000000000000000000000000'
               delegationManager: '0x2D48e6f5Ae053e4E918d2be53570961D880905F2'
               dependencies: []
@@ -913,48 +919,6 @@ methods:
                 - '0xaa36a7'
               ruleTypes:
                 - expiry
-  - name: wallet_revokeExecutionPermission
-    tags:
-      - $ref: '#/components/tags/MetaMask'
-      - $ref: '#/components/tags/Experimental'
-      - $ref: '#/components/tags/Multichain'
-    summary: Revokes an ERC-7715 execution permission.
-    description: >-
-      Revokes a previously granted ERC-7715 execution permission, identified by
-      its permission context. Specified by
-      [ERC-7715](https://eips.ethereum.org/EIPS/eip-7715).
-    params:
-      - name: Revoke request
-        required: true
-        description: An object identifying the permission to revoke.
-        schema:
-          type: object
-          required:
-            - permissionContext
-          properties:
-            permissionContext:
-              description: >-
-                The `0x`-prefixed context of the permission to revoke, as
-                returned by `wallet_requestExecutionPermissions`.
-              $ref: '#/components/schemas/bytes'
-    result:
-      name: Null response
-      description: This method returns an empty object if the permission is revoked.
-      schema:
-        type: object
-        additionalProperties: false
-    errors:
-      - $ref: '#/components/errors/InvalidParams'
-      - $ref: '#/components/errors/Unauthorized'
-    examples:
-      - name: wallet_revokeExecutionPermission example
-        params:
-          - name: Revoke request
-            value:
-              permissionContext: '0x00000000000000000000000000000000000000000000000000000000000000'
-        result:
-          name: Null response
-          value: {}
   - name: eth_requestAccounts
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -1445,6 +1409,7 @@ components:
       type: object
       required:
         - type
+        - isAdjustmentAllowed
         - data
       properties:
         type:
@@ -1488,6 +1453,7 @@ components:
       type: object
       required:
         - chainId
+        - to
         - permission
       properties:
         chainId:
@@ -1505,21 +1471,13 @@ components:
         to:
           description: The address the permission is granted to (the redeemer/delegate).
           $ref: '#/components/schemas/address'
-        signer:
-          description: >-
-            (Optional) The signer that will redeem the permission. Used by the
-            ERC-7715 `account`/`wallet`/`key` signer types.
-          type: object
-          additionalProperties: true
-        expiry:
-          description: >-
-            (Optional) The UNIX timestamp (in seconds) after which the
-            permission is no longer valid.
-          type: number
         permission:
           $ref: '#/components/schemas/ExecutionPermission'
         rules:
-          description: An array of rules constraining the permission.
+          description: >-
+            An array of rules constraining the permission. Time-bounded
+            permissions are expressed as an `expiry` rule (with a UNIX
+            `timestamp` in its `data`) rather than a top-level field.
           type: array
           items:
             $ref: '#/components/schemas/ExecutionPermissionRule'
@@ -1531,6 +1489,10 @@ components:
       allOf:
         - $ref: '#/components/schemas/ExecutionPermissionRequest'
         - type: object
+          required:
+            - context
+            - dependencies
+            - delegationManager
           properties:
             context:
               description: >-
@@ -1548,6 +1510,9 @@ components:
               items:
                 title: ExecutionPermissionDependency
                 type: object
+                required:
+                  - factory
+                  - factoryData
                 properties:
                   factory:
                     description: The address of the account factory contract.
