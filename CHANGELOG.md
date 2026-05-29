@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Add ERC-7715 execution permission methods: `wallet_requestExecutionPermissions`, `wallet_getGrantedExecutionPermissions`, `wallet_getSupportedExecutionPermissions`, `wallet_revokeExecutionPermission`, along with the `ExecutionPermission`, `ExecutionPermissionRule`, `ExecutionPermissionRequest`, and `ExecutionPermissionResponse` schemas ([#311](https://github.com/MetaMask/api-specs/pull/311))
 
 ## [0.14.0]
 ### Added

@@ -781,6 +781,180 @@ methods:
             '0xaa36a7':
               atomic:
                 status: ready
+  - name: wallet_requestExecutionPermissions
+    tags:
+      - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Experimental'
+      - $ref: '#/components/tags/Multichain'
+    summary: Requests ERC-7715 execution permissions.
+    description: >-
+      Requests that the user grant one or more ERC-7715 execution permissions,
+      allowing a delegate account to perform a constrained set of actions on
+      behalf of the user's account. Specified by
+      [ERC-7715](https://eips.ethereum.org/EIPS/eip-7715).
+    params:
+      - name: Permission requests
+        required: true
+        description: An array of execution permission requests.
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExecutionPermissionRequest'
+    result:
+      name: Granted permissions
+      description: An array of the granted execution permissions.
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/ExecutionPermissionResponse'
+    errors:
+      - $ref: '#/components/errors/InvalidParams'
+      - $ref: '#/components/errors/UserRejected'
+      - $ref: '#/components/errors/Unauthorized'
+    examples:
+      - name: wallet_requestExecutionPermissions example
+        params:
+          - name: Permission requests
+            value:
+              - chainId: '0xaa36a7'
+                to: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+                permission:
+                  type: native-token-periodic
+                  isAdjustmentAllowed: true
+                  data:
+                    periodAmount: '0x38d7ea4c68000'
+                    periodDuration: 86400
+                    justification: Permission to transfer 0.001 ETH every day
+                rules: []
+        result:
+          name: Granted permissions
+          value:
+            - chainId: '0xaa36a7'
+              to: '0x4B0897b0513FdBeEc7C469D9aF4fA6C0752aBea7'
+              permission:
+                type: native-token-periodic
+                isAdjustmentAllowed: true
+                data:
+                  periodAmount: '0x38d7ea4c68000'
+                  periodDuration: 86400
+                  justification: Permission to transfer 0.001 ETH every day
+              rules: []
+              context: '0x00000000000000000000000000000000000000000000000000000000000000'
+              delegationManager: '0x2D48e6f5Ae053e4E918d2be53570961D880905F2'
+              dependencies: []
+  - name: wallet_getGrantedExecutionPermissions
+    tags:
+      - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Experimental'
+      - $ref: '#/components/tags/Multichain'
+    summary: Gets granted ERC-7715 execution permissions.
+    description: >-
+      Returns the ERC-7715 execution permissions that the user has previously
+      granted to the requesting dapp. Specified by
+      [ERC-7715](https://eips.ethereum.org/EIPS/eip-7715).
+    params: []
+    result:
+      name: Granted permissions
+      description: An array of the granted execution permissions.
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/ExecutionPermissionResponse'
+    errors:
+      - $ref: '#/components/errors/Unauthorized'
+    examples:
+      - name: wallet_getGrantedExecutionPermissions example
+        params: []
+        result:
+          name: Granted permissions
+          value: []
+  - name: wallet_getSupportedExecutionPermissions
+    tags:
+      - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Experimental'
+      - $ref: '#/components/tags/Multichain'
+    summary: Gets supported ERC-7715 execution permissions.
+    description: >-
+      Returns the ERC-7715 execution permission types supported by the wallet,
+      keyed by permission type, including the chain IDs and rule types each
+      permission supports. Specified by
+      [ERC-7715](https://eips.ethereum.org/EIPS/eip-7715).
+    params: []
+    result:
+      name: Supported permissions
+      description: >-
+        An object keyed by permission type. Each entry describes the chain IDs
+        and rule types supported for that permission type.
+      schema:
+        type: object
+        additionalProperties:
+          type: object
+          properties:
+            chainIds:
+              description: The chain IDs that support the permission type.
+              type: array
+              items:
+                $ref: '#/components/schemas/uint'
+            ruleTypes:
+              description: The rule types supported for the permission type.
+              type: array
+              items:
+                type: string
+    errors:
+      - $ref: '#/components/errors/Unauthorized'
+    examples:
+      - name: wallet_getSupportedExecutionPermissions example
+        params: []
+        result:
+          name: Supported permissions
+          value:
+            native-token-periodic:
+              chainIds:
+                - '0xaa36a7'
+              ruleTypes:
+                - expiry
+  - name: wallet_revokeExecutionPermission
+    tags:
+      - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Experimental'
+      - $ref: '#/components/tags/Multichain'
+    summary: Revokes an ERC-7715 execution permission.
+    description: >-
+      Revokes a previously granted ERC-7715 execution permission, identified by
+      its permission context. Specified by
+      [ERC-7715](https://eips.ethereum.org/EIPS/eip-7715).
+    params:
+      - name: Revoke request
+        required: true
+        description: An object identifying the permission to revoke.
+        schema:
+          type: object
+          required:
+            - permissionContext
+          properties:
+            permissionContext:
+              description: >-
+                The `0x`-prefixed context of the permission to revoke, as
+                returned by `wallet_requestExecutionPermissions`.
+              $ref: '#/components/schemas/bytes'
+    result:
+      name: Null response
+      description: This method returns an empty object if the permission is revoked.
+      schema:
+        type: object
+        additionalProperties: false
+    errors:
+      - $ref: '#/components/errors/InvalidParams'
+      - $ref: '#/components/errors/Unauthorized'
+    examples:
+      - name: wallet_revokeExecutionPermission example
+        params:
+          - name: Revoke request
+            value:
+              permissionContext: '0x00000000000000000000000000000000000000000000000000000000000000'
+        result:
+          name: Null response
+          value: {}
   - name: eth_requestAccounts
     tags:
       - $ref: '#/components/tags/MetaMask'
@@ -1262,6 +1436,126 @@ components:
             Dapps can use this object to communicate with the wallet about
             supported capabilities.
           type: object
+    ExecutionPermission:
+      title: ExecutionPermission
+      description: >-
+        An ERC-7715 execution permission. The `type` determines the shape of the
+        `data` object (for example `native-token-periodic`, `native-token-stream`,
+        `erc20-token-periodic`, `erc20-token-allowance`).
+      type: object
+      required:
+        - type
+        - data
+      properties:
+        type:
+          description: The permission type.
+          type: string
+        isAdjustmentAllowed:
+          description: >-
+            Whether the wallet is allowed to adjust the requested permission
+            (for example to a lower allowance) before granting it.
+          type: boolean
+        data:
+          description: >-
+            Permission-type-specific data. All amounts are `0x`-prefixed
+            hexadecimal strings.
+          type: object
+          additionalProperties: true
+          properties:
+            justification:
+              description: A human-readable explanation of why the permission is requested.
+              type: string
+    ExecutionPermissionRule:
+      title: ExecutionPermissionRule
+      description: >-
+        A rule that constrains an ERC-7715 execution permission, such as an
+        `expiry`, `redeemer`, or `payee` rule.
+      type: object
+      required:
+        - type
+        - data
+      properties:
+        type:
+          description: The rule type.
+          type: string
+        data:
+          description: Rule-type-specific data.
+          type: object
+          additionalProperties: true
+    ExecutionPermissionRequest:
+      title: ExecutionPermissionRequest
+      description: An object describing a single ERC-7715 execution permission request.
+      type: object
+      required:
+        - chainId
+        - permission
+      properties:
+        chainId:
+          description: >-
+            The [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain ID the
+            permission applies to, as a `0x`-prefixed hexadecimal string.
+          $ref: '#/components/schemas/uint'
+        address:
+          description: >-
+            (Optional) The account address the permission should be granted from.
+          $ref: '#/components/schemas/address'
+        from:
+          description: >-
+            (Optional) The account address the permission should be granted from.
+          $ref: '#/components/schemas/address'
+        to:
+          description: The address the permission is granted to (the redeemer/delegate).
+          $ref: '#/components/schemas/address'
+        signer:
+          description: >-
+            (Optional) The signer that will redeem the permission. Used by the
+            ERC-7715 `account`/`wallet`/`key` signer types.
+          type: object
+          additionalProperties: true
+        expiry:
+          description: >-
+            (Optional) The UNIX timestamp (in seconds) after which the
+            permission is no longer valid.
+          type: number
+        permission:
+          $ref: '#/components/schemas/ExecutionPermission'
+        rules:
+          description: An array of rules constraining the permission.
+          type: array
+          items:
+            $ref: '#/components/schemas/ExecutionPermissionRule'
+    ExecutionPermissionResponse:
+      title: ExecutionPermissionResponse
+      description: >-
+        A granted ERC-7715 execution permission. Contains the original request
+        fields plus the data needed to redeem the permission.
+      allOf:
+        - $ref: '#/components/schemas/ExecutionPermissionRequest'
+        - type: object
+          properties:
+            context:
+              description: >-
+                An opaque `0x`-prefixed context used to identify and redeem the
+                granted permission.
+              $ref: '#/components/schemas/bytes'
+            delegationManager:
+              description: The address of the delegation manager contract.
+              $ref: '#/components/schemas/address'
+            dependencies:
+              description: >-
+                Account deployment dependencies required to redeem the
+                permission (for example a smart account factory and its data).
+              type: array
+              items:
+                title: ExecutionPermissionDependency
+                type: object
+                properties:
+                  factory:
+                    description: The address of the account factory contract.
+                    $ref: '#/components/schemas/address'
+                  factoryData:
+                    description: The calldata to pass to the account factory.
+                    $ref: '#/components/schemas/bytes'
     AddEthereumChainParameter:
       title: Chain
       description: Object containing information about the chain to add.
