@@ -824,6 +824,7 @@ methods:
                   data:
                     periodAmount: '0x38d7ea4c68000'
                     periodDuration: 86400
+                    startTime: 1798761600
                     justification: Permission to transfer 0.001 ETH every day
                 rules:
                   - type: expiry
@@ -840,6 +841,7 @@ methods:
                 data:
                   periodAmount: '0x38d7ea4c68000'
                   periodDuration: 86400
+                  startTime: 1798761600
                   justification: Permission to transfer 0.001 ETH every day
               rules:
                 - type: expiry
@@ -1422,8 +1424,8 @@ components:
           type: boolean
         data:
           description: >-
-            Permission-type-specific data. All amounts are `0x`-prefixed
-            hexadecimal strings.
+            Permission-type-specific data. Token amounts are `0x`-prefixed
+            hexadecimal strings; timestamps and durations are numbers (seconds).
           type: object
           additionalProperties: true
           properties:
