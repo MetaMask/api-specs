@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.15.0]
+### Uncategorized
+- build(deps): bump the npm_and_yarn group across 1 directory with 5 updates ([#235](https://github.com/MetaMask/api-specs/pull/235))
+- Update multichain `Scope` properties ([#295](https://github.com/MetaMask/api-specs/pull/295))
+
 ### Added
 - Add ERC-7715 execution permission methods: `wallet_requestExecutionPermissions`, `wallet_getGrantedExecutionPermissions`, and `wallet_getSupportedExecutionPermissions`, along with the `ExecutionPermission`, `ExecutionPermissionRule`, `ExecutionPermissionRequest`, and `ExecutionPermissionResponse` schemas ([#311](https://github.com/MetaMask/api-specs/pull/311))
 
@@ -299,7 +305,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix release automation compatibility ([#69](https://github.com/MetaMask/api-specs/pull/69))
 
-[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.14.0...HEAD
+[Unreleased]: https://github.com/MetaMask/api-specs/compare/v0.15.0...HEAD
+[0.15.0]: https://github.com/MetaMask/api-specs/compare/v0.14.0...v0.15.0
 [0.14.0]: https://github.com/MetaMask/api-specs/compare/v0.13.0...v0.14.0
 [0.13.0]: https://github.com/MetaMask/api-specs/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/MetaMask/api-specs/compare/v0.11.0...v0.12.0
