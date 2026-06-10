@@ -7,10 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [0.15.0]
-### Uncategorized
-- build(deps): bump the npm_and_yarn group across 1 directory with 5 updates ([#235](https://github.com/MetaMask/api-specs/pull/235))
-
 ### Changed
+- build(deps): Bump `node-fetch` to `2.6.7`, `ansi-regex` to `3.0.1`, `braces` to `3.0.3`, `semver` to `5.7.2`, `ws` to `7.5.10`([#235](https://github.com/MetaMask/api-specs/pull/235))
 - Update multichain `Scope` properties ([#295](https://github.com/MetaMask/api-specs/pull/295))
 
 ### Added
