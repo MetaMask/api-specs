@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.15.0]
 ### Uncategorized
 - build(deps): bump the npm_and_yarn group across 1 directory with 5 updates ([#235](https://github.com/MetaMask/api-specs/pull/235))
+
+### Changed
 - Update multichain `Scope` properties ([#295](https://github.com/MetaMask/api-specs/pull/295))
 
 ### Added
