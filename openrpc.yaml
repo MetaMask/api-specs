@@ -524,6 +524,7 @@ methods:
   - name: wallet_sendCalls
     tags:
       - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Multichain'
     summary: Sends a batch of calls.
     description: >-
       Requests that the wallet submits a batch of calls. Specified by
@@ -584,6 +585,7 @@ methods:
   - name: wallet_getCallsStatus
     tags:
       - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Multichain'
     summary: Gets the status of a call batch.
     description: >-
       Gets the status of a batch of calls that was previously sent using
@@ -723,6 +725,7 @@ methods:
   - name: wallet_getCapabilities
     tags:
       - $ref: '#/components/tags/MetaMask'
+      - $ref: '#/components/tags/Multichain'
     summary: Gets the capabilities of the wallet.
     description: >-
       Returns information about the wallet's support for the `atomic`
