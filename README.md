@@ -11,6 +11,13 @@ You can view the specs in the following formats:
 human-readable, and machine-readable.
 It improves the accuracy of documentation, APIs, and clients.
 
+> **Multichain API (CAIP-25 / CAIP-27).** For a prose walkthrough of the
+> Multichain API — `wallet_createSession` inputs/outputs, supported methods, error
+> codes, and how MetaMask currently diverges from the latest CAIP-25 — see
+> [`MULTICHAIN_API.md`](https://github.com/MetaMask/core/blob/main/packages/multichain-api-middleware/MULTICHAIN_API.md)
+> in `@metamask/multichain-api-middleware`. The `multichain/openrpc.yaml` file here
+> is the machine-readable source of truth for that API.
+
 ## Contribute
 
 You can contribute to the API specs using the following steps.
